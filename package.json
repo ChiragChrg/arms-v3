@@ -9,14 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@jridgewell/sourcemap-codec": "^1.4.15",
+    "@rollup/plugin-terser": "^0.4.4",
+    "axios": "^1.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.290.0",
     "next": "14.0.0",
+    "next-pwa": "^5.6.0",
+    "next-themes": "^0.2.1",
     "react": "^18",
     "react-dom": "^18",
+    "react-hot-toast": "^2.4.1",
     "tailwind-merge": "^1.14.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.4.4"
   },
   "devDependencies": {
     "@types/node": "^20",
