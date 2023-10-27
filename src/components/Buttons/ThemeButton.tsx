@@ -9,10 +9,12 @@ const ThemeButton = () => {
     const { setTheme, resolvedTheme } = useTheme()
 
     return (
-        <Button variant="outline" size="icon" className="rounded-full bg-transparent"
+        <Button variant="ghost" size="icon"
+            className="rounded-full bg-transparent"
+            title={resolvedTheme === "dark" ? "Toggle Light Mode" : "Toggle Dark Mode"}
             onClick={() => resolvedTheme === "dark" ? setTheme("light") : setTheme("dark")}>
-            <SunIcon width="24px" height="24px" className="dark:hidden" />
-            <MoonIcon width="24px" height="24px" className="hidden dark:block" />
+            <SunIcon size={24} className="dark:hidden" />
+            <MoonIcon size={24} className="hidden dark:block" />
         </Button>
     )
 }
