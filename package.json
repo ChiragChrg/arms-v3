@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
-    "@jridgewell/sourcemap-codec": "^1.4.15",
-    "@rollup/plugin-terser": "^0.4.4",
+    "@radix-ui/react-slot": "^1.0.2",
     "axios": "^1.6.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
@@ -26,6 +25,8 @@
     "zustand": "^4.4.4"
   },
   "devDependencies": {
+    "@jridgewell/sourcemap-codec": "^1.4.15",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
