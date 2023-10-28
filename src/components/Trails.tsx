@@ -7,19 +7,24 @@ import { Button } from './ui/button'
 type Props = {
     trailCount?: number,
     xOffset?: string,
-    rotate?: string
+    rotate?: string,
+    topOffset?: string,
+    leftBtn?: boolean
 }
 
-const Trails = ({ trailCount = 10, xOffset = "-70%", rotate = "-45deg" }: Props) => {
+const Trails = ({ trailCount = 10, xOffset = "-70%", rotate = "-45deg", topOffset = "50%", leftBtn = false }: Props) => {
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
-
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
     return (
         <>
             <div
-                style={{ rotate: rotate, transform: `translateY(${xOffset})` }}
-                className={`fixed top-[50%] w-[200%] h-[80%] bg-primary -z-10`}>
+                style={{
+                    rotate: rotate,
+                    transform: `translateY(${xOffset})`,
+                    top: topOffset
+                }}
+                className={`fixed w-[200%] h-[80%] bg-primary -z-10`}>
                 <div className="relative flex flex-col justify-evenly w-full h-full">
                     {/* <div className="absolute flex_center w-full h-full">
                         <div className=" w-[100px] h-full bg-red-600"></div>
@@ -38,7 +43,7 @@ const Trails = ({ trailCount = 10, xOffset = "-70%", rotate = "-45deg" }: Props)
             </div>
 
             <Button variant='ghost' size='icon'
-                className="absolute bottom-4 right-4 text-primary hover:text-primary"
+                className={`absolute bottom-4 text-primary z-50 hover:text-primary ${leftBtn ? "left-4" : "right-4"}`}
                 onClick={() => setDisableAnimation(prev => !prev)}
                 title={disableAnimation ? "Play Animation" : "Pause Animation"}>
                 {disableAnimation ?
