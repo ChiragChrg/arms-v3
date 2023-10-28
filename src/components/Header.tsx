@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-import ThemeButton from './Buttons/ThemeButton'
+import ThemeButton from './CustomUI/ThemeButton'
 import Logo from '@/assets/Logo'
 
 type Props = {
-    altLogo?: boolean
+    altLogo?: boolean,
 }
 
 const Header = ({ altLogo = false }: Props) => {
@@ -23,10 +23,7 @@ const Header = ({ altLogo = false }: Props) => {
             </div>
 
             <nav
-                style={{
-                    color: !altLogo ? "#fff" : ""
-                }}
-                className='flex items-center gap-8 text-[1.1em]'>
+                className='flex items-center gap-8 text-[1.1em] drop-shadow-md'>
                 <Link href="/">Home</Link>
                 <Link href="/about">About</Link>
                 <Link href="https://chiragchrg.netlify.app/" target='_blank'>Portfolio</Link>
