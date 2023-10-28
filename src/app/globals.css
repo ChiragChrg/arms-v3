@@ -67,6 +67,12 @@
   }
 }
 
+.Landing_Title span {
+  color: hsl(var(--primary));
+  font-size: 1.5em;
+}
+
+/* Trails Animation CSS */
 .Trails-Trail {
   transform: translateX(-150%);
   animation: TrailMove 10s linear infinite;

@@ -1,1 +1,1 @@
-export { default as Logo } from './logo.svg'
+export { default as LandingVector } from './LandingVector.svg'
