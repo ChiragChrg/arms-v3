@@ -6,12 +6,17 @@ import Provider from '@/providers/Provider'
 const poppins = localFont({
   src: [
     {
-      path: '../assets/fonts/poppins-v20-latin-regular.woff2',
+      path: '../assets/fonts/Poppins-Regular.woff2',
       weight: '400',
       style: "normal"
     },
     {
-      path: '../assets/fonts/poppins-v20-latin-700.woff2',
+      path: '../assets/fonts/Poppins-Medium.woff2',
+      weight: '500',
+      style: "normal"
+    },
+    {
+      path: '../assets/fonts/Poppins-Bold.woff2',
       weight: '700',
       style: "normal"
     }
