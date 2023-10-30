@@ -146,16 +146,14 @@
 
 /* Skeleton Animations */
 .SkeletonLoader-wave {
-  --loaderClr: hsl(var(--secondary));
   background: linear-gradient(to right,
-      transparent, var(--loaderClr), var(--loaderClr), transparent);
+      transparent, var(--trailClrA), var(--trailClrA), transparent);
   background-size: 300%;
   animation: LoaderAnimation 3s linear infinite;
 }
 
 .SkeletonLoader-pulse {
-  --loaderClr: hsl(var(--secondary));
-  background: var(--loaderClr);
+  background: var(--trailClrA);
 }
 
 @keyframes LoaderAnimation {
