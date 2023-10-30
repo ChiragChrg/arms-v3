@@ -1,6 +1,6 @@
 "use client"
-import { useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { FormEvent, useEffect, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { getProviders, signIn } from 'next-auth/react'
@@ -19,28 +19,61 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [providersLoading, setProvidersLoading] = useState(true)
 
+    const router = useRouter()
+    const params = useSearchParams().get("callbackUrl")
+    const callback = params ? params as string : ""
+
     useEffect(() => {
         const FetchProviders = async () => {
             const response = await getProviders()
+            console.log(response)
             if (response) {
                 setProviderList(response)
                 setProvidersLoading(false)
             }
         }
-        // FetchProviders()
+        FetchProviders()
     }, [])
 
-    const params = useSearchParams().get("callbackUrl")
-    const callback = params ? params as string : ""
+
+    const HandleLogin = async (e: FormEvent<HTMLFormElement>) => {
+        e?.preventDefault()
+        const LoginToastID = toast.loading("Logging in...")
+        setIsLoading(true)
+        try {
+            const res = await signIn("credentials", {
+                email: email,
+                password: password,
+                redirect: false,
+                callbackUrl: callback || "/dashboard"
+            })
+            console.log("LoginRes", res)
+            if (res?.status === 200) {
+                toast.success("Logged in Successfully!", {
+                    id: LoginToastID
+                })
+
+                router.push(res?.url as string)
+            }
+        } catch (err) {
+            toast.error("Something went wrong!", {
+                id: LoginToastID
+            })
+            console.log(err)
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     const HandleOAuthLogin = async (provider: string) => {
         const OAuthTostID = toast.loading(`Connecting to ${provider.charAt(0).toUpperCase() + provider.slice(1)}...`)
+        setIsLoading(true)
 
         try {
             const res = await signIn(provider, {
-                redirect: callback !== "" ? true : false,
-                callbackUrl: callback as string
+                callbackUrl: callback || "/dashboard"
             })
+            // redirect: callback !== "" ? true : false,
 
             console.log("LoginRes", res)
             toast.success("Logged in Successfully!", {
@@ -51,6 +84,9 @@ const Login = () => {
                 id: OAuthTostID
             })
             console.log(err)
+        } finally {
+            setIsLoading(false)
+            toast.dismiss()
         }
     }
 
@@ -63,10 +99,10 @@ const Login = () => {
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
                         Let's get <span className="text-primary">Started</span>
                     </p>
-                    <Image src={UploadVector} alt='UploadVector' className='w-[300px] 2xl:w-[450px]' />
+                    <Image src={UploadVector} alt='UploadVector' className='w-[300px] 2xl:w-[450px]' priority={true} />
                 </div>
 
-                <div className='relative flex_center flex-col gap-4 2xl:gap-8 w-fit p-8 rounded-lg bg-background/60 backdrop-blur-md'>
+                <div className='relative flex_center flex-col gap-4 2xl:gap-8 w-fit p-8 rounded-lg bg-background/70 backdrop-blur-md'>
                     <h1 className='text-[2em] 2xl:text-[2.5em] font-medium'>
                         Welcome to <span className="text-primary">ARMS</span>
                     </h1>
@@ -107,7 +143,7 @@ const Login = () => {
                     <div className="flex_center gap-4 w-full sm:px-4">
                         {/* Google Login Button */}
                         <button
-                            className='bg-baseClr text-textClr w-full flex_center gap-4 p-2 rounded border border-secondaryClr disabled:cursor-not-allowed'
+                            className='bg-background text-textClr w-full flex_center gap-4 p-2 rounded disabled:cursor-not-allowed'
                             disabled={providersLoading}
                             onClick={() => HandleOAuthLogin(providerList["google"]?.id)}>
                             {!providersLoading ?
@@ -142,7 +178,7 @@ const Login = () => {
 
                         {/* GitHUb Login Button */}
                         <button
-                            className='bg-baseClr text-textClr w-full flex_center gap-4 p-2 rounded border border-secondaryClr disabled:cursor-not-allowed'
+                            className='bg-background text-textClr w-full flex_center gap-4 p-2 rounded disabled:cursor-not-allowed'
                             disabled={providersLoading}
                             onClick={() => HandleOAuthLogin(providerList["github"]?.id)}>
                             {!providersLoading ?
@@ -162,7 +198,7 @@ const Login = () => {
                 </div>
 
                 <div className=" flex_center flex-col gap-8">
-                    <Image src={PeopleVector} alt='PeopleVector' className='w-[300px] 2xl:w-[450px]' />
+                    <Image src={PeopleVector} alt='PeopleVector' className='w-[300px] 2xl:w-[450px]' priority={true} />
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
                         Login as <span className="text-primary">Faculty</span>
                     </p>
