@@ -17,6 +17,8 @@ module.exports = {
     },
     extend: {
       colors: {
+        logoClr: "var(--logoClr)",
+        baseClr: "var(--baseClr)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

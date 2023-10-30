@@ -10,7 +10,7 @@ const ThemeButton = () => {
 
     return (
         <Button variant="ghost" size="icon"
-            className="rounded-full bg-transparent"
+            className="rounded-full bg-transparent border border-white/30 hover:bg-white hover:text-baseClr"
             title={resolvedTheme === "dark" ? "Toggle Light Mode" : "Toggle Dark Mode"}
             onClick={() => resolvedTheme === "dark" ? setTheme("light") : setTheme("dark")}>
             <SunIcon size={24} className="dark:hidden" />

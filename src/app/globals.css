@@ -4,7 +4,8 @@
 
 @layer base {
   :root {
-    --logoClr: #2d65ce;
+    --logoClr: rgb(45, 101, 206);
+    --baseClr: rgb(0, 49, 141);
     --trailClrA: rgba(0, 49, 141, 0.8);
     --trailClrB: rgba(250, 250, 250, 0.5);
 
@@ -143,6 +144,30 @@
   }
 }
 
+/* Skeleton Animations */
+.SkeletonLoader-wave {
+  --loaderClr: hsl(var(--secondary));
+  background: linear-gradient(to right,
+      transparent, var(--loaderClr), var(--loaderClr), transparent);
+  background-size: 300%;
+  animation: LoaderAnimation 3s linear infinite;
+}
+
+.SkeletonLoader-pulse {
+  --loaderClr: hsl(var(--secondary));
+  background: var(--loaderClr);
+}
+
+@keyframes LoaderAnimation {
+  from {
+    background-position: 0% center;
+  }
+
+  to {
+    background-position: -300% center;
+  }
+}
+
 /* Custom ScrollBar */
 ::-webkit-scrollbar {
   width: 18px;
@@ -153,7 +178,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--secondary));
+  background-color: hsla(var(--primary)/0.6);
   border-radius: 20px;
   border: 6px solid transparent;
   background-clip: content-box;
