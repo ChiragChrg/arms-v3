@@ -6,7 +6,7 @@ interface UserTypes {
     email?: string | null,
     avatarImg?: string | null,
     isApproved?: boolean | null,
-    authType?: String[] | null
+    authType?: String[] | null,
     accessToken?: string | null,
 }
 

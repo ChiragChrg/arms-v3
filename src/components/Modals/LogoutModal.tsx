@@ -23,12 +23,12 @@ const LogoutModal = () => {
             deleteUser()
             onClose()
 
-            localStorage.removeItem("ampliflex-user")
+            localStorage.removeItem("arms-user")
             router.push("/")
-            setIsLoading(false)
-
         } catch (error) {
             console.error('Logout error:', error);
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -40,7 +40,7 @@ const LogoutModal = () => {
             onClose={onClose}
         >
             <div className="flex justify-between items-end gap-8 w-[20em] h-[5em]">
-                <Button variant="secondary" onClick={() => onClose()} className='flex_center gap-2 w-full text-white'>
+                <Button variant="secondary" onClick={() => onClose()} className='flex_center gap-2 w-full'>
                     <X size={20} />
                     <span>Cancel</span>
                 </Button>
