@@ -97,7 +97,7 @@ const Login = () => {
             <section className='flex justify-between items-center px-8 2xl:px-4'>
                 <div className=" flex_center flex-col gap-8">
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
-                        Let's get <span className="text-primary">Started</span>
+                        Let&apos;s get <span className="text-primary">Started</span>
                     </p>
                     <Image src={UploadVector} alt='UploadVector' className='w-[300px] 2xl:w-[450px]' priority={true} />
                 </div>

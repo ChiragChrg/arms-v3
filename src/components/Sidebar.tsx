@@ -31,7 +31,7 @@ const Sidebar = () => {
             }
             setUser(formattedUser)
         }
-    }, [session, status])
+    }, [session, status, setUser])
 
     return (
         <header className='min-w-[18em] h-full p-3 rounded-md flex flex-col gap-4 bg-baseClr'>
