@@ -134,10 +134,15 @@ const Login = () => {
                         </Button>
                     </form>
 
-                    <div className=" w-full sm:max-w-md sm:px-4 flex_center gap-2 text-primaryClr font-medium">
-                        <span className='flex w-full h-[2px] bg-secondary'></span>
+                    <div className="flex_center gap-2 text-[0.8em]">
+                        Don&apos;t have an account yet?
+                        <Link href="/signup" className='text-primary'>Signup</Link>
+                    </div>
+
+                    <div className="w-full sm:px-2 flex_center gap-2 font-medium">
+                        <span className='flex w-full h-[2px] bg-muted-foreground/60'></span>
                         <span>OR</span>
-                        <span className='flex w-full h-[2px] bg-secondary'></span>
+                        <span className='flex w-full h-[2px] bg-muted-foreground/60'></span>
                     </div>
 
                     <div className="flex_center gap-4 w-full sm:px-4">
@@ -208,7 +213,6 @@ const Login = () => {
             <p className='flex_center text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
 
             <Trails rotate='90deg' xOffset='0%' leftBtn />
-            {/* <Trails rotate='45deg' leftBtn /> */}
         </main>
     )
 }
