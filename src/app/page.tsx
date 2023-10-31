@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <main className='relative flex flex-col px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
-      <Header />
+      <Header altColor />
 
       <section className='flex flex-col flex-1 justify-between w-full h-max p-4'>
         <div className="flex flex-col gap-2">
@@ -24,19 +24,19 @@ export default function Home() {
         <div className="flex justify-between items-end mt-[5em] 2xl:mt-[10em]">
           <Image src={LandingVector} alt='LandingVector' className='w-[350px] 2xl:w-[500px]' />
 
-          <div className="flex_center flex-col gap-8 bg-background/70 backdrop-blur-md rounded-xl p-4 2xl:p-8 mr-[10em] 2xl:mr-[25em]">
-            <h2 className='text-[1.4em]'>Lets get started! 🚀</h2>
+          <div className="flex_center flex-col gap-8 bg-background/70 backdrop-blur-md rounded-md p-4 2xl:p-8 mr-[18em] 2xl:mr-[25em]">
+            <h2 className='text-[1.4em]'>Let&apos;s get started! 🚀</h2>
             <div className="flex_center gap-4">
               <Link
                 href='/dashboard'
-                className='flex_center flex-col rounded-lg w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors cursor-pointer'>
+                className='flex_center flex-col rounded w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors transi cursor-pointer'>
                 <h3 className='text-[1.1em]'>I&apos;m a Student</h3>
                 <p className='opacity-70 text-[0.9em]'>Anonymous</p>
               </Link>
 
               <Link
                 href="/login"
-                className='flex_center flex-col rounded-lg w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors cursor-pointer'>
+                className='flex_center flex-col rounded w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors transi cursor-pointer'>
                 <h3 className='text-[1.1em]'>I&apos;m a Faculty</h3>
                 <p className='opacity-70 text-[0.9em]'>Login / Signup</p>
               </Link>

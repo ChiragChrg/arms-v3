@@ -2,12 +2,14 @@ import React from 'react'
 import Link from 'next/link'
 import ThemeButton from './CustomUI/ThemeButton'
 import Logo from '@/assets/Logo'
+import { cn } from '@/lib/utils'
 
 type Props = {
     altLogo?: boolean,
+    altColor?: boolean,
 }
 
-const Header = ({ altLogo = false }: Props) => {
+const Header = ({ altLogo = false, altColor = false }: Props) => {
     return (
         <header className='flex justify-between items-center z-10'>
             <div className="flex_center gap-3">
@@ -23,7 +25,7 @@ const Header = ({ altLogo = false }: Props) => {
             </div>
 
             <nav
-                className='flex items-center gap-8 text-[1.1em] drop-shadow-md'>
+                className={cn('flex items-center gap-8 text-[1.1em] drop-shadow-md', altColor && "text-white")}>
                 <Link href="/">Home</Link>
                 <Link href="/about">About</Link>
                 <Link href="https://chiragchrg.netlify.app/" target='_blank'>Portfolio</Link>
