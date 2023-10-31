@@ -24,7 +24,7 @@ export default function Home() {
         <div className="flex justify-between items-end mt-[5em] 2xl:mt-[10em]">
           <Image src={LandingVector} alt='LandingVector' className='w-[350px] 2xl:w-[500px]' />
 
-          <div className="flex_center flex-col gap-8 bg-background/70 backdrop-blur-md rounded-md p-4 2xl:p-8 mr-[18em] 2xl:mr-[25em]">
+          <div className="flex_center flex-col gap-8 bg-background/70 backdrop-blur-md rounded-md p-4 2xl:p-8 mr-[17em] 2xl:mr-[25em]">
             <h2 className='text-[1.4em]'>Let&apos;s get started! 🚀</h2>
             <div className="flex_center gap-4">
               <Link
@@ -48,7 +48,7 @@ export default function Home() {
       </section>
 
 
-      <Trails />
+      <Trails className='2xl:h-[75%]' />
     </main>
   )
 }

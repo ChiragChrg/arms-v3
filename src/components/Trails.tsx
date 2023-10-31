@@ -3,15 +3,17 @@
 import React, { useState } from 'react'
 import { PlayCircleIcon, PauseCircle } from "lucide-react"
 import { Button } from './ui/button'
+import { cn } from '@/lib/utils'
 
 type Props = {
     trailCount?: number,
     xOffset?: string,
     rotate?: string,
+    className?: string,
     leftBtn?: boolean
 }
 
-const Trails = ({ trailCount = 10, xOffset = "45%", rotate = "-45deg", leftBtn = false }: Props) => {
+const Trails = ({ trailCount = 10, xOffset = "45%", rotate = "-45deg", className = "", leftBtn = false }: Props) => {
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
@@ -23,7 +25,7 @@ const Trails = ({ trailCount = 10, xOffset = "45%", rotate = "-45deg", leftBtn =
                         rotate: rotate,
                         transform: `translateY(${xOffset})`,
                     }}
-                    className={`fixed w-[200%] h-[80%] bg-primary`}>
+                    className={cn(`fixed w-[200%] h-[85%] bg-primary`, className)}>
                     <div className="relative flex flex-col justify-evenly w-full h-full">
                         {/* <div className="absolute flex_center w-full h-full">
                             <div className=" w-[100px] h-full bg-red-600"></div>

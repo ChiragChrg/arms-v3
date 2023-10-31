@@ -26,7 +26,7 @@ const Input = ({ label, type = "text", placeholder, className = "", required = f
                 <span className="text-red-600">{required && "*"}</span>
             </span>
 
-            <div className="flex items-center border border-secondary sm:focus-within:border-primary rounded p-1">
+            <div className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
                 <input
                     type={showPassword ? "text" : type}
                     placeholder={placeholder}
