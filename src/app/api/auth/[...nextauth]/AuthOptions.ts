@@ -68,7 +68,7 @@ export const AuthOptions: NextAuthOptions = {
     ],
     callbacks: {
         async signIn({ user, account, profile }) {
-            console.log("\nSignInCallback", { user, account, profile })
+            // console.log("\nSignInCallback", { user, account, profile })
 
             if (account?.type === 'credentials' && UserAccount !== null) return true
 
@@ -95,7 +95,7 @@ export const AuthOptions: NextAuthOptions = {
             }
         },
         async jwt({ token, user, account, profile, trigger }) {
-            console.log("\nJWTCallback", { token, user, account, profile, trigger })
+            // console.log("\nJWTCallback", { token, user, account, profile, trigger })
             const { picture, sub, ...restToken } = token
 
             if (trigger === "update") {
@@ -135,7 +135,7 @@ export const AuthOptions: NextAuthOptions = {
             return token
         },
         async session({ session, user, token }) {
-            console.log("\nSessionCallback", { session, user, token })
+            // console.log("\nSessionCallback", { session, user, token })
 
             if (UserAccount !== null) {
                 // console.log("\nUserAccount_Session", UserAccount)

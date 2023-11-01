@@ -25,10 +25,6 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    authType: {
-        type: [String],
-        default: []
-    },
     createdAt: {
         type: Date,
         default: Date.now,
