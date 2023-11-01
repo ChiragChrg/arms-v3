@@ -1,8 +1,10 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import ThemeButton from './CustomUI/ThemeButton'
 import Logo from '@/assets/Logo'
 import { cn } from '@/lib/utils'
+import { useRouter } from 'next/navigation'
 
 type Props = {
     altLogo?: boolean,
@@ -10,6 +12,16 @@ type Props = {
 }
 
 const Header = ({ altLogo = false, altColor = false }: Props) => {
+    const router = useRouter()
+
+    useEffect(() => {
+        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
+
+        if (localUser) {
+            router.push('/dashboard')
+        }
+    }, [router])
+
     return (
         <header className='flex justify-between items-center z-10'>
             <div className="flex_center gap-3">

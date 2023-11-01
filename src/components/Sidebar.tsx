@@ -1,22 +1,18 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import ThemeButton from './CustomUI/ThemeButton'
-import { Button } from './ui/button'
 import Link from 'next/link'
 import UserAvatar from './UserAvatar'
-import { usePathname, useRouter } from 'next/navigation'
-import axios from "axios"
+import { usePathname } from 'next/navigation'
 import useUserStore from '@/store/useUserStore'
 import Logo from '@/assets/Logo'
 import { cn } from '@/lib/utils'
-import { RectLoader } from './CustomUI/Skeletons'
 import { BadgeInfoIcon, PieChart, Settings2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import BuildingSVG from '@/assets/BuildingSVG'
 
 const Sidebar = () => {
-    const { user, setUser } = useUserStore()
-    const router = useRouter()
+    const { setUser } = useUserStore()
     const pathname = usePathname()
     const { data: session, status } = useSession()
 
@@ -30,6 +26,7 @@ const Sidebar = () => {
                 accessToken: session?.user?.accessToken,
             }
             setUser(formattedUser)
+            localStorage.setItem("arms-user", JSON.stringify(formattedUser));
         }
     }, [session, status, setUser])
 
