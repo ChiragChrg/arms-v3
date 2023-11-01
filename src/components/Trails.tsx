@@ -28,9 +28,9 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
                     }}
                     className={cn(`fixed w-[200%] h-[85%] bg-primary`, className)}>
                     <div className="relative flex flex-col justify-evenly w-full h-full">
-                        <div className="absolute flex_center w-full h-full">
+                        {/* <div className="absolute flex_center w-full h-full">
                             <div className=" w-[100px] h-full bg-red-600"></div>
-                        </div>
+                        </div> */}
                         {trailArray.map((item: number) => (
                             <div
                                 key={item}
