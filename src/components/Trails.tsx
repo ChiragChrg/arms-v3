@@ -8,28 +8,29 @@ import { cn } from '@/lib/utils'
 type Props = {
     trailCount?: number,
     xOffset?: string,
+    yOffset?: string,
     rotate?: string,
     className?: string,
     leftBtn?: boolean
 }
 
-const Trails = ({ trailCount = 10, xOffset = "45%", rotate = "-45deg", className = "", leftBtn = false }: Props) => {
+const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false }: Props) => {
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
     return (
-        <>
-            <div className="fixed inset-0 flex_center w-screen h-screen overflow-hidden -z-10">
+        <div className='fixed inset-0 z-[-1]'>
+            <div className="relative flex_center w-screen h-screen overflow-hidden -z-10">
                 <div
                     style={{
                         rotate: rotate,
-                        transform: `translateY(${xOffset})`,
+                        transform: `translateY(${yOffset}) translateX(${xOffset})`,
                     }}
                     className={cn(`fixed w-[200%] h-[85%] bg-primary`, className)}>
                     <div className="relative flex flex-col justify-evenly w-full h-full">
-                        {/* <div className="absolute flex_center w-full h-full">
+                        <div className="absolute flex_center w-full h-full">
                             <div className=" w-[100px] h-full bg-red-600"></div>
-                        </div> */}
+                        </div>
                         {trailArray.map((item: number) => (
                             <div
                                 key={item}
@@ -45,7 +46,7 @@ const Trails = ({ trailCount = 10, xOffset = "45%", rotate = "-45deg", className
             </div>
 
             <Button variant='ghost' size='icon'
-                className={`absolute bottom-4 text-primary z-50 hover:text-primary ${leftBtn ? "left-4" : "right-4"}`}
+                className={`absolute bottom-4 text-primary z-0 hover:text-primary ${leftBtn ? "left-4" : "right-4"}`}
                 onClick={() => setDisableAnimation(prev => !prev)}
                 title={disableAnimation ? "Play Animation" : "Pause Animation"}>
                 {disableAnimation ?
@@ -53,7 +54,7 @@ const Trails = ({ trailCount = 10, xOffset = "45%", rotate = "-45deg", className
                     : <PauseCircle size={30} />
                 }
             </Button>
-        </>
+        </div>
     )
 }
 

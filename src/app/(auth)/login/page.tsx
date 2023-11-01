@@ -212,7 +212,7 @@ const Login = () => {
 
             <p className='flex_center text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails rotate='90deg' xOffset='0%' leftBtn />
+            <Trails rotate='90deg' yOffset='0%' leftBtn />
         </main>
     )
 }
