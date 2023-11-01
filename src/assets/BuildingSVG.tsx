@@ -2,9 +2,10 @@ type Props = {
     fill?: string,
     stroke?: string,
     size?: string,
+    className?: string,
 }
 
-const Logo = ({ fill = "currentColor", stroke = "currentColor", size = "100" }: Props) => {
+const BuildingSVG = ({ fill = "currentColor", stroke = "currentColor", size = "100", className = "" }: Props) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -12,6 +13,7 @@ const Logo = ({ fill = "currentColor", stroke = "currentColor", size = "100" }: 
             stroke={stroke}
             width={size}
             height={size}
+            className={className}
             strokeWidth="0"
             viewBox="0 0 16 16"
         >
@@ -27,4 +29,4 @@ const Logo = ({ fill = "currentColor", stroke = "currentColor", size = "100" }: 
     )
 }
 
-export default Logo
+export default BuildingSVG
