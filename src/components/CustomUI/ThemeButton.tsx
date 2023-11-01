@@ -1,20 +1,24 @@
 "use client"
-
 import { SunIcon, MoonIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "../ui/button"
+import { cn } from "@/lib/utils"
 
+type Props = {
+    size?: string | number,
+    className?: string,
+}
 
-const ThemeButton = () => {
+const ThemeButton = ({ size = 24, className = "" }: Props) => {
     const { setTheme, resolvedTheme } = useTheme()
 
     return (
         <Button variant="ghost" size="icon"
-            className="rounded-full bg-transparent border border-white/30 hover:bg-white hover:text-baseClr"
+            className={cn("rounded-full bg-transparent border border-white/30 hover:bg-white hover:text-baseClr", className)}
             title={resolvedTheme === "dark" ? "Toggle Light Mode" : "Toggle Dark Mode"}
             onClick={() => resolvedTheme === "dark" ? setTheme("light") : setTheme("dark")}>
-            <SunIcon size={24} className="dark:hidden" />
-            <MoonIcon size={24} className="hidden dark:block" />
+            <SunIcon size={size} className="dark:hidden" />
+            <MoonIcon size={size} className="hidden dark:block" />
         </Button>
     )
 }
