@@ -1,21 +1,37 @@
 "use client"
+import { useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { Button } from './ui/button'
-import { LogOutIcon, User2 } from 'lucide-react'
-import { useState } from 'react'
-import { CircleLoader, RectLoader } from "./CustomUI/Skeletons"
 import useUserStore from '@/store/useUserStore'
 import useModalStore from '@/store/useModalStore'
+import { CircleLoader, RectLoader } from "./CustomUI/Skeletons"
+import { Button } from './ui/button'
+import { LogOutIcon, User2 } from 'lucide-react'
 
 const UserAvatar = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { user } = useUserStore()
+    const { user, setUser } = useUserStore()
     const { onOpen } = useModalStore()
+    const { data: session, status } = useSession()
+
+    useEffect(() => {
+        console.log(session, status)
+        if (status == "authenticated" && session !== null) {
+            const formattedUser = {
+                uid: session?.user?.uid,
+                username: session?.user?.name,
+                email: session?.user?.email,
+                avatarImg: session?.user?.image,
+                accessToken: session?.user?.accessToken,
+            }
+            setUser(formattedUser)
+            localStorage.setItem("arms-user", JSON.stringify(formattedUser));
+        }
+    }, [session, status, setUser])
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-black/40">
             <div className="flex_center w-fit aspect-square rounded-full overflow-hidden">
-                <CircleLoader size='40px' className={isLoading ? 'block' : "hidden"} />
+                <CircleLoader size='40px' className={status == "loading" ? 'block' : "hidden"} />
                 {user?.avatarImg ?
                     <Image
                         src={user?.avatarImg}
@@ -23,18 +39,17 @@ const UserAvatar = () => {
                         width={40}
                         height={40}
                         loading='eager'
-                        onLoadingComplete={() => setIsLoading(false)}
-                        className={isLoading ? 'hidden' : "block object-cover"}
+                        className={status == "loading" ? 'hidden' : "block object-cover"}
                     />
                     :
-                    <div className="bg-slate-500 w-fit p-1.5">
+                    <div className={status == "loading" ? 'hidden' : "block bg-slate-500 w-fit p-1.5"}>
                         <User2 size={30} />
                     </div>
                 }
             </div>
 
             <div className="flex_center flex-col w-full max-w-[9.5em]">
-                {isLoading ?
+                {status == "loading" ?
                     <>
                         <RectLoader height='22px' className='mb-1' />
                         <RectLoader height='14px' />
@@ -52,7 +67,7 @@ const UserAvatar = () => {
                 size="icon"
                 className='bg-red-800 hover:bg-red-700'
                 onClick={() => onOpen("LogoutModal")}
-                disabled={isLoading}>
+                disabled={status == "loading"}>
                 <LogOutIcon size={20} />
             </Button>
         </div>

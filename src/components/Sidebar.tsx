@@ -1,5 +1,4 @@
 "use client"
-import React, { useEffect } from 'react'
 import ThemeButton from './CustomUI/ThemeButton'
 import Link from 'next/link'
 import UserAvatar from './UserAvatar'
@@ -8,27 +7,10 @@ import useUserStore from '@/store/useUserStore'
 import Logo from '@/assets/Logo'
 import { cn } from '@/lib/utils'
 import { BadgeInfoIcon, PieChart, Settings2 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import BuildingSVG from '@/assets/BuildingSVG'
 
 const Sidebar = () => {
-    const { setUser } = useUserStore()
     const pathname = usePathname()
-    const { data: session, status } = useSession()
-
-    useEffect(() => {
-        if (status == "authenticated" && session !== null) {
-            const formattedUser = {
-                uid: session?.user?.uid,
-                username: session?.user?.name,
-                email: session?.user?.email,
-                avatarImg: session?.user?.image,
-                accessToken: session?.user?.accessToken,
-            }
-            setUser(formattedUser)
-            localStorage.setItem("arms-user", JSON.stringify(formattedUser));
-        }
-    }, [session, status, setUser])
 
     return (
         <header className='min-w-[18em] h-full p-3 rounded-md flex flex-col gap-4 bg-baseClr'>

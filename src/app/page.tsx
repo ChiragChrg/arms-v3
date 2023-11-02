@@ -1,10 +1,26 @@
+"use client"
 import { LandingVector } from '@/assets'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
+import useUserStore from '@/store/useUserStore'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
+  const { setUser } = useUserStore()
+  const router = useRouter()
+
+  const HandleAnonymousLogin = () => {
+    const formattedUser = {
+      uid: "anonymous",
+      username: "Anonymous",
+      email: "Student",
+    }
+    setUser(formattedUser)
+    localStorage.setItem("arms-user", JSON.stringify(formattedUser));
+    router.push("/dashboard")
+  }
 
   return (
     <main className='relative flex flex-col px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
@@ -26,12 +42,12 @@ export default function Home() {
           <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/70 backdrop-blur-md rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
             <h2 className='text-[1.4em]'>Let&apos;s get started! 🚀</h2>
             <div className="flex_center gap-4 w-full sm:w-fit">
-              <Link
-                href='/dashboard'
+              <div
+                onClick={HandleAnonymousLogin}
                 className='flex_center flex-col rounded w-full sm:w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors transi cursor-pointer'>
                 <h3 className='text-[1.1em]'>I&apos;m a Student</h3>
                 <p className='opacity-70 text-[0.9em]'>Anonymous</p>
-              </Link>
+              </div>
 
               <Link
                 href="/login"
