@@ -75,7 +75,7 @@ const Login = () => {
             })
             // redirect: callback !== "" ? true : false,
 
-            console.log("LoginRes", res)
+            // console.log("LoginRes", res)
             toast.success("Logged in Successfully!", {
                 id: OAuthTostID
             })

@@ -8,6 +8,8 @@
     --baseClr: rgb(0, 49, 141);
     --trailClrA: rgba(0, 49, 141, 0.8);
     --trailClrB: rgba(250, 250, 250, 0.5);
+    --baseClrLite: 45, 101, 206;
+
 
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -153,13 +155,16 @@
 /* Skeleton Animations */
 .SkeletonLoader-wave {
   background: linear-gradient(to right,
-      transparent, var(--trailClrA), var(--trailClrA), transparent);
+      rgba(var(--baseClrLite), 0.3),
+      rgba(var(--baseClrLite), 0.5),
+      rgba(var(--baseClrLite), 0.5),
+      rgba(var(--baseClrLite), 0.3));
   background-size: 300%;
   animation: LoaderAnimation 3s linear infinite;
 }
 
 .SkeletonLoader-pulse {
-  background: var(--trailClrA);
+  background: rgba(var(--baseClrLite), 0.6);
 }
 
 @keyframes LoaderAnimation {
