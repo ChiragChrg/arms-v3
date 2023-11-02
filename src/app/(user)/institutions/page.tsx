@@ -1,0 +1,57 @@
+"use client"
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import useDataStore from '@/store/useDataStore'
+import { RectLoader } from '@/components/CustomUI/Skeletons'
+import BuildingSVG from '@/assets/BuildingSVG'
+
+const Institutions = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true)
+    const { data, setData } = useDataStore()
+
+    useEffect(() => {
+        const GetInstitutions = async () => {
+            try {
+                const res = await axios.get('/api/institutions')
+                if (res.status === 200) {
+                    console.log(res.data)
+                    setData(res?.data)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        GetInstitutions()
+    }, [])
+
+    return (
+        <section className='w-full h-full overflow-y-auto  p-2 pb-4'>
+            <h1 className='text-[2em] font-medium'>Institutions</h1>
+
+            <div className="grid grid-cols-3 gap-[1.25em] w-full mt-6">
+                {isLoading ?
+                    data?.map(obj => (
+                        <div key={obj?._id} className="flex_center flex-col w-full h-full rounded-lg bg-primary/20 p-2 hover:translate-y-[-0.5em] transition-transform">
+                            <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
+                                <BuildingSVG size='50' />
+                            </div>
+                            <span className="text-[1.4em] font-medium">{obj?.collegeName}</span>
+                            <p className="w-full text-center text-[0.9em] opacity-80">{obj?.description}</p>
+                        </div>
+                    ))
+                    :
+                    <>
+                        <RectLoader height='11em' radius={0.5} />
+                        <RectLoader height='11em' radius={0.5} />
+                        <RectLoader height='11em' radius={0.5} />
+                        <RectLoader height='11em' radius={0.5} />
+                        <RectLoader height='11em' radius={0.5} />
+                        <RectLoader height='11em' radius={0.5} />
+                    </>
+                }
+            </div>
+        </section>
+    )
+}
+
+export default Institutions
