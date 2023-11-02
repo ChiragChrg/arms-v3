@@ -15,16 +15,16 @@ const Dashboard = () => {
     useEffect(() => {
         const GetCount = async () => {
             try {
-                const res = await axios.get('/api/getcount')
+                const res = await axios.get('/api/dashcount')
                 if (res.status === 200) {
-                    console.log(res.data.Count)
-                    setCount(res?.data?.Count)
+                    console.log(res.data)
+                    setCount(res?.data)
                 }
             } catch (err) {
                 console.log(err)
             }
         }
-        // GetCount()
+        GetCount()
     }, [])
 
     return (
@@ -39,7 +39,7 @@ const Dashboard = () => {
                     <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
                         <BuildingSVG size='50' />
                     </div>
-                    <CountUp end={count?.institute || 0} duration={2} className='text-[2.5em] font-bold text-primary leading-[1.5em] mr-4 z-[1]' />
+                    <CountUp end={count?.institute || 0} duration={4} className='text-[2.5em] font-bold text-primary leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Institutes registered</p>
                 </div>
 
@@ -47,7 +47,7 @@ const Dashboard = () => {
                     <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
                         <BookStackSVG size='50' />
                     </div>
-                    <CountUp end={count?.course || 0} duration={2} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
+                    <CountUp end={count?.course || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Courses created</p>
                 </div>
 
@@ -55,7 +55,7 @@ const Dashboard = () => {
                     <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
                         <OpenBookSVG size='50' />
                     </div>
-                    <CountUp end={count?.subject || 0} duration={2} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
+                    <CountUp end={count?.subject || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Subjects created</p>
                 </div>
 
@@ -63,7 +63,7 @@ const Dashboard = () => {
                     <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
                         <DocumentsSVG size='50' />
                     </div>
-                    <CountUp end={count?.document || 0} duration={2} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
+                    <CountUp end={count?.document || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>PDFs uploaded</p>
                 </div>
             </div>
