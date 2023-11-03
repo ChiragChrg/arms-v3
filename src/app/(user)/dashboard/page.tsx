@@ -70,35 +70,35 @@ const Dashboard = () => {
             </h1>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 mx-2 sm:mx-8 mt-4">
-                <div className="relative rounded-md flex flex-col items-end bg-primary/20 overflow-hidden p-2.5">
-                    <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
-                        <BuildingSVG size='50' />
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                    <div className="flex justify-between items-start w-full">
+                        <BuildingSVG size='50' className='text-white dark:text-white/80' />
+                        <CountUp end={count?.institute || 0} duration={4} className='text-[2.5em] font-bold text-primary leading-[1.5em] mr-4 z-[1]' />
                     </div>
-                    <CountUp end={count?.institute || 0} duration={4} className='text-[2.5em] font-bold text-primary leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Institutes registered</p>
                 </div>
 
-                <div className="relative rounded-md flex flex-col items-end bg-primary/20 overflow-hidden p-2.5">
-                    <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
-                        <BookStackSVG size='50' />
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                    <div className="flex justify-between items-start w-full">
+                        <BookStackSVG size='50' className='text-white dark:text-white/80' />
+                        <CountUp end={count?.course || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     </div>
-                    <CountUp end={count?.course || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Courses created</p>
                 </div>
 
-                <div className="relative rounded-md flex flex-col items-end bg-primary/20 overflow-hidden p-2.5">
-                    <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
-                        <OpenBookSVG size='50' />
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                    <div className="flex justify-between items-start w-full">
+                        <OpenBookSVG size='50' className='text-white dark:text-white/80' />
+                        <CountUp end={count?.subject || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     </div>
-                    <CountUp end={count?.subject || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Subjects created</p>
                 </div>
 
-                <div className="relative rounded-md flex flex-col items-end bg-primary/20 overflow-hidden p-2.5">
-                    <div className="absolute top-[-2em] left-[-2em] p-10 rounded-full radialGradient text-white/70 dark:text-white/50">
-                        <DocumentsSVG size='50' />
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                    <div className="flex justify-between items-start w-full">
+                        <DocumentsSVG size='50' className='text-white dark:text-white/80' />
+                        <CountUp end={count?.document || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     </div>
-                    <CountUp end={count?.document || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>PDFs uploaded</p>
                 </div>
             </div>

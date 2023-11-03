@@ -76,9 +76,9 @@
 }
 
 .radialGradient {
-  background: radial-gradient(circle at 50% 50%,
-      hsla(var(--primary)/ 0.6) 0%,
-      hsla(0, 0%, 0%, 0) 72.5%);
+  background: radial-gradient(circle at 10% 10%,
+      hsla(var(--primary)/ 0.5) 0%,
+      hsla(var(--primary)/ 0.1) 100%);
 }
 
 /* Trails Animation CSS */
