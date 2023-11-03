@@ -10,9 +10,10 @@ import { MenuIcon, X } from 'lucide-react'
 type Props = {
     altLogo?: boolean,
     altColor?: boolean,
+    className?: string
 }
 
-const Header = ({ altLogo = false, altColor = false }: Props) => {
+const Header = ({ altLogo = false, altColor = false, className = "" }: Props) => {
     const [showNav, setShowNav] = useState<boolean>(false)
     const router = useRouter()
 
@@ -31,7 +32,7 @@ const Header = ({ altLogo = false, altColor = false }: Props) => {
     }, [showNav])
 
     return (
-        <header className='flex justify-between items-center z-10'>
+        <header className={cn('flex justify-between items-center z-10', className)}>
             <div className="flex_center gap-3">
                 <Logo
                     size='35'

@@ -1,11 +1,12 @@
 'use client'
 import { cn } from "@/lib/utils"
-import { AtSignIcon, EyeIcon, EyeOffIcon } from "lucide-react"
+import { AtSignIcon, EyeIcon, EyeOffIcon, User2Icon } from "lucide-react"
 import { useState, SetStateAction, Dispatch } from "react"
 
 interface InputProps {
     label: string,
     type?: "text" | "email" | "password",
+    name?: "username" | "",
     placeholder?: string,
     className?: string,
     required?: boolean,
@@ -13,7 +14,7 @@ interface InputProps {
 }
 
 
-const Input = ({ label, type = "text", placeholder, className = "", required = false, setValue }: InputProps) => {
+const Input = ({ label, type = "text", name = "", placeholder, className = "", required = false, setValue }: InputProps) => {
     const [showPassword, setShowPassword] = useState<boolean>(false)
     const TogglePassword = () => {
         setShowPassword(prev => !prev)
@@ -35,7 +36,7 @@ const Input = ({ label, type = "text", placeholder, className = "", required = f
                     className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                 {type === "password" ?
-                    <div className="p-1 w-fit absolute right-2 text-foreground/60 cursor-pointer" onClick={TogglePassword}>
+                    <div className="p-1 w-fit absolute right-2 text-slate-400 cursor-pointer" onClick={TogglePassword}>
                         {showPassword ?
                             <EyeIcon />
                             :
@@ -43,8 +44,11 @@ const Input = ({ label, type = "text", placeholder, className = "", required = f
                         }
                     </div>
                     :
-                    type === "email" &&
-                    <AtSignIcon size={24} className="absolute right-2 text-foreground/60" />
+                    type === "email" ?
+                        <AtSignIcon size={24} className="absolute right-2 text-slate-400" />
+                        :
+                        name === "username" &&
+                        <User2Icon size={24} className="absolute right-2 text-slate-400" />
                 }
             </div>
         </label>

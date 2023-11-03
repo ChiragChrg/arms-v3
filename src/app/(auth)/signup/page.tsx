@@ -8,8 +8,8 @@ import Input from '@/components/CustomUI/Input'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
 import { Button } from '@/components/ui/button'
-import { PeopleVector, SignupVector, UploadVector } from '@/assets'
-import { LoaderIcon, LogInIcon, UserPlusIcon } from 'lucide-react'
+import { SignupVector } from '@/assets'
+import { Loader2Icon, UserPlusIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const Signup = () => {
@@ -94,11 +94,13 @@ const Signup = () => {
 
     return (
         <main className='relative flex flex-col justify-between px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
-            <Header altLogo />
+            {/* Show colored Logo on mobile devies & vice versa */}
+            <Header altLogo className='hidden sm:flex' />
+            <Header className='sm:hidden' />
 
-            <section className='flex justify-between items-center px-8 2xl:px-4'>
-                <div className='relative flex_center flex-col gap-2 2xl:gap-4 w-fit px-8 py-4 rounded-lg bg-background/70 backdrop-blur-md ml-[4em]'>
-                    <h1 className='text-[1.5em] 2xl:text-[2em] font-medium'>
+            <section className='flex justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4'>
+                <div className='relative flex_center flex-col gap-2 2xl:gap-4 w-fit px-8 py-4 rounded-lg bg-background/70 backdrop-blur-md sm:ml-[4em]'>
+                    <h1 className='hidden sm:block text-[1.5em] 2xl:text-[2em] font-medium'>
                         Create new account
                     </h1>
 
@@ -106,7 +108,8 @@ const Signup = () => {
                         <Input
                             type='text'
                             label='Username'
-                            placeholder='Your name'
+                            name='username'
+                            placeholder='Enter your name'
                             className='2xl:w-[500px]'
                             setValue={setUsername} />
                         <Input
@@ -118,40 +121,40 @@ const Signup = () => {
                         <Input
                             type='password'
                             label='Password'
-                            placeholder='Enter Password'
+                            placeholder='Enter password'
                             className='2xl:w-[500px]'
                             setValue={setPassword} />
                         <Input
                             type='password'
                             label='Confirm Password'
-                            placeholder='Retype Password'
+                            placeholder='Retype password'
                             className='2xl:w-[500px]'
                             setValue={setConfirmPassword} />
 
                         <Button className='flex_center gap-4 text-white' disabled={isLoading}>
                             {isLoading ?
-                                <LoaderIcon className='animate-spin' />
+                                <Loader2Icon className='animate-spin' />
                                 : <UserPlusIcon />
                             }
                             CREATE ACCOUNT
                         </Button>
                     </form>
 
-                    <div className="flex_center gap-2 text-[0.8em]">
+                    <div className="flex_center gap-2 text-[0.9em] sm:text-[0.8em]">
                         Already have an account?
                         <Link href="/login" className='text-primary'>Login</Link>
                     </div>
 
                     <div className="w-full sm:px-2 flex_center gap-2 font-medium">
-                        <span className='flex w-full h-[2px] bg-muted-foreground/60'></span>
+                        <span className='flex w-full h-[2px] bg-slate-300'></span>
                         <span>OR</span>
-                        <span className='flex w-full h-[2px] bg-muted-foreground/60'></span>
+                        <span className='flex w-full h-[2px] bg-slate-300'></span>
                     </div>
 
                     <div className="flex_center gap-4 w-full sm:px-4">
                         {/* Google Login Button */}
                         <button
-                            className='bg-background text-textClr w-full flex_center gap-4 px-2 py-1.5 2xl:p-2.5 rounded disabled:cursor-not-allowed'
+                            className='bg-foreground/10 sm:bg-background text-textClr w-full flex_center gap-4 px-2 py-1.5 2xl:p-2.5 rounded disabled:cursor-not-allowed'
                             disabled={providersLoading}
                             onClick={() => HandleOAuthLogin(providerList["google"]?.id)}>
                             {!providersLoading ?
@@ -179,14 +182,14 @@ const Signup = () => {
                                     ></path>
                                 </svg>
                                 :
-                                <LoaderIcon className='animate-spin' />
+                                <Loader2Icon className='animate-spin' />
                             }
                             <span className='text-[1.2em]'>Google</span>
                         </button>
 
                         {/* GitHUb Login Button */}
                         <button
-                            className='bg-background text-textClr w-full flex_center gap-4 px-2 py-1.5 2xl:p-2.5 rounded disabled:cursor-not-allowed'
+                            className='bg-foreground/10 sm:bg-background text-textClr w-full flex_center gap-4 px-2 py-1.5 2xl:p-2.5 rounded disabled:cursor-not-allowed'
                             disabled={providersLoading}
                             onClick={() => HandleOAuthLogin(providerList["github"]?.id)}>
                             {!providersLoading ?
@@ -198,24 +201,24 @@ const Signup = () => {
                                     ></path>
                                 </svg>
                                 :
-                                <LoaderIcon className='animate-spin' />
+                                <Loader2Icon className='animate-spin' />
                             }
                             <span className='text-[1.2em]'>GitHub</span>
                         </button>
                     </div>
                 </div>
 
-                <div className=" flex_center flex-col gap-8 mb-12">
-                    <p className="text-[2.5em] 2xl:text-[3em] font-medium">
+                <div className=" flex_center flex-col gap-8 mb-6 sm:mb-12 mt-4 sm:mt-0">
+                    <p className="text-[2em] whitespace-nowrap sm:text-[2.5em] 2xl:text-[3em] font-medium">
                         Welcome new <span className="text-primary">Faculty</span>
                     </p>
-                    <Image src={SignupVector} alt='SignupVector' className='w-[400px] 2xl:w-[550px]' priority={true} />
+                    <Image src={SignupVector} alt='SignupVector' className='w-[280px] sm:w-[400px] 2xl:w-[550px]' priority={true} />
                 </div>
             </section>
 
-            <p className='flex_center text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
+            <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails className='h-[90%]' rotate='45deg' leftBtn />
+            <Trails className='hidden sm:block h-[90%]' buttonClass='hidden sm:inline-flex' rotate='45deg' leftBtn />
         </main>
     )
 }

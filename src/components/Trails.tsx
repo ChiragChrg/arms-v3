@@ -12,10 +12,10 @@ type Props = {
     rotate?: string,
     className?: string,
     leftBtn?: boolean,
-    ButtonClass?: string
+    buttonClass?: string
 }
 
-const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false, ButtonClass = "" }: Props) => {
+const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false, buttonClass = "" }: Props) => {
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
@@ -47,7 +47,7 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
             </div>
 
             <Button variant='ghost' size='icon'
-                className={cn("absolute bottom-4 text-primary z-0 hover:text-primary", leftBtn ? "left-4" : "right-4", ButtonClass)}
+                className={cn("absolute bottom-4 text-primary z-0 hover:text-primary", leftBtn ? "left-4" : "right-4", buttonClass)}
                 onClick={() => setDisableAnimation(prev => !prev)}
                 title={disableAnimation ? "Play Animation" : "Pause Animation"}>
                 {disableAnimation ?

@@ -9,7 +9,7 @@ import Header from '@/components/Header'
 import Trails from '@/components/Trails'
 import { Button } from '@/components/ui/button'
 import { PeopleVector, UploadVector } from '@/assets'
-import { LoaderIcon, LogInIcon } from 'lucide-react'
+import { Loader2Icon, LogInIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
 
 const Login = () => {
@@ -127,7 +127,7 @@ const Login = () => {
 
                         <Button className='flex_center gap-4 text-white' disabled={isLoading}>
                             {isLoading ?
-                                <LoaderIcon className='animate-spin' />
+                                <Loader2Icon className='animate-spin' />
                                 : <LogInIcon />
                             }
                             LOGIN
@@ -140,9 +140,9 @@ const Login = () => {
                     </div>
 
                     <div className="w-full sm:px-2 flex_center gap-2 font-medium">
-                        <span className='flex w-full h-[2px] bg-muted-foreground/60'></span>
+                        <span className='flex w-full h-[2px] bg-slate-300'></span>
                         <span>OR</span>
-                        <span className='flex w-full h-[2px] bg-muted-foreground/60'></span>
+                        <span className='flex w-full h-[2px] bg-slate-300'></span>
                     </div>
 
                     <div className="flex_center gap-4 w-full sm:px-4">
@@ -176,7 +176,7 @@ const Login = () => {
                                     ></path>
                                 </svg>
                                 :
-                                <LoaderIcon className='animate-spin' />
+                                <Loader2Icon className='animate-spin' />
                             }
                             <span className='text-[1.2em]'>Google</span>
                         </button>
@@ -195,7 +195,7 @@ const Login = () => {
                                     ></path>
                                 </svg>
                                 :
-                                <LoaderIcon className='animate-spin' />
+                                <Loader2Icon className='animate-spin' />
                             }
                             <span className='text-[1.2em]'>GitHub</span>
                         </button>
@@ -212,7 +212,7 @@ const Login = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails rotate='90deg' yOffset='0%' leftBtn ButtonClass='hidden sm:inline-flex' className='hidden sm:block' />
+            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden sm:inline-flex' className='hidden sm:block' />
         </main>
     )
 }
