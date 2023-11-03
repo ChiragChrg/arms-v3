@@ -192,3 +192,9 @@
   border: 6px solid transparent;
   background-clip: content-box;
 }
+
+@media (width <=640px) {
+  ::-webkit-scrollbar {
+    width: 0;
+  }
+}

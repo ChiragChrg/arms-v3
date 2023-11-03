@@ -41,6 +41,7 @@ const Sidebar = () => {
 
             <nav className='flex justify-between items-center flex-col gap-4 sm:gap-2 w-full mt-4 font-medium'>
                 <Link href={`/dashboard`}
+                    onClick={() => setShowSidebar(false)}
                     className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
                         pathname === `/dashboard` && "text-baseClr bg-white")}>
                     <PieChart size={20} />
@@ -48,6 +49,7 @@ const Sidebar = () => {
                 </Link>
 
                 <Link href={`/institutions`}
+                    onClick={() => setShowSidebar(false)}
                     className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
                         pathname === `/institutions` && "text-baseClr bg-white")}>
                     <BuildingSVG size="20" />
@@ -55,6 +57,7 @@ const Sidebar = () => {
                 </Link>
 
                 <Link href={`/settings`}
+                    onClick={() => setShowSidebar(false)}
                     className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
                         pathname === `/settings` && "text-baseClr bg-white")}>
                     <Settings2 size={20} />
@@ -62,6 +65,7 @@ const Sidebar = () => {
                 </Link>
 
                 <Link href={`/about`}
+                    onClick={() => setShowSidebar(false)}
                     className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
                         pathname === `/about` && "text-baseClr bg-white")}>
                     <BadgeInfoIcon size={20} />

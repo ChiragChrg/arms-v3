@@ -38,7 +38,7 @@ const Dashboard = () => {
         if (typeof window !== 'undefined' && window?.innerWidth >= 640) {
             setShowSidebar(true)
         }
-    }, [window, window?.innerWidth])
+    }, [setShowSidebar])
 
     return (
         <section className='w-full h-full overflow-y-auto'>
