@@ -7,11 +7,20 @@ import useModalStore from '@/store/useModalStore'
 import { CircleLoader, RectLoader } from "./CustomUI/Skeletons"
 import { Button } from './ui/button'
 import { LogOutIcon, User2 } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const UserAvatar = () => {
     const { user, setUser } = useUserStore()
     const { onOpen } = useModalStore()
     const { data: session, status } = useSession()
+    const router = useRouter()
+
+    useEffect(() => {
+        if (!user?.uid) {
+            localStorage.removeItem("arms-user")
+            router.push('/login')
+        }
+    }, [user, router])
 
     useEffect(() => {
         console.log(session, status)
@@ -56,8 +65,8 @@ const UserAvatar = () => {
                     </>
                     :
                     <>
-                        <h2 className="text-[0.95em]">{user?.username || "Anonymous"}</h2>
-                        <span className='opacity-80 text-[0.6em] tracking-wider'>{user?.email || "Student"}</span>
+                        <h2 className="text-[0.95em]">{user?.username}</h2>
+                        <span className='opacity-80 text-[0.6em] tracking-wider'>{user?.email}</span>
                     </>
                 }
             </div>
