@@ -48,11 +48,11 @@ const Header = ({ altLogo = false, altColor = false }: Props) => {
 
             <div
                 style={{
-                    transform: `translateX(${showNav ? "0" : "-100%"})`,
+                    transform: `translateX(${showNav ? "0" : "100%"})`,
                     pointerEvents: showNav ? "auto" : "none",
                     userSelect: showNav ? "auto" : "none",
                 }}
-                className='sm:hidden fixed inset-0 flex flex-col bg-background/50 backdrop-blur-sm z-50'>
+                className='sm:hidden fixed inset-0 flex flex-col z-50 transition-transform duration-500'>
                 <nav className='w-[60%] h-full ml-auto flex flex-col justify-start items-center gap-4 pt-8 bg-background shadow text-[1.5em] tracking-wider'>
                     <X size={50} className='bg-primary/80 text-white rounded-full p-1 mb-8' onClick={() => setShowNav(false)} />
 
