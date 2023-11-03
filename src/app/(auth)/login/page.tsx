@@ -94,8 +94,8 @@ const Login = () => {
         <main className='relative flex flex-col justify-between px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
             <Header />
 
-            <section className='flex justify-between items-center px-8 2xl:px-4'>
-                <div className=" flex_center flex-col gap-8">
+            <section className='flex justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4'>
+                <div className="hidden sm:flex_center flex-col gap-8">
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
                         Let&apos;s get <span className="text-primary">Started</span>
                     </p>
@@ -103,7 +103,7 @@ const Login = () => {
                 </div>
 
                 <div className='relative flex_center flex-col gap-4 2xl:gap-8 w-fit p-8 rounded-lg bg-background/70 backdrop-blur-md'>
-                    <h1 className='text-[2em] 2xl:text-[2.5em] font-medium'>
+                    <h1 className='hidden sm:block text-[2em] 2xl:text-[2.5em] font-medium'>
                         Welcome to <span className="text-primary">ARMS</span>
                     </h1>
 
@@ -122,7 +122,7 @@ const Login = () => {
                                 placeholder='Enter Password'
                                 className='2xl:w-[500px]'
                                 setValue={setPassword} />
-                            <Link href="#forgot-password" className='text-[0.8em] text-primary self-end'>Forgot Password?</Link>
+                            <Link href="#forgot-password" className='text-[0.9em] sm:text-[0.8em] text-primary self-end'>Forgot Password?</Link>
                         </div>
 
                         <Button className='flex_center gap-4 text-white' disabled={isLoading}>
@@ -134,7 +134,7 @@ const Login = () => {
                         </Button>
                     </form>
 
-                    <div className="flex_center gap-2 text-[0.8em]">
+                    <div className="flex_center gap-2 text-[0.9em] sm:text-[0.8em]">
                         Don&apos;t have an account yet?
                         <Link href="/signup" className='text-primary'>Signup</Link>
                     </div>
@@ -148,7 +148,7 @@ const Login = () => {
                     <div className="flex_center gap-4 w-full sm:px-4">
                         {/* Google Login Button */}
                         <button
-                            className='bg-background text-textClr w-full flex_center gap-4 p-2 rounded disabled:cursor-not-allowed'
+                            className='bg-foreground/10 sm:bg-background text-textClr w-full flex_center gap-4 p-2 rounded disabled:cursor-not-allowed'
                             disabled={providersLoading}
                             onClick={() => HandleOAuthLogin(providerList["google"]?.id)}>
                             {!providersLoading ?
@@ -183,7 +183,7 @@ const Login = () => {
 
                         {/* GitHUb Login Button */}
                         <button
-                            className='bg-background text-textClr w-full flex_center gap-4 p-2 rounded disabled:cursor-not-allowed'
+                            className='bg-foreground/10 sm:bg-background text-textClr w-full flex_center gap-4 p-2 rounded disabled:cursor-not-allowed'
                             disabled={providersLoading}
                             onClick={() => HandleOAuthLogin(providerList["github"]?.id)}>
                             {!providersLoading ?
@@ -202,17 +202,17 @@ const Login = () => {
                     </div>
                 </div>
 
-                <div className=" flex_center flex-col gap-8">
-                    <Image src={PeopleVector} alt='PeopleVector' className='w-[300px] 2xl:w-[450px]' priority={true} />
-                    <p className="text-[2.5em] 2xl:text-[3em] font-medium">
+                <div className="flex_center flex-col-reverse sm:flex-col gap-8">
+                    <Image src={PeopleVector} alt='PeopleVector' className='w-[250px] sm:w-[300px] 2xl:w-[450px]' priority={true} />
+                    <p className="text-[2em] sm:text-[2.5em] 2xl:text-[3em] font-medium">
                         Login as <span className="text-primary">Faculty</span>
                     </p>
                 </div>
             </section>
 
-            <p className='flex_center text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
+            <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails rotate='90deg' yOffset='0%' leftBtn />
+            <Trails rotate='90deg' yOffset='0%' leftBtn ButtonClass='hidden sm:inline-flex' className='hidden sm:block' />
         </main>
     )
 }

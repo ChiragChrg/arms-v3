@@ -14,8 +14,8 @@ export default function Home() {
   const HandleAnonymousLogin = () => {
     const formattedUser = {
       uid: "anonymous",
-      username: "Anonymous",
-      email: "Student",
+      username: "Student",
+      email: "Anomymous User",
     }
     setUser(formattedUser)
     localStorage.setItem("arms-user", JSON.stringify(formattedUser));
@@ -44,14 +44,14 @@ export default function Home() {
             <div className="flex_center gap-4 w-full sm:w-fit">
               <div
                 onClick={HandleAnonymousLogin}
-                className='flex_center flex-col rounded w-full sm:w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors transi cursor-pointer'>
+                className='flex_center flex-col rounded w-full sm:w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors cursor-pointer select-none'>
                 <h3 className='text-[1.1em]'>I&apos;m a Student</h3>
                 <p className='opacity-70 text-[0.9em]'>Anonymous</p>
               </div>
 
               <Link
                 href="/login"
-                className='flex_center flex-col rounded w-full sm:w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors transi cursor-pointer'>
+                className='flex_center flex-col rounded w-full sm:w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors cursor-pointer'>
                 <h3 className='text-[1.1em]'>I&apos;m a Faculty</h3>
                 <p className='opacity-70 text-[0.9em]'>Login / Signup</p>
               </Link>
