@@ -1,13 +1,15 @@
 import { Fragment } from 'react'
 import Link from "next/link"
 import { ChevronRight } from "lucide-react"
+import { cn } from '@/lib/utils'
 
 type Props = {
     defaultRoute?: string,
-    routes?: string[]
+    routes?: string[],
+    className?: string,
 }
 
-const NavRoute = ({ defaultRoute = "dashboard", routes = [] }: Props) => {
+const NavRoute = ({ defaultRoute = "dashboard", routes = [], className = "" }: Props) => {
     //Custome made Route Map
     //Default Root Path is "Dashboard", can be changed using @defaultRoute prop 
 
@@ -27,7 +29,7 @@ const NavRoute = ({ defaultRoute = "dashboard", routes = [] }: Props) => {
     // the path will be "institute/new" & lable is "New"
 
     return (
-        <div className="w-full flex items-center">
+        <div className={cn("w-full flex items-center", className)}>
             <Link href={`/${defaultRoute.toLowerCase()}`} className='capitalize'>
                 {defaultRoute}
             </Link>
