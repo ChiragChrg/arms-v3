@@ -17,7 +17,6 @@ const UserAvatar = () => {
 
     useEffect(() => {
         if (!user?.uid) {
-            localStorage.removeItem("arms-user")
             router.push('/login')
         }
     }, [user, router])

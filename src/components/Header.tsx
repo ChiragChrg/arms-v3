@@ -6,6 +6,7 @@ import Logo from '@/assets/Logo'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { MenuIcon, X } from 'lucide-react'
+import useUserStore from '@/store/useUserStore'
 
 type Props = {
     altLogo?: boolean,
@@ -16,11 +17,13 @@ type Props = {
 const Header = ({ altLogo = false, altColor = false, className = "" }: Props) => {
     const [showNav, setShowNav] = useState<boolean>(false)
     const router = useRouter()
+    const { setUser } = useUserStore()
 
     useEffect(() => {
         const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
 
-        if (localUser) {
+        if (localUser?.uid) {
+            setUser(localUser)
             router.push('/dashboard')
         }
     }, [router])
