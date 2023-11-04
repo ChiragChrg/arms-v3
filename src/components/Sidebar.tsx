@@ -20,7 +20,7 @@ const Sidebar = () => {
                 pointerEvents: showSidebar ? "auto" : "none",
                 userSelect: showSidebar ? "auto" : "none",
             }}
-            className='sm:min-w-[18em] fixed inset-2 sm:inset-auto sm:relative sm:h-full p-3 rounded-2xl sm:rounded-md flex flex-col gap-4 bg-baseClr z-10 transition-transform duration-300'>
+            className='sm:min-w-[18em] fixed inset-2 sm:inset-auto sm:relative sm:h-full p-3 rounded-2xl sm:rounded-md flex flex-col gap-4 bg-baseClr z-10 transition-transform duration-500 ease-in-out'>
             <div
                 className="flex_center sm:hidden mx-auto border border-white text-white rounded-full p-1"
                 onClick={() => setShowSidebar(false)}>

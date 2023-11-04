@@ -7,12 +7,14 @@ import useUserStore from '@/store/useUserStore'
 import { Button } from '@/components/ui/button'
 import { Loader, LogOutIcon, X } from 'lucide-react'
 import { signOut } from "next-auth/react"
+import useSidebarStore from '@/store/useSidebarStore'
 
 const LogoutModal = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const { isOpen, onClose } = useModalStore()
     const { deleteUser } = useUserStore()
     const router = useRouter()
+    const { setShowSidebar } = useSidebarStore()
 
     const HandleLogout = async () => {
         setIsLoading(true)
@@ -22,6 +24,7 @@ const LogoutModal = () => {
             })
             deleteUser()
             onClose()
+            setShowSidebar(false)
 
             localStorage.removeItem("arms-user")
             router.push("/")

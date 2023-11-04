@@ -64,12 +64,12 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <h1 className='text-[1.5em] text-center sm:text-[2em] font-medium'>
-                Welcome,
-                <span className="text-primary"> {user?.username || "Anonymous"}!</span>
+            <h1 className='text-[1.6em] text-center sm:text-[2em] font-medium'>
+                Welcome back,
+                <span className="text-primary"> {user?.username?.split(" ")[0]}!</span>
             </h1>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 mx-2 sm:mx-8 mt-4">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 mx-2 sm:mx-8 2xl:mx-[10em] mt-4 2xl:mt-8">
                 <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
                     <div className="flex justify-between items-start w-full">
                         <BuildingSVG size='50' className='text-white dark:text-white/80' />
