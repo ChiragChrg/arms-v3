@@ -20,14 +20,14 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
     return (
-        <div className='fixed inset-0 z-[-1]'>
-            <div className="relative flex_center w-screen h-screen overflow-hidden -z-10">
+        <>
+            <div className="fixed inset-0 flex_center w-screen h-screen overflow-hidden z-[-10]">
                 <div
                     style={{
                         rotate: rotate,
                         transform: `translateY(${yOffset}) translateX(${xOffset})`,
                     }}
-                    className={cn(`fixed w-[200%] h-[85%] bg-primary`, className)}>
+                    className={cn(`fixed w-[200%] h-[85%] bg-logoClr`, className)}>
                     <div className="relative flex flex-col justify-evenly w-full h-full">
                         {/* <div className="absolute flex_center w-full h-full">
                             <div className=" w-[100px] h-full bg-red-600"></div>
@@ -47,7 +47,7 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
             </div>
 
             <Button variant='ghost' size='icon'
-                className={cn("absolute bottom-4 text-primary z-0 hover:text-primary", leftBtn ? "left-4" : "right-4", buttonClass)}
+                className={cn("absolute bottom-4 text-primary z-10 hover:text-primary", leftBtn ? "left-4" : "right-4", buttonClass)}
                 onClick={() => setDisableAnimation(prev => !prev)}
                 title={disableAnimation ? "Play Animation" : "Pause Animation"}>
                 {disableAnimation ?
@@ -55,7 +55,7 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
                     : <PauseCircle size={30} />
                 }
             </Button>
-        </div>
+        </>
     )
 }
 
