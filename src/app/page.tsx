@@ -31,7 +31,7 @@ export default function Home() {
           <h1 className='Landing_Title text-[2rem] 2xl:text-[3rem] font-medium'>
             <span>A</span>cademic <span>R</span>esource <span>M</span>anagement <span>S</span>ystem
           </h1>
-          <p className='text-[1em] 2xl:text-[1.5em] mt-4 bg-background/20 backdrop-blur-sm sm:bg-transparent rounded drop-shadow'>
+          <p className='text-[1em] 2xl:text-[1.5em] p-1 mt-4 bg-background/20 backdrop-blur-sm sm:bg-transparent rounded drop-shadow'>
             ARMS is an open-source software developed for students. <br />
             Students can easily find and download the study materials uploaded by the college faculty.</p>
         </div>
