@@ -35,7 +35,7 @@ const Header = ({ altLogo = false, altColor = false, className = "" }: Props) =>
     }, [showNav])
 
     return (
-        <header className={cn('flex justify-between items-center z-10', className)}>
+        <header className={cn('flex justify-between items-center z-20', className)}>
             <div className="flex_center gap-3">
                 <Logo
                     size='35'
