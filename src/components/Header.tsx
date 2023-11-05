@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import { MenuIcon, X } from 'lucide-react'
 import useUserStore from '@/store/useUserStore'
+import HamMenuSVG from '@/assets/HamMenuSVG'
 
 type Props = {
     altLogo?: boolean,
@@ -48,7 +49,9 @@ const Header = ({ altLogo = false, altColor = false, className = "" }: Props) =>
                     className='text-[2em] font-bold leading-8'>ARMS</p>
             </div>
 
-            <MenuIcon size={40} className='sm:hidden text-logoClr dark:text-white' onClick={() => setShowNav(true)} />
+            <div onClick={() => setShowNav(true)} >
+                <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white -scale-x-100' />
+            </div>
 
             <div
                 style={{
