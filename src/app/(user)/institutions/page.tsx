@@ -1,17 +1,20 @@
 "use client"
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { PlusIcon } from 'lucide-react'
+import useSidebarStore from '@/store/useSidebarStore'
 import useDataStore from '@/store/useDataStore'
+import NavRoute from '@/components/NavRoutes'
+import { Button } from '@/components/ui/button'
 import { RectLoader } from '@/components/CustomUI/Skeletons'
 import BuildingSVG from '@/assets/BuildingSVG'
-import NavRoute from '@/components/NavRoutes'
-import { Menu } from 'lucide-react'
-import useSidebarStore from '@/store/useSidebarStore'
+import HamMenuSVG from '@/assets/HamMenuSVG'
 
 const Institutions = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const { data, setData } = useDataStore()
     const { setShowSidebar } = useSidebarStore()
+    const isAdmin = false
 
     useEffect(() => {
         const GetInstitutions = async () => {
@@ -34,8 +37,17 @@ const Institutions = () => {
         <section className='w-full h-full overflow-y-auto pb-4'>
             <NavRoute routes={["Institutions"]} className='hidden sm:flex' />
 
-            <div className="flex sm:hidden justify-between items-center px-2 mb-1">
-                <Menu size={40} className='sm:hidden text-logoClr dark:text-white' onClick={() => setShowSidebar(true)} />
+            <div className="flex sm:hidden justify-between items-center px-2 mb-2">
+                <div onClick={() => setShowSidebar(true)} >
+                    <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white' />
+                </div>
+
+                {isAdmin &&
+                    <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-2 py-1'>
+                        <PlusIcon />
+                        New Institute
+                    </Button>
+                }
             </div>
 
             <h1 className='text-[2em] font-medium px-2'>Institutions</h1>
