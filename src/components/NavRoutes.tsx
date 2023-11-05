@@ -29,7 +29,7 @@ const NavRoute = ({ defaultRoute = "dashboard", routes = [], className = "" }: P
     // the path will be "institute/new" & lable is "New"
 
     return (
-        <div className={cn("w-full flex items-center px-2", className)}>
+        <div className={cn("w-full hidden sm:flex items-center", className)}>
             <Link href={`/${defaultRoute.toLowerCase()}`} className='capitalize'>
                 {defaultRoute}
             </Link>
@@ -38,7 +38,7 @@ const NavRoute = ({ defaultRoute = "dashboard", routes = [], className = "" }: P
                 return (
                     <Fragment key={index}>
                         <ChevronRight size={18} className="text-slate-400" />
-                        <Link href={`/${path?.toLowerCase()}`} className='capitalize last:text-logoClr'>
+                        <Link href={`/${path?.toLowerCase()}`} className='capitalize last:text-primary last:font-medium'>
                             {path?.includes("/") ? path?.split("/").pop() : path}
                         </Link>
                     </Fragment>

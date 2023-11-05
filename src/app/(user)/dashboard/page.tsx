@@ -39,8 +39,8 @@ const Dashboard = () => {
     }, [])
 
     return (
-        <section className='w-full h-full overflow-y-auto'>
-            <div className="flex sm:hidden justify-between items-center px-2 mb-4">
+        <section className='section_style'>
+            <div className="flex sm:hidden justify-between items-center mb-4">
                 <div onClick={() => setShowSidebar(true)} >
                     <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white' />
                 </div>
@@ -69,7 +69,7 @@ const Dashboard = () => {
                 <span className="text-primary"> {user?.username?.split(" ")[0]}!</span>
             </h1>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 mx-2 sm:mx-8 2xl:mx-[10em] mt-4 2xl:mt-8">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 sm:mx-8 2xl:mx-[10em] mt-4 2xl:mt-8">
                 <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
                     <div className="flex justify-between items-start w-full">
                         <BuildingSVG size='50' className='text-white dark:text-white/80' />

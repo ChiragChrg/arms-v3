@@ -68,6 +68,10 @@
   .flex_center {
     @apply flex justify-center items-center
   }
+
+  .section_style {
+    @apply w-full h-full overflow-y-auto px-2
+  }
 }
 
 .Landing_Title span {
