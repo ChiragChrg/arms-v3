@@ -26,7 +26,7 @@ const Header = ({ altLogo = false, altColor = false, className = "" }: Props) =>
             setUser(localUser)
             router.push('/dashboard')
         }
-    }, [router])
+    }, [setUser, router])
 
     useEffect(() => {
         if (showNav) {
@@ -58,14 +58,14 @@ const Header = ({ altLogo = false, altColor = false, className = "" }: Props) =>
                 }}
                 className='sm:hidden fixed inset-0 flex flex-col z-50 transition-transform duration-500'>
                 <nav className='w-[60%] h-full ml-auto flex flex-col justify-start items-center gap-4 pt-8 bg-background shadow text-[1.5em] tracking-wider'>
-                    <X size={50} className='bg-primary/80 text-white rounded-full p-1 mb-8' onClick={() => setShowNav(false)} />
+                    <X size={45} className='bg-primary/80 text-white rounded-full p-2 mb-8' onClick={() => setShowNav(false)} />
 
                     <Link href="/">Home</Link>
                     <Link href="/about">About</Link>
                     <Link href="https://chiragchrg.netlify.app/" target='_blank'>Portfolio</Link>
                     <Link href="https://github.com/ChiragChrg" target='_blank'>GitHub</Link>
 
-                    <ThemeButton size={40} className='mt-8 dark:bg-background dark:text-white' />
+                    <ThemeButton size={40} className='mt-8 dark:bg-background dark:text-white border-0' />
                 </nav>
             </div>
 
