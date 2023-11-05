@@ -31,7 +31,7 @@ export default function Home() {
           <h1 className='Landing_Title text-[2rem] 2xl:text-[3rem] font-medium'>
             <span>A</span>cademic <span>R</span>esource <span>M</span>anagement <span>S</span>ystem
           </h1>
-          <p className='text-[1em] 2xl:text-[1.5em]'>
+          <p className='text-[1em] 2xl:text-[1.5em] mt-4 bg-background/20 backdrop-blur-sm sm:bg-transparent rounded drop-shadow'>
             ARMS is an open-source software developed for students. <br />
             Students can easily find and download the study materials uploaded by the college faculty.</p>
         </div>
@@ -39,8 +39,8 @@ export default function Home() {
         <div className="flex justify-between items-end mt-[5em] 2xl:mt-[10em]">
           <Image src={LandingVector} alt='LandingVector' className='hidden sm:block w-[350px] 2xl:w-[500px]' />
 
-          <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/70 backdrop-blur-md rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
-            <h2 className='text-[1.4em]'>Let&apos;s get started! 🚀</h2>
+          <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
+            <h2 className='text-[1.4em] font-medium drop-shadow'>Let&apos;s get started! 🚀</h2>
             <div className="flex_center gap-4 w-full sm:w-fit">
               <div
                 onClick={HandleAnonymousLogin}
@@ -59,11 +59,11 @@ export default function Home() {
           </div>
         </div>
 
-        <p className='flex_center text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
+        <p className='flex_center sm:text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
       </section>
 
 
-      <Trails className='w-[400%] h-[40%] sm:w-[200%] sm:h-[85%] 2xl:h-[75%]' />
+      <Trails className='w-[400%] h-[46%] sm:w-[200%] sm:h-[85%] 2xl:h-[75%]' />
     </main>
   )
 }
