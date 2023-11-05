@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import CountUp from "react-countup"
-import axios from 'axios'
 import { User2 } from 'lucide-react'
 import { CircleLoader } from '@/components/CustomUI/Skeletons'
 import useUserStore from '@/store/useUserStore'
@@ -23,10 +22,14 @@ const Dashboard = () => {
     useEffect(() => {
         const GetCount = async () => {
             try {
-                const res = await axios.get('/api/dashcount')
+                const res = await fetch('/api/dashcount', {
+                    cache: "force-cache"
+                })
+
                 if (res.status === 200) {
-                    console.log(res.data)
-                    setCount(res?.data)
+                    const data = await res.json();
+                    console.log(data)
+                    setCount(data)
                 }
             } catch (err) {
                 console.log(err)
