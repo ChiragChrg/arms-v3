@@ -29,7 +29,7 @@ const NavRoute = ({ defaultRoute = "dashboard", routes = [], className = "" }: P
     // the path will be "institute/new" & lable is "New"
 
     return (
-        <div className={cn("w-full flex items-center", className)}>
+        <div className={cn("w-full flex items-center px-2", className)}>
             <Link href={`/${defaultRoute.toLowerCase()}`} className='capitalize'>
                 {defaultRoute}
             </Link>

@@ -26,6 +26,7 @@ const Sidebar = () => {
             }
         }
 
+        updateScreenWidth() //Initial Call
         window.addEventListener('resize', updateScreenWidth)
         return () => window.removeEventListener('resize', updateScreenWidth)
     }, [setShowSidebar])
