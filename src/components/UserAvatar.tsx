@@ -16,10 +16,14 @@ const UserAvatar = () => {
     const router = useRouter()
 
     useEffect(() => {
-        if (!user?.uid) {
-            router.push('/login')
+        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
+
+        if (!localUser?.uid) {
+            router.push('/')
+        } else {
+            setUser(localUser)
         }
-    }, [user, router])
+    }, [router, setUser])
 
     useEffect(() => {
         console.log(session, status)
