@@ -35,12 +35,6 @@ const Dashboard = () => {
         GetCount()
     }, [])
 
-    useEffect(() => {
-        if (typeof window !== 'undefined' && window?.innerWidth >= 640) {
-            setShowSidebar(true)
-        }
-    }, [setShowSidebar])
-
     return (
         <section className='w-full h-full overflow-y-auto'>
             <div className="flex sm:hidden justify-between items-center px-2 mb-4">
