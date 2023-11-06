@@ -1,23 +1,16 @@
 "use client"
 import { useState, useEffect } from 'react'
-import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import CountUp from "react-countup"
-import { User2 } from 'lucide-react'
-import { CircleLoader } from '@/components/CustomUI/Skeletons'
 import useUserStore from '@/store/useUserStore'
-import useSidebarStore from '@/store/useSidebarStore'
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import DocumentsSVG from '@/assets/DocumentsSVG'
-import HamMenuSVG from '@/assets/HamMenuSVG'
+import MobileHeader from '@/components/MobileHeader'
 
 const Dashboard = () => {
     const [count, setCount] = useState<Record<string, number>>({})
     const { user } = useUserStore()
-    const { setShowSidebar } = useSidebarStore()
-    const { status } = useSession()
 
     useEffect(() => {
         const GetCount = async () => {
@@ -40,29 +33,7 @@ const Dashboard = () => {
 
     return (
         <section className='section_style'>
-            <div className="flex sm:hidden justify-between items-center mb-4">
-                <div onClick={() => setShowSidebar(true)} >
-                    <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white' />
-                </div>
-
-                <div className="flex_center w-fit aspect-square rounded-full overflow-hidden">
-                    <CircleLoader size='40px' className={status == "loading" ? 'block' : "hidden"} />
-                    {user?.avatarImg ?
-                        <Image
-                            src={user?.avatarImg}
-                            alt='User_Avatar'
-                            width={40}
-                            height={40}
-                            loading='eager'
-                            className={status == "loading" ? 'hidden' : "block object-cover"}
-                        />
-                        :
-                        <div className={status == "loading" ? 'hidden' : "block bg-slate-400 text-white w-fit p-1.5"}>
-                            <User2 size={30} />
-                        </div>
-                    }
-                </div>
-            </div>
+            <MobileHeader />
 
             <h1 className='text-[1.6em] text-center sm:text-[2em] font-medium'>
                 Welcome back,

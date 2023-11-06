@@ -1,19 +1,18 @@
 "use client"
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import axios from 'axios'
-import { PlusIcon } from 'lucide-react'
-import useSidebarStore from '@/store/useSidebarStore'
 import useDataStore from '@/store/useDataStore'
+import MobileHeader from '@/components/MobileHeader'
 import NavRoute from '@/components/NavRoutes'
-import { Button } from '@/components/ui/button'
 import { RectLoader } from '@/components/CustomUI/Skeletons'
+import { Button } from '@/components/ui/button'
+import { PlusIcon } from 'lucide-react'
 import BuildingSVG from '@/assets/BuildingSVG'
-import HamMenuSVG from '@/assets/HamMenuSVG'
 
 const Institutions = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const { data, setData } = useDataStore()
-    const { setShowSidebar } = useSidebarStore()
     const isAdmin = false
 
     useEffect(() => {
@@ -34,34 +33,34 @@ const Institutions = () => {
     }, [setData])
 
     return (
-        <section className='w-full h-full overflow-y-auto pb-4'>
-            <NavRoute routes={["Institutions"]} className='hidden sm:flex' />
+        <section className='section_style pb-4'>
+            <NavRoute routes={["Institutions"]} />
+            <MobileHeader />
 
-            <div className="flex sm:hidden justify-between items-center px-2 mb-2">
-                <div onClick={() => setShowSidebar(true)} >
-                    <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white' />
-                </div>
-
-                {isAdmin &&
+            <div className="flex justify-between items-center">
+                <h1 className='text-[2em] font-medium'>Institutions</h1>
+                {!isAdmin &&
                     <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-2 py-1'>
                         <PlusIcon />
-                        New Institute
+                        <span>Create</span>
+                        <span className='hidden sm:block'>Institution</span>
                     </Button>
                 }
             </div>
 
-            <h1 className='text-[2em] font-medium px-2'>Institutions</h1>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[1.25em] w-full mt-4 px-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[1.25em] w-full mt-4">
                 {!isLoading ?
                     data?.map(obj => (
-                        <div key={obj?._id} className="flex_center flex-col w-full h-full rounded-md bg-primary/20 p-2 sm:hover:translate-y-[-0.5em] transition-transform">
+                        <Link
+                            href={`./institutions/${obj?.collegeName?.toLowerCase().replaceAll(" ", "-")}`}
+                            key={obj?._id}
+                            className="flex_center flex-col w-full h-full rounded-md radialGradient p-2 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
                             <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
                                 <BuildingSVG size='40' />
                             </div>
                             <span className="text-[1.4em] font-medium">{obj?.collegeName}</span>
                             <p className="w-full min-h-[45px] text-center text-[0.925em] opacity-80">{obj?.description}</p>
-                        </div>
+                        </Link>
                     ))
                     :
                     <>
