@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import useDataStore from '@/store/useDataStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
 import axios from 'axios'
@@ -14,13 +14,11 @@ import BookStackSVG from '@/assets/BookStackSVG'
 import toast from 'react-hot-toast'
 import { PlusIcon, Settings2Icon } from 'lucide-react'
 
-type Props = {
-    params: {
-        instituteID: string
-    }
+type Params = {
+    instituteID: string,
 }
 
-const InstituteInfo = ({ params }: Props) => {
+const InstituteInfo = () => {
     const [institute, setInstitute] = useState<DataStoreTypes | null | undefined>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [subjectCount, setSubjectCount] = useState<number>(0)
@@ -28,6 +26,7 @@ const InstituteInfo = ({ params }: Props) => {
 
     const { data } = useDataStore()
     const pathname = usePathname()
+    const params = useParams<Params>()
     const router = useRouter()
     const isAdmin = false
 
