@@ -148,7 +148,7 @@ const InstituteInfo = ({ params }: Props) => {
                 }
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[1.25em]">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[1.25em] mb-6">
                 {!isLoading ?
                     institute?.course?.map((obj, index) => (
                         <Link
@@ -164,9 +164,6 @@ const InstituteInfo = ({ params }: Props) => {
                     ))
                     :
                     <>
-                        <RectLoader height='11em' radius={0.375} />
-                        <RectLoader height='11em' radius={0.375} />
-                        <RectLoader height='11em' radius={0.375} />
                         <RectLoader height='11em' radius={0.375} />
                         <RectLoader height='11em' radius={0.375} />
                         <RectLoader height='11em' radius={0.375} />

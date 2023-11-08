@@ -1,4 +1,4 @@
-type docsType = {
+export interface docsType {
     docId: string,
     docName: string,
     docSize: string,
@@ -7,14 +7,14 @@ type docsType = {
     docUploader: string,
 }
 
-type subjectType = {
+export interface subjectType {
     subjectName: string,
     subjectDesc: string,
     subjectCreator: string,
     subjectDocs?: docsType[] | null,
 }
 
-type courseType = {
+export interface courseType {
     courseName: string,
     courseDesc: string,
     courseCreator: string,
