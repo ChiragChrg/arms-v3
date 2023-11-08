@@ -1,16 +1,18 @@
 "use client"
-import BuildingSVG from '@/assets/BuildingSVG'
-import { RectLoader } from '@/components/CustomUI/Skeletons'
-import MobileHeader from '@/components/MobileHeader'
-import NavRoute from '@/components/NavRoutes'
-import { Button } from '@/components/ui/button'
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import useDataStore from '@/store/useDataStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
 import axios from 'axios'
-import { Settings2Icon } from 'lucide-react'
-import { usePathname, useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import NavRoute from '@/components/NavRoutes'
+import MobileHeader from '@/components/MobileHeader'
+import { RectLoader } from '@/components/CustomUI/Skeletons'
+import { Button } from '@/components/ui/button'
+import BuildingSVG from '@/assets/BuildingSVG'
+import BookStackSVG from '@/assets/BookStackSVG'
 import toast from 'react-hot-toast'
+import { PlusIcon, Settings2Icon } from 'lucide-react'
 
 type Props = {
     params: {
@@ -58,7 +60,6 @@ const InstituteInfo = ({ params }: Props) => {
 
     useEffect(() => {
         if (institute) {
-            console.log(institute)
             let totalSubject = 0
             let totalDocs = 0
 
@@ -126,7 +127,7 @@ const InstituteInfo = ({ params }: Props) => {
                         }
                     </div>
 
-                    <div className="w-full flex justify-end items-center text-[0.8em] opacity-80">
+                    <div className="w-full flex justify-end items-center text-[0.8em] opacity-70">
                         {!isLoading ?
                             <span>Registered by: {institute?.registeredBy}</span>
                             :
@@ -134,6 +135,43 @@ const InstituteInfo = ({ params }: Props) => {
                         }
                     </div>
                 </div>
+            </div>
+
+            <div className="flex justify-between items-center py-4">
+                <h2 className='text-[1.7em] font-medium'>Courses</h2>
+                {!isAdmin &&
+                    <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-3'>
+                        <PlusIcon />
+                        <span>Create</span>
+                        <span className='hidden sm:block'>Course</span>
+                    </Button>
+                }
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-[1.25em]">
+                {!isLoading ?
+                    institute?.course?.map((obj, index) => (
+                        <Link
+                            href={`${pathname}/${obj?.courseName?.toLowerCase().replaceAll(" ", "-")}`}
+                            key={index}
+                            className="flex_center flex-col w-full h-full rounded-md radialGradient px-2 py-4 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
+                            <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
+                                <BookStackSVG size='40' />
+                            </div>
+                            <span className="text-[1.4em] font-medium">{obj?.courseName}</span>
+                            <p className="w-full max-h-[45px] text-center text-[0.925em] opacity-80">{obj?.courseDesc}</p>
+                        </Link>
+                    ))
+                    :
+                    <>
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
+                    </>
+                }
             </div>
         </section>
     )
