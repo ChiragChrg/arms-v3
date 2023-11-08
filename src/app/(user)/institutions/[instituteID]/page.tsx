@@ -35,7 +35,7 @@ const InstituteInfo = () => {
             try {
                 const collegeName = params?.instituteID.replaceAll("-", " ")
                 const res = await axios.post('/api/getinstitute', { collegeName })
-                console.log(res)
+
                 if (res?.status === 200) {
                     setInstitute(res?.data)
                     setIsLoading(false)
@@ -48,7 +48,7 @@ const InstituteInfo = () => {
         }
 
         if (data !== null) {
-            const instituteInfo = data.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID)
+            const instituteInfo = data.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
             setInstitute(instituteInfo)
             setIsLoading(false)
         } else {
