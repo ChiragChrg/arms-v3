@@ -37,14 +37,14 @@ const Institutions = () => {
             <NavRoute routes={["Institutions"]} />
             <MobileHeader />
 
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center mt-2">
                 <h1 className='text-[2em] font-medium'>Institutions</h1>
                 {!isAdmin &&
-                    <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-2 py-1'>
+                    <Link href="./institutions/create" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
                         <span className='hidden sm:block'>Institution</span>
-                    </Button>
+                    </Link>
                 }
             </div>
 
