@@ -19,7 +19,7 @@ type Params = {
     courseID: string
 }
 
-const InstituteInfo = () => {
+const CourseInfo = () => {
     const [course, setCourse] = useState<courseType | null | undefined>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [docsCount, setDocsCount] = useState<number>(0)
@@ -160,4 +160,4 @@ const InstituteInfo = () => {
     )
 }
 
-export default InstituteInfo
+export default CourseInfo
