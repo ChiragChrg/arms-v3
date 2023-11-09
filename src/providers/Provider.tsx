@@ -5,6 +5,7 @@ import { type ThemeProviderProps } from "next-themes/dist/types"
 import { useEffect, useState } from "react"
 import { Toaster } from "react-hot-toast"
 import ModalProvider from "./ModalProvider"
+import { EdgeStoreProvider } from "@/lib/edgestore"
 
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)
@@ -18,7 +19,9 @@ const Provider = ({ children, ...props }: ThemeProviderProps) => {
         return (
             <ThemeProvider {...props}>
                 <SessionProvider refetchOnWindowFocus={true}>
-                    {children}
+                    <EdgeStoreProvider>
+                        {children}
+                    </EdgeStoreProvider>
                 </SessionProvider>
 
                 <ModalProvider />
