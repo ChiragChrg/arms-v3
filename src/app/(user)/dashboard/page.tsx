@@ -41,7 +41,7 @@ const Dashboard = () => {
             </h1>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-8 sm:mx-8 2xl:mx-[10em] mt-4 2xl:mt-8">
-                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 bg-radialGradient dark:bg-radialGradientDark">
                     <div className="flex justify-between items-start w-full">
                         <BuildingSVG size='50' className='text-white dark:text-white/80' />
                         <CountUp end={count?.institute || 0} duration={4} className='text-[2.5em] font-bold text-primary leading-[1.5em] mr-4 z-[1]' />
@@ -49,7 +49,7 @@ const Dashboard = () => {
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Institutes registered</p>
                 </div>
 
-                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 bg-radialGradient dark:bg-radialGradientDark">
                     <div className="flex justify-between items-start w-full">
                         <BookStackSVG size='50' className='text-white dark:text-white/80' />
                         <CountUp end={count?.course || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
@@ -57,7 +57,7 @@ const Dashboard = () => {
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Courses created</p>
                 </div>
 
-                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 bg-radialGradient dark:bg-radialGradientDark">
                     <div className="flex justify-between items-start w-full">
                         <OpenBookSVG size='50' className='text-white dark:text-white/80' />
                         <CountUp end={count?.subject || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
@@ -65,7 +65,7 @@ const Dashboard = () => {
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>Subjects created</p>
                 </div>
 
-                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 radialGradient">
+                <div className="relative rounded-md flex flex-col items-end overflow-hidden p-2.5 bg-radialGradient dark:bg-radialGradientDark">
                     <div className="flex justify-between items-start w-full">
                         <DocumentsSVG size='50' className='text-white dark:text-white/80' />
                         <CountUp end={count?.document || 0} duration={4} className='text-[2.5em] font-bold text-primary drop-shadow leading-[1.5em] mr-4 z-[1]' />
