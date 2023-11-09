@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from "next/font/local"
 import './globals.css'
 import Provider from '@/providers/Provider'
@@ -41,10 +41,6 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
     },
   },
   verification: {
@@ -85,6 +81,10 @@ export const metadata: Metadata = {
     creator: '@chrgchirag',
     images: ['/Icons/192.png', '/Icons/ARMSDevices.png'],
   },
+}
+
+export const viewport: Viewport = {
+  themeColor: 'hsl(var(--background))',
 }
 
 export default function RootLayout({
