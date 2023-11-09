@@ -75,6 +75,10 @@ module.exports = {
       fontFamily: {
         poppins: ["var(--Poppins)"],
       },
+      backgroundImage: {
+        'radialGradient': 'radial-gradient(circle at 10% 10%, hsla(var(--primary)/ 0.5) 0%, hsla(var(--primary)/ 0.175) 100%)',
+        'radialGradientDark': 'radial-gradient(circle at 10% 10%, hsla(var(--primary)/ 0.3) 0%, hsla(var(--primary)/ 0.075) 100%)',
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
