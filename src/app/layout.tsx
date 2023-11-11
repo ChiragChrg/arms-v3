@@ -27,7 +27,7 @@ const poppins = localFont({
 
 export const metadata: Metadata = {
   title: 'ARMS | Academic Resource Management System',
-  description: 'Academic Resource Management System (ARMS) is a software which is developed for the Education system. Teachers can upload study materials and Students can download those files.',
+  description: 'ARMS is an educational platform designed to empower students with easy access to study materials for their respective subjects. Students can conveniently browse and download PDF documents uploaded by authorized faculties.',
   keywords: ["chiragchrg", "chirag", "chrgchirag", "ARMS", "Arms-v3", "Academic", "Resource", "Management", "System", "armss", "chiruchirag2001"],
   authors: [{ name: "ChiragChrg" }, { url: "https://chiragchrg.netlify.app/" }],
   creator: "ChiragChrg",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'ARMS | Academic Resource Management System',
-    description: 'Academic Resource Management System (ARMS) is a software which is developed for the Education system. Teachers can upload study materials and Students can download those files.',
+    description: 'ARMS is an educational platform designed to empower students with easy access to study materials for their respective subjects. Students can conveniently browse and download PDF documents uploaded by authorized faculties.',
     url: 'https://armss.netlify.app/',
     siteName: 'ARMS',
     images: [
@@ -77,7 +77,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'ARMS | Academic Resource Management System',
-    description: 'Academic Resource Management System (ARMS) is a software which is developed for the Education system. Teachers can upload study materials and Students can download those files.',
+    description: 'ARMS is an educational platform designed to empower students with easy access to study materials for their respective subjects. Students can conveniently browse and download PDF documents uploaded by authorized faculties.',
     creator: '@chrgchirag',
     images: ['/Icons/192.png', '/Icons/ARMSDevices.png'],
   },
