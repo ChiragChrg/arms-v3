@@ -35,7 +35,7 @@ export default function Home() {
             ARMS is an educational platform designed to empower students with easy access to study <br className='hidden sm:block' /> materials for their respective subjects. <br className='block sm:hidden' /> Students can conveniently browse and <br className='hidden sm:block' /> download PDF documents uploaded by authorized faculties.</p>
         </div>
 
-        <div className="flex justify-between items-end mt-[5em] 2xl:mt-[10em]">
+        <div className="flex justify-between items-end mt-[3em] 2xl:mt-[10em]">
           <Image src={LandingVector} alt='LandingVector' className='hidden sm:block w-[350px] 2xl:w-[500px]' />
 
           <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
