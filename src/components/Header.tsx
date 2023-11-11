@@ -44,7 +44,7 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                 setShowLoader(false)
             }, 2500)
         }
-    }, [setUser, router, setShowLoader])
+    }, [setUser, router, setShowLoader, disableAuth])
 
     useEffect(() => {
         if (showNav) {
