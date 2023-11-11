@@ -5,9 +5,10 @@ import ThemeButton from './CustomUI/ThemeButton'
 import Logo from '@/assets/Logo'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { MenuIcon, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import useUserStore from '@/store/useUserStore'
 import HamMenuSVG from '@/assets/HamMenuSVG'
+import useLoaderStore from '@/store/useLoaderStore'
 
 type Props = {
     altLogo?: boolean,
@@ -19,6 +20,7 @@ const Header = ({ altLogo = false, altColor = false, className = "" }: Props) =>
     const [showNav, setShowNav] = useState<boolean>(false)
     const router = useRouter()
     const { setUser } = useUserStore()
+    const { setShowLoader } = useLoaderStore()
 
     useEffect(() => {
         const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
@@ -26,8 +28,16 @@ const Header = ({ altLogo = false, altColor = false, className = "" }: Props) =>
         if (localUser?.uid) {
             setUser(localUser)
             router.push('/dashboard')
+
+            setTimeout(() => {
+                setShowLoader(false)
+            }, 2500)
+        } else {
+            setTimeout(() => {
+                setShowLoader(false)
+            }, 2500)
         }
-    }, [setUser, router])
+    }, [setUser, router, setShowLoader])
 
     useEffect(() => {
         if (showNav) {

@@ -8,10 +8,12 @@ import { CircleLoader, RectLoader } from "./CustomUI/Skeletons"
 import { Button } from './ui/button'
 import { LogOutIcon, User2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import useLoaderStore from '@/store/useLoaderStore'
 
 const UserAvatar = () => {
     const { user, setUser } = useUserStore()
     const { onOpen } = useModalStore()
+    const { setShowLoader } = useLoaderStore()
     const { data: session, status } = useSession()
     const router = useRouter()
 
@@ -22,8 +24,12 @@ const UserAvatar = () => {
             router.push('/')
         } else {
             setUser(localUser)
+
+            setTimeout(() => {
+                setShowLoader(false)
+            }, 2500)
         }
-    }, [router, setUser])
+    }, [router, setUser, setShowLoader])
 
     useEffect(() => {
         console.log(session, status)

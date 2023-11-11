@@ -6,9 +6,13 @@ import { useEffect, useState } from "react"
 import { Toaster } from "react-hot-toast"
 import ModalProvider from "./ModalProvider"
 import { EdgeStoreProvider } from "@/lib/edgestore"
+import LoaderUI from "@/components/LoaderUI"
+import useLoaderStore from "@/store/useLoaderStore"
 
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)
+    const { showLoader } = useLoaderStore()
+
     useEffect(() => {
         if (typeof window !== 'undefined') {
             setIsMounted(true)
@@ -23,6 +27,9 @@ const Provider = ({ children, ...props }: ThemeProviderProps) => {
                         {children}
                     </EdgeStoreProvider>
                 </SessionProvider>
+
+                {/* Loader Overlay while User is fetched */}
+                {showLoader && <LoaderUI />}
 
                 <ModalProvider />
                 <Toaster position="bottom-right" />

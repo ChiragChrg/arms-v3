@@ -2,15 +2,17 @@ type Props = {
 	fill?: string,
 	stroke?: string,
 	size?: string,
+	className?: string,
 }
 
-const Logo = ({ fill = "var(--logoClr)", stroke = "rgba(0, 0, 0, 0.5)", size = "100" }: Props) => {
+const Logo = ({ fill = "var(--logoClr)", stroke = "rgba(0, 0, 0, 0.5)", size = "100", className = "" }: Props) => {
 	return (
 		<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080"
 			fill={fill}
 			stroke={stroke}
 			width={size}
 			height={size}
+			className={className}
 			style={{ strokeWidth: "20" }}>
 			<path id="Shape 3" d="m260 380l40 80 180 40 28.5 76.3-28.5 83.7-220 320h-160v-160l280-200 11.5-20-11.5-20-160-100v-120c2 0 40 20 40 20z" />
 			<path id="Shape 3 copy" d="m860.5 360v120l-160 100-11.5 20 11.5 20 280 200v160h-160l-220-320-28.5-83.7 28.5-76.3 180-40 40-80c0 0 38-20 40-20z" />
