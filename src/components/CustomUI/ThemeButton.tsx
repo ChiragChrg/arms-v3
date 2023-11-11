@@ -1,5 +1,5 @@
 "use client"
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { SunIcon, MoonIcon } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Button } from "../ui/button"
@@ -14,9 +14,19 @@ const ThemeButton = ({ size = 24, className = "" }: Props) => {
     const { setTheme, resolvedTheme } = useTheme()
     const themeMetaTagRef = useRef<HTMLElement | null>(null)
 
+    useEffect(() => {
+        if (typeof window !== undefined)
+            themeMetaTagRef.current = document?.querySelector('meta[name="theme-color"]');
+
+        const localTheme = localStorage.getItem("arms-theme")
+        if (localTheme === "dark") {
+            themeMetaTagRef.current?.setAttribute('content', "hsl(222.2 84% 4.9%)");
+        } else {
+            themeMetaTagRef.current?.setAttribute('content', "hsl(0 0% 100%)");
+        }
+    }, [])
+
     const HandleThemeToggle = () => {
-        themeMetaTagRef.current = document?.querySelector('meta[name="theme-color"]');
-        
         if (resolvedTheme === "dark") {
             setTheme("light")
             themeMetaTagRef.current?.setAttribute('content', "hsl(0 0% 100%)");
