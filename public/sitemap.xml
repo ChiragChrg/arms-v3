@@ -2,5 +2,21 @@
     <url>
         <loc>https://armss.netlify.app/</loc>
         <lastmod>2023-11-11T17:23:01+00:00</lastmod>
+        <priority>1.00</priority>
+    </url>
+    <url>
+        <loc>https://armss.netlify.app/about</loc>
+        <lastmod>2023-11-11T17:23:01+00:00</lastmod>
+        <priority>0.90</priority>
+    </url>
+    <url>
+        <loc>https://armss.netlify.app/login</loc>
+        <lastmod>2023-11-11T17:23:01+00:00</lastmod>
+        <priority>0.80</priority>
+    </url>
+    <url>
+        <loc>https://armss.netlify.app/signup</loc>
+        <lastmod>2023-11-11T17:23:01+00:00</lastmod>
+        <priority>0.80</priority>
     </url>
 </urlset>
