@@ -1,11 +1,11 @@
 "use client"
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { LandingVector } from '@/assets'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
 import useUserStore from '@/store/useUserStore'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function Home() {
   const { setUser } = useUserStore()
