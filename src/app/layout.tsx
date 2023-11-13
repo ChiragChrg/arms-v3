@@ -95,7 +95,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Provider attribute="class" defaultTheme="dark" enableSystem storageKey='arms-theme'>
+        <Provider attribute="class" enableSystem storageKey='arms-theme'>
           {children}
         </Provider>
       </body>
