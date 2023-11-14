@@ -8,6 +8,10 @@ import ModalProvider from "./ModalProvider"
 import { EdgeStoreProvider } from "@/lib/edgestore"
 import LoaderUI from "@/components/LoaderUI"
 import useLoaderStore from "@/store/useLoaderStore"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
+
+const queryClient = new QueryClient()
 
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)
@@ -21,19 +25,22 @@ const Provider = ({ children, ...props }: ThemeProviderProps) => {
 
     if (isMounted)
         return (
-            <ThemeProvider {...props}>
-                <SessionProvider refetchOnWindowFocus={true}>
-                    <EdgeStoreProvider>
-                        {children}
-                    </EdgeStoreProvider>
-                </SessionProvider>
+            <QueryClientProvider client={queryClient}>
+                <ThemeProvider {...props}>
+                    <SessionProvider refetchOnWindowFocus={true}>
+                        <EdgeStoreProvider>
+                            {children}
+                        </EdgeStoreProvider>
+                    </SessionProvider>
 
-                {/* Loader Overlay while User is fetched */}
-                {showLoader && <LoaderUI />}
+                    {/* Loader Overlay while User is fetched */}
+                    {showLoader && <LoaderUI />}
 
-                <ModalProvider />
-                <Toaster position="bottom-right" />
-            </ThemeProvider>
+                    <ModalProvider />
+                    <Toaster position="bottom-right" />
+                    <ReactQueryDevtools initialIsOpen={false} />
+                </ThemeProvider>
+            </QueryClientProvider>
         )
 }
 
