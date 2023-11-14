@@ -1,5 +1,4 @@
 "use client"
-import { useState, useEffect } from 'react'
 import CountUp from "react-countup"
 import useUserStore from '@/store/useUserStore'
 import BuildingSVG from '@/assets/BuildingSVG'
@@ -7,29 +6,26 @@ import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import DocumentsSVG from '@/assets/DocumentsSVG'
 import MobileHeader from '@/components/MobileHeader'
+import { useQuery } from '@tanstack/react-query'
+import axios from 'axios'
+
+interface CountDataType {
+    institute: number,
+    course: number,
+    subject: number,
+    document: number,
+}
 
 const Dashboard = () => {
-    const [count, setCount] = useState<Record<string, number>>({})
     const { user } = useUserStore()
 
-    useEffect(() => {
-        const GetCount = async () => {
-            try {
-                const res = await fetch('/api/dashcount', {
-                    cache: "force-cache"
-                })
-
-                if (res.status === 200) {
-                    const data = await res.json();
-                    console.log(data)
-                    setCount(data)
-                }
-            } catch (err) {
-                console.log(err)
-            }
+    const { data: count } = useQuery({
+        queryKey: ["dashCount"],
+        queryFn: async () => {
+            const { data } = await axios.get('/api/dashcount')
+            return data as CountDataType
         }
-        GetCount()
-    }, [])
+    })
 
     return (
         <section className='section_style'>
