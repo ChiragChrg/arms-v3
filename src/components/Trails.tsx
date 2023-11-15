@@ -19,6 +19,11 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
+    if (typeof window !== undefined && window.devicePixelRatio == 1.25) {
+        yOffset = "90%"
+
+    }
+
     return (
         <>
             <div className="fixed inset-0 flex_center w-screen h-screen overflow-hidden z-[-10]">

@@ -58,11 +58,11 @@
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border box-border;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground relative;
   }
 
   .flex_center {
@@ -71,6 +71,10 @@
 
   .section_style {
     @apply w-full h-full overflow-y-auto px-2
+  }
+
+  [data-scale="1.25"] {
+    zoom: 0.8;
   }
 }
 
@@ -183,6 +187,17 @@ div {
   -webkit-tap-highlight-color: transparent;
 }
 
+/* Fix 125% windows scaling issue */
+@media (-webkit-device-pixel-ratio: 1.25) {
+  .scalingZoom {
+    zoom: 0.8;
+  }
+
+  .scalingHeight {
+    height: 115vh;
+  }
+}
+
 /* Custom ScrollBar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -204,3 +219,9 @@ div {
     width: 0;
   }
 }
+
+/* Ui debugging */
+/* * {
+  border: 1px solid red;
+  outline: 1px solid limegreen;
+} */
