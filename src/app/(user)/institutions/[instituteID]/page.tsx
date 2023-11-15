@@ -13,6 +13,7 @@ import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import toast from 'react-hot-toast'
 import { PlusIcon, Settings2Icon } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
 
 type Params = {
     instituteID: string,
@@ -24,38 +25,49 @@ const InstituteInfo = () => {
     const [subjectCount, setSubjectCount] = useState<number>(0)
     const [docsCount, setDocsCount] = useState<number>(0)
 
-    const { data } = useDataStore()
+    const { data: globalData } = useDataStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
     const isAdmin = false
 
-    useEffect(() => {
-        const fetchInstitute = async () => {
-            try {
-                const collegeName = params?.instituteID.replaceAll("-", " ")
-                const res = await axios.post('/api/getinstitute', { collegeName })
+    const fetchInstitute = async () => {
+        const collegeName = params?.instituteID.replaceAll("-", " ");
+        const { data, status } = await axios.post('/api/getinstitute', { collegeName });
 
-                if (res?.status === 200) {
-                    setInstitute(res?.data)
-                    setIsLoading(false)
-                }
-            } catch (error: any) {
-                toast.error(error?.response?.data || "Error while fetching Institute")
-                router.push('/institutions')
-                console.log(error)
-            }
-        }
-
-        if (data !== null) {
-            const instituteInfo = data.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
-            setInstitute(instituteInfo)
+        if (status == 200) {
             setIsLoading(false)
+            return data as DataStoreTypes;
         } else {
-            // If no data in store, fetch from DB using DynamicRoute params
-            fetchInstitute()
+            console.error(data)
         }
-    }, [data, params, router])
+    }
+
+    const { data: fetchedData, isError } = useQuery({
+        queryKey: ['getInstitutebyID', params.instituteID],
+        queryFn: fetchInstitute,
+        enabled: globalData === null, //Fetch only if globalData is Null
+    });
+
+    if (isError) {
+        toast.error("Error while fetching Institute")
+        router.push('/institutions')
+    }
+
+    useEffect(() => {
+        if (globalData !== null) {
+            const instituteInfo = globalData.find(
+                (obj) => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase()
+            );
+            if (instituteInfo) {
+                setInstitute(instituteInfo);
+                setIsLoading(false);
+            }
+        } else if (fetchedData) {
+            // Set data fetched from TanstackQuery
+            setInstitute(fetchedData);
+        }
+    }, [globalData, params, fetchedData]);
 
     useEffect(() => {
         if (institute) {
@@ -163,6 +175,9 @@ const InstituteInfo = () => {
                     ))
                     :
                     <>
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
+                        <RectLoader height='11em' radius={0.375} />
                         <RectLoader height='11em' radius={0.375} />
                         <RectLoader height='11em' radius={0.375} />
                         <RectLoader height='11em' radius={0.375} />
