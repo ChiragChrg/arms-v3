@@ -1,36 +1,27 @@
 "use client"
-import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { DataStoreTypes } from '@/types/dataStoreTypes'
 import Link from 'next/link'
 import axios from 'axios'
 import useDataStore from '@/store/useDataStore'
 import MobileHeader from '@/components/MobileHeader'
 import NavRoute from '@/components/NavRoutes'
 import { RectLoader } from '@/components/CustomUI/Skeletons'
-import { Button } from '@/components/ui/button'
 import { PlusIcon } from 'lucide-react'
 import BuildingSVG from '@/assets/BuildingSVG'
 
 const Institutions = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-    const { data, setData } = useDataStore()
+    const { setData } = useDataStore()
     const isAdmin = false
 
-    useEffect(() => {
-        const GetInstitutions = async () => {
-            try {
-                const res = await axios.get('/api/institutions')
-                if (res.status === 200) {
-                    // console.log(res.data)
-                    setData(res?.data)
-                }
-            } catch (err) {
-                console.log(err)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        GetInstitutions()
-    }, [setData])
+    const { data, isLoading } = useQuery({
+        queryKey: ["getInstitution"],
+        queryFn: async () => {
+            const { data } = await axios.get('/api/institutions')
+            setData(data)
+            return data as DataStoreTypes[]
+        },
+    })
 
     return (
         <section className='section_style pb-4'>
