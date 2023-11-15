@@ -11,7 +11,13 @@ import useLoaderStore from "@/store/useLoaderStore"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: false,
+        },
+    },
+})
 
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)
