@@ -5,7 +5,7 @@ import { useParams, usePathname, useRouter } from 'next/navigation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import useDataStore from '@/store/useDataStore'
-import { courseType } from '@/types/dataStoreTypes'
+import { DataStoreTypes, courseType } from '@/types/dataStoreTypes'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,7 @@ import { RectLoader } from '@/components/CustomUI/Skeletons'
 import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import { PlusIcon, Settings2Icon } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
 
 type Params = {
     instituteID: string,
@@ -24,40 +25,47 @@ const CourseInfo = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [docsCount, setDocsCount] = useState<number>(0)
 
-    const { data } = useDataStore()
+    const { data: globalData } = useDataStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
     const isAdmin = false
 
-    useEffect(() => {
-        const fetchInstitute = async () => {
-            try {
-                const collegeName = params?.instituteID.replaceAll("-", " ")
-                const res = await axios.post('/api/getinstitute', { collegeName })
+    const fetchInstitute = async () => {
+        const collegeName = params?.instituteID.replaceAll("-", " ");
+        const { data, status } = await axios.post('/api/getinstitute', { collegeName });
 
-                if (res?.status === 200) {
-                    const courseInfo = res?.data?.course?.find((obj: Record<string, string>) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-                    setCourse(courseInfo)
-                    setIsLoading(false)
-                }
-            } catch (error: any) {
-                toast.error(error?.response?.data || "Error while fetching Course")
-                router.push('/institutions')
-                console.log(error)
-            }
+        if (status == 200) {
+            setIsLoading(false)
+            return data as DataStoreTypes;
+        } else {
+            console.error(data)
         }
+    }
 
-        if (data !== null) {
-            const instituteInfo = data.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
+    const { data: fetchedData, isError } = useQuery({
+        queryKey: ['getCoursebyID', params.courseID],
+        queryFn: fetchInstitute,
+        enabled: globalData === null, //Fetch only if globalData is Null
+    });
+
+    if (isError) {
+        toast.error("Error while fetching Institute")
+        router.push('/institutions')
+    }
+
+    useEffect(() => {
+        if (globalData !== null) {
+            const instituteInfo = globalData.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
             const courseInfo = instituteInfo?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
             setCourse(courseInfo)
             setIsLoading(false)
-        } else {
-            // If no data in store, fetch from DB using DynamicRoute params
-            fetchInstitute()
+        } else if (fetchedData) {
+            // Set data fetched from TanstackQuery
+            const courseInfo = fetchedData?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
+            setCourse(courseInfo);
         }
-    }, [data, params, router])
+    }, [globalData, params, fetchedData]);
 
     useEffect(() => {
         if (course) {

@@ -4,13 +4,14 @@ import { useParams, usePathname, useRouter } from 'next/navigation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import useDataStore from '@/store/useDataStore'
-import { subjectType } from '@/types/dataStoreTypes'
+import { DataStoreTypes, subjectType } from '@/types/dataStoreTypes'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
 import { RectLoader } from '@/components/CustomUI/Skeletons'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
 
 import {
     Table,
@@ -31,44 +32,50 @@ const SubjectInfo = () => {
     const [subject, setSubject] = useState<subjectType | null | undefined>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
-    const { data } = useDataStore()
+    const { data: globalData } = useDataStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
     const isAdmin = false
 
-    useEffect(() => {
-        const fetchInstitute = async () => {
-            try {
-                const collegeName = params?.instituteID.replaceAll("-", " ")
-                const res = await axios.post('/api/getinstitute', { collegeName })
+    const fetchInstitute = async () => {
+        const collegeName = params?.instituteID.replaceAll("-", " ");
+        const { data, status } = await axios.post('/api/getinstitute', { collegeName });
 
-                if (res?.status === 200) {
-                    const courseInfo = res?.data?.course?.find((obj: Record<string, string>) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-                    const subjectInfo = courseInfo?.subjects?.find((subj: Record<string, string>) => subj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-
-                    setSubject(subjectInfo)
-                    setIsLoading(false)
-                }
-            } catch (error: any) {
-                toast.error(error?.response?.data || "Error while fetching Course")
-                router.push('/institutions')
-                console.log(error)
-            }
+        if (status == 200) {
+            setIsLoading(false)
+            return data as DataStoreTypes;
+        } else {
+            console.error(data)
         }
+    }
 
-        if (data !== null) {
-            const instituteInfo = data.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
+    const { data: fetchedData, isError } = useQuery({
+        queryKey: ['getSubjectbyID', params.subjectID],
+        queryFn: fetchInstitute,
+        enabled: globalData === null, //Fetch only if globalData is Null
+    });
+
+    if (isError) {
+        toast.error("Error while fetching Institute")
+        router.push('/institutions')
+    }
+
+    useEffect(() => {
+        if (globalData !== null) {
+            const instituteInfo = globalData.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
             const courseInfo = instituteInfo?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
             const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-
             setSubject(subjectInfo)
             setIsLoading(false)
-        } else {
-            // If no data in store, fetch from DB using DynamicRoute params
-            fetchInstitute()
+        } else if (fetchedData) {
+            // Set data fetched from TanstackQuery
+            const courseInfo = fetchedData?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
+            const subjectInfo = courseInfo?.subjects?.find((subj) => subj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
+
+            setSubject(subjectInfo)
         }
-    }, [data, params, router])
+    }, [globalData, params, fetchedData]);
 
     return (
         <section className='section_style'>
