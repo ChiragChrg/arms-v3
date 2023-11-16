@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   keywords: ["chiragchrg", "chirag", "chrgchirag", "ARMS", "Arms-v3", "Academic", "Resource", "Management", "System", "armss", "chiruchirag2001"],
   authors: [{ name: "ChiragChrg" }, { url: "https://chiragchrg.netlify.app/" }],
   creator: "ChiragChrg",
-  metadataBase: new URL("https://armss.netlify.app/"),
+  metadataBase: new URL("https://arms-v3.vercel.app/"),
   alternates: {
     canonical: '/',
   },
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'ARMS | Academic Resource Management System',
     description: 'ARMS is an educational platform designed to empower students with easy access to study materials for their respective subjects. Students can conveniently browse and download PDF documents uploaded by authorized faculties.',
-    url: 'https://armss.netlify.app/',
+    url: 'https://arms-v3.vercel.app/',
     siteName: 'ARMS',
     images: [
       {
