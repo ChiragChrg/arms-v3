@@ -91,10 +91,10 @@ const Login = () => {
     }
 
     return (
-        <main className='relative flex flex-col justify-between px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
+        <main className='relative px-4 py-3 w-full h-full overflow-hidden scalingZoom'>
             <Header />
 
-            <section className='flex justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4'>
+            <section className='w-full h-full min-h-[90vh] min-h-110 flex flex-1 justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4 my-auto'>
                 <div className="hidden sm:flex_center flex-col gap-8">
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
                         Let&apos;s get <span className="text-primary">Started</span>
@@ -102,7 +102,7 @@ const Login = () => {
                     <Image src={UploadVector} alt='UploadVector' className='w-[300px] 2xl:w-[450px]' priority={true} />
                 </div>
 
-                <div className='relative flex_center flex-col gap-4 2xl:gap-8 w-fit p-8 rounded-lg bg-background/70 backdrop-blur-md'>
+                <div className='relative flex_center flex-col gap-4 2xl:gap-8 w-fit p-8 rounded-lg bg-background/70 backdrop-blur-lg'>
                     <h1 className='hidden sm:block text-[2em] 2xl:text-[2.5em] font-medium'>
                         Welcome to <span className="text-primary">ARMS</span>
                     </h1>
@@ -212,7 +212,7 @@ const Login = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden sm:inline-flex' className='hidden sm:block' />
+            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden sm:inline-flex' offsetCenter className='hidden sm:block' />
         </main>
     )
 }

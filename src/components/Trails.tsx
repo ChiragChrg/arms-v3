@@ -12,16 +12,19 @@ type Props = {
     rotate?: string,
     className?: string,
     leftBtn?: boolean,
-    buttonClass?: string
+    buttonClass?: string,
+    offsetCenter?: boolean
 }
 
-const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false, buttonClass = "" }: Props) => {
+const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false, buttonClass = "", offsetCenter = false }: Props) => {
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
     if (typeof window !== undefined && window.devicePixelRatio == 1.25) {
-        yOffset = "90%"
-
+        offsetCenter ?
+            yOffset = "-25%"
+            :
+            yOffset = "90%"
     }
 
     return (

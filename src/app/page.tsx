@@ -39,7 +39,7 @@ export default function Home() {
           <div className="flex justify-between items-end ">
             <Image src={LandingVector} alt='LandingVector' className='hidden sm:block w-[350px] 2xl:w-[500px]' />
 
-            <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
+            <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur-lg rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
               <h2 className='text-[1.4em] font-medium drop-shadow'>Let&apos;s get started! 🚀</h2>
               <div className="flex_center gap-4 w-full sm:w-fit">
                 <div

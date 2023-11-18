@@ -62,7 +62,7 @@
   }
 
   body {
-    @apply bg-background text-foreground relative;
+    @apply bg-background text-foreground relative min-h-screen;
   }
 
   .flex_center {
@@ -191,10 +191,15 @@ div {
 @media (-webkit-device-pixel-ratio: 1.25) {
   .scalingZoom {
     zoom: 0.8;
+    min-height: 125vh;
+  }
+
+  .min-h-110 {
+    min-height: 110vh;
   }
 
   .scalingHeight {
-    height: 115vh;
+    height: 114vh;
   }
 }
 
