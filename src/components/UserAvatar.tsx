@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation'
 import useLoaderStore from '@/store/useLoaderStore'
 
 const UserAvatar = () => {
-    const { user, setUser } = useUserStore()
+    const { user, setUser, setIsAdmin } = useUserStore()
     const { onOpen } = useModalStore()
     const { setShowLoader } = useLoaderStore()
     const { data: session, status } = useSession()
@@ -42,9 +42,10 @@ const UserAvatar = () => {
                 accessToken: session?.user?.accessToken,
             }
             setUser(formattedUser)
+            setIsAdmin(session?.user?.uid === process.env.NEXT_PUBLIC_ARMS_ADMIN_UID)
             localStorage.setItem("arms-user", JSON.stringify(formattedUser));
         }
-    }, [session, status, setUser])
+    }, [session, status, setUser, setIsAdmin])
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-black/40">

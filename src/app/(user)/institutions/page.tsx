@@ -9,10 +9,11 @@ import NavRoute from '@/components/NavRoutes'
 import { RectLoader } from '@/components/CustomUI/Skeletons'
 import { PlusIcon } from 'lucide-react'
 import BuildingSVG from '@/assets/BuildingSVG'
+import useUserStore from '@/store/useUserStore'
 
 const Institutions = () => {
     const { setData } = useDataStore()
-    const isAdmin = false
+    const { isAdmin } = useUserStore()
 
     const { data, isLoading } = useQuery({
         queryKey: ["getInstitution"],
@@ -30,7 +31,7 @@ const Institutions = () => {
 
             <div className="flex justify-between items-center mt-2">
                 <h1 className='text-[2em] font-medium'>Institutions</h1>
-                {!isAdmin &&
+                {isAdmin &&
                     <Link href="./institutions/create" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
