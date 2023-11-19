@@ -92,6 +92,12 @@ const Signup = () => {
         }
     }
 
+    // Height based on window scaling for Trail
+    let TrailHeight = "90%"
+    if (typeof window !== undefined && window.devicePixelRatio == 1.25) {
+        TrailHeight = "100%"
+    }
+
     return (
         <main className='relative flex flex-col justify-between px-4 py-3 w-full h-full min-h-screen overflow-hidden scalingZoom'>
             {/* Show colored Logo on mobile devies & vice versa */}
@@ -218,7 +224,7 @@ const Signup = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails className='hidden sm:block h-[90%]' buttonClass='hidden sm:inline-flex' rotate='45deg' leftBtn />
+            <Trails className={`hidden sm:block h-[${TrailHeight}]`} offsetDirection='right' buttonClass='hidden sm:inline-flex' rotate='45deg' leftBtn />
         </main>
     )
 }
