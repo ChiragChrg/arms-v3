@@ -28,8 +28,19 @@ export default function Home() {
 
       <section className='w-full h-full min-h-[90vh] scalingHeight px-4 flex flex-col flex-1 justify-between'>
         <div className="flex flex-col gap-2">
-          <h1 className='Landing_Title text-[2rem] 2xl:text-[3rem] font-medium'>
-            <span>A</span>cademic <span>R</span>esource <span>M</span>anagement <span>S</span>ystem
+          <h1 className='Landing_Title sm:flex gap-8 text-[2rem] 2xl:text-[3rem] font-medium'>
+            <p>
+              <span>A</span>cademic
+            </p>
+            <p>
+              <span>R</span>esource
+            </p>
+            <p>
+              <span>M</span>anagement
+            </p>
+            <p>
+              <span>S</span>ystem
+            </p>
           </h1>
           <p className='text-[1em] 2xl:text-[1.5em] p-1 mt-4 bg-background/20 backdrop-blur-sm sm:bg-transparent sm:backdrop-blur-none rounded drop-shadow'>
             ARMS is an educational platform designed to empower students with easy access to study <br className='hidden sm:block' /> materials for their respective subjects. <br className='block sm:hidden' /> Students can conveniently browse and <br className='hidden sm:block' /> download PDF documents uploaded by authorized faculties.</p>
