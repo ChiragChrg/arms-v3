@@ -49,7 +49,7 @@ export const AuthOptions: NextAuthOptions = {
 
                     const userData = {
                         uid: userExists?._id,
-                        username: userExists?.username,
+                        name: userExists?.username,
                         email: userExists?.email,
                         avatarImg: userExists?.avatarImg,
                         isApproved: userExists?.isApproved,

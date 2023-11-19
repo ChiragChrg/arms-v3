@@ -54,6 +54,8 @@ const Login = () => {
                 })
 
                 router.push(res?.url as string)
+            } else {
+                throw new Error()
             }
         } catch (err) {
             toast.error("Something went wrong!", {
@@ -107,7 +109,7 @@ const Login = () => {
                         Welcome to <span className="text-primary">ARMS</span>
                     </h1>
 
-                    <form className='flex flex-col gap-4'>
+                    <form onSubmit={HandleLogin} className='flex flex-col gap-4'>
                         <Input
                             type='email'
                             label='Email'
@@ -125,7 +127,7 @@ const Login = () => {
                             <Link href="#forgot-password" className='text-[0.9em] sm:text-[0.8em] text-primary self-end'>Forgot Password?</Link>
                         </div>
 
-                        <Button className='flex_center gap-4 text-white' disabled={isLoading}>
+                        <Button type='submit' className='flex_center gap-4 text-white' disabled={isLoading}>
                             {isLoading ?
                                 <Loader2Icon className='animate-spin' />
                                 : <LogInIcon />
