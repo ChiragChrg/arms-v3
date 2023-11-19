@@ -14,6 +14,7 @@ import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import { PlusIcon, Settings2Icon } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
+import useUserStore from '@/store/useUserStore'
 
 type Params = {
     instituteID: string,
@@ -26,10 +27,10 @@ const CourseInfo = () => {
     const [docsCount, setDocsCount] = useState<number>(0)
 
     const { data: globalData } = useDataStore()
+    const { isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
-    const isAdmin = false
 
     const fetchInstitute = async () => {
         const collegeName = params?.instituteID.replaceAll("-", " ");
@@ -141,7 +142,7 @@ const CourseInfo = () => {
 
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Subjects</h2>
-                {!isAdmin &&
+                {isAdmin &&
                     <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-3'>
                         <PlusIcon />
                         <span>Create</span>

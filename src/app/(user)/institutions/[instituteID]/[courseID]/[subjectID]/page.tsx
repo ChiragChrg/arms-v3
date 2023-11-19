@@ -21,6 +21,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import useUserStore from '@/store/useUserStore'
 
 type Params = {
     instituteID: string,
@@ -33,10 +34,10 @@ const SubjectInfo = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const { data: globalData } = useDataStore()
+    const { isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
-    const isAdmin = false
 
     const fetchInstitute = async () => {
         const collegeName = params?.instituteID.replaceAll("-", " ");
@@ -138,7 +139,7 @@ const SubjectInfo = () => {
 
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Documents</h2>
-                {!isAdmin &&
+                {isAdmin &&
                     <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-3'>
                         <PlusIcon />
                         <span>Upload</span>
@@ -188,7 +189,7 @@ const SubjectInfo = () => {
                                             <DownloadCloudIcon />
                                         </a>
                                     </Button>
-                                    {!isAdmin &&
+                                    {isAdmin &&
                                         <Button variant='destructive' size='icon' title='Delete' className='w-full bg-red-500 hover:bg-red-500/90 text-white'>
                                             <Trash2Icon />
                                         </Button>
