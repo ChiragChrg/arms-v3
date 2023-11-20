@@ -42,17 +42,19 @@ const page = () => {
                             <span className='font-medium capitalize'>ChiragChrg</span>
                         </TableCell>
                         <TableCell className="px-2 sm:px-4 py-2">chiruchirag2001@gmail.com</TableCell>
-                        {false ?
-                            <TableCell className='px-2 sm:px-4 py-2 text-green-500 flex items-center gap-2 drop-shadow-sm'>
-                                <CheckIcon size={20} />
-                                <span>Approved</span>
-                            </TableCell>
-                            :
-                            <TableCell className='px-2 sm:px-4 py-auto text-yellow-500 flex items-center gap-2 drop-shadow-sm'>
-                                <TimerIcon size={20} />
-                                Pending
-                            </TableCell>
-                        }
+                        <TableCell className='px-2 sm:px-4 py-2'>
+                            {false ?
+                                <div className=' text-green-500 flex items-center gap-2 drop-shadow-sm'>
+                                    <CheckIcon size={20} />
+                                    <span>Approved</span>
+                                </div>
+                                :
+                                <div className='text-yellow-500 flex items-center gap-2 drop-shadow-sm'>
+                                    <TimerIcon size={20} />
+                                    Pending
+                                </div>
+                            }
+                        </TableCell>
                         <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>12 Aug 2023</TableCell>
                     </TableRow>
                 </TableBody>
