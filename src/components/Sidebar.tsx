@@ -8,12 +8,14 @@ import Logo from '@/assets/Logo'
 import { cn } from '@/lib/utils'
 import UserAvatar from './UserAvatar'
 import ThemeButton from './CustomUI/ThemeButton'
-import { BadgeInfoIcon, PieChart, Settings2, X } from 'lucide-react'
+import { BadgeInfoIcon, PieChart, Settings2, Users2, X } from 'lucide-react'
+import useUserStore from '@/store/useUserStore'
 
 const Sidebar = () => {
     const [isMobile, setIsMobile] = useState<boolean>(false)
     const { showSidebar, setShowSidebar } = useSidebarStore()
     const pathname = usePathname()
+    const { isAdmin } = useUserStore()
 
     useEffect(() => {
         const updateScreenWidth = () => {
@@ -73,6 +75,14 @@ const Sidebar = () => {
                     <BuildingSVG size="20" />
                     <span>Institutions</span>
                 </Link>
+
+                {isAdmin && <Link href={`/faculty`}
+                    onClick={() => { isMobile && setShowSidebar(false) }}
+                    className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
+                        pathname === `/institutions` && "text-baseClr bg-white")}>
+                    <Users2 size="20" />
+                    <span>Faculty</span>
+                </Link>}
 
                 <Link href={`/settings`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
