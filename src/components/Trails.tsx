@@ -32,7 +32,7 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
 
     return (
         <>
-            <div className="fixed inset-0 flex_center w-screen h-screen overflow-hidden z-[-10]">Z
+            <div className="fixed inset-0 flex_center w-full h-full overflow-hidden z-[-10] TrailZoom">
                 <div
                     style={{
                         rotate: rotate,
