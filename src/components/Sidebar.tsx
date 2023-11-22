@@ -79,7 +79,7 @@ const Sidebar = () => {
                 {isAdmin && <Link href={`/faculty`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
-                        pathname === `/institutions` && "text-baseClr bg-white")}>
+                        pathname === `/faculty` && "text-baseClr bg-white")}>
                     <Users2 size="20" />
                     <span>Faculty</span>
                 </Link>}

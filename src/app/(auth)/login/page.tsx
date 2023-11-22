@@ -58,7 +58,7 @@ const Login = () => {
                 throw new Error()
             }
         } catch (err) {
-            toast.error("Something went wrong!", {
+            toast.error("Invalid Email or Password", {
                 id: LoginToastID
             })
             console.log(err)
