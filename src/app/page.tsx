@@ -23,10 +23,10 @@ export default function Home() {
   }
 
   return (
-    <main className='relative px-4 py-3 w-full h-full overflow-hidden scalingZoom'>
+    <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>
       <Header altColor />
 
-      <section className='w-full h-full min-h-[90vh] scalingHeight px-4 flex flex-col flex-1 justify-between'>
+      <section className='h-full px-4 flex flex-col justify-between'>
         <div className="flex flex-col gap-2">
           <h1 className='Landing_Title sm:flex gap-8 text-[2rem] 2xl:text-[3rem] font-medium'>
             <p>
@@ -46,8 +46,8 @@ export default function Home() {
             ARMS is an educational platform designed to empower students with easy access to study <br className='hidden sm:block' /> materials for their respective subjects. <br className='block sm:hidden' /> Students can conveniently browse and <br className='hidden sm:block' /> download PDF documents uploaded by authorized faculties.</p>
         </div>
 
-        <div className="">
-          <div className="flex justify-between items-end ">
+        <div className='h-full flex flex-col justify-end gap-4 pb-4'>
+          <div className="flex justify-between items-center mb-12">
             <Image src={LandingVector} alt='LandingVector' className='hidden sm:block w-[350px] 2xl:w-[500px]' />
 
             <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur-lg rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
@@ -70,7 +70,7 @@ export default function Home() {
             </div>
           </div>
 
-          <p className='flex_center sm:text-[1.2em] drop-shadow-md text-white mt-8'>© Copyright 2023 ChiragChrg</p>
+          <p className='flex_center sm:text-[1.2em] drop-shadow-md text-white'>© Copyright 2023 ChiragChrg</p>
         </div>
       </section>
 

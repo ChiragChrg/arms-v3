@@ -194,12 +194,8 @@ div {
     min-height: 125vh;
   }
 
-  .min-h-110 {
-    min-height: 110vh;
-  }
-
-  .scalingHeight {
-    height: 114vh;
+  .TrailZoom {
+    zoom: 1.25;
   }
 }
 
@@ -227,6 +223,11 @@ div {
 
 /* Ui debugging */
 /* * {
+  border: 1px solid red;
+  outline: 1px solid limegreen;
+} */
+
+/* .debug {
   border: 1px solid red;
   outline: 1px solid limegreen;
 } */

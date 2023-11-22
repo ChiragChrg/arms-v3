@@ -14,20 +14,23 @@ type Props = {
     leftBtn?: boolean,
     buttonClass?: string,
     offsetDirection?: "left" | "center" | "right"
+    height?: string,
 }
 
-const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false, buttonClass = "", offsetDirection = "left" }: Props) => {
+const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45deg", className = "", leftBtn = false, buttonClass = "", offsetDirection = "left", height = "" }: Props) => {
     const [disableAnimation, setDisableAnimation] = useState<boolean>(false)
     const trailArray = Array.from({ length: trailCount }, (_, index) => index + 1);
 
     if (typeof window !== undefined && window.devicePixelRatio == 1.25) {
-        offsetDirection === "center" ?
-            yOffset = "-25%"
-            :
-            offsetDirection === "right" ?
-                yOffset = "38%"
-                :
-                yOffset = "90%"
+        if (offsetDirection === "center")
+            yOffset = "0%"
+        else
+            if (offsetDirection === "right") {
+                yOffset = "45%"
+                height = "100%"
+            }
+            else
+                yOffset = "50%"
     }
 
     return (
@@ -37,6 +40,7 @@ const Trails = ({ trailCount = 10, xOffset = "0", yOffset = "45%", rotate = "-45
                     style={{
                         rotate: rotate,
                         transform: `translateY(${yOffset}) translateX(${xOffset})`,
+                        height: height
                     }}
                     className={cn(`fixed w-[200%] h-[85%] bg-logoClr`, className)}>
                     <div className="relative flex flex-col justify-evenly w-full h-full">

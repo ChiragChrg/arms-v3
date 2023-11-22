@@ -92,19 +92,13 @@ const Signup = () => {
         }
     }
 
-    // Height based on window scaling for Trail
-    let TrailHeight = "90%"
-    if (typeof window !== undefined && window.devicePixelRatio == 1.25) {
-        TrailHeight = "100%"
-    }
-
     return (
-        <main className='relative flex flex-col justify-between px-4 py-3 w-full h-full min-h-screen overflow-hidden scalingZoom'>
+        <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>
             {/* Show colored Logo on mobile devies & vice versa */}
             <Header altLogo className='hidden sm:flex' />
             <Header className='sm:hidden' />
 
-            <section className='flex justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4'>
+            <section className='h-full flex justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-8'>
                 <div className='relative flex_center flex-col gap-2 2xl:gap-4 w-fit px-8 py-4 rounded-lg bg-background/70 backdrop-blur-lg sm:ml-[4em]'>
                     <h1 className='hidden sm:block text-[1.5em] 2xl:text-[2em] font-medium'>
                         Create new account
@@ -146,7 +140,7 @@ const Signup = () => {
                         </Button>
                     </form>
 
-                    <div className="flex_center gap-2 text-[0.9em] sm:text-[0.8em]">
+                    <div className="flex_center gap-2 text-[0.9em] sm:text-[0.8em] 2xl:text-[1em]">
                         Already have an account?
                         <Link href="/login" className='text-primary'>Login</Link>
                     </div>
@@ -224,7 +218,7 @@ const Signup = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails className={`hidden sm:block h-[${TrailHeight}]`} offsetDirection='right' buttonClass='hidden sm:inline-flex' rotate='45deg' leftBtn />
+            <Trails className='hidden sm:inline-flex' offsetDirection='right' buttonClass='hidden sm:inline-flex' rotate='45deg' leftBtn />
         </main>
     )
 }

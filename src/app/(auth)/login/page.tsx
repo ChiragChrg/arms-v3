@@ -93,10 +93,10 @@ const Login = () => {
     }
 
     return (
-        <main className='relative px-4 py-3 w-full h-full overflow-hidden scalingZoom'>
+        <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>
             <Header />
 
-            <section className='w-full h-full min-h-[90vh] min-h-110 flex flex-1 justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4 my-auto'>
+            <section className='h-full flex justify-evenly sm:justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4 my-auto'>
                 <div className="hidden sm:flex_center flex-col gap-8">
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
                         Let&apos;s get <span className="text-primary">Started</span>
@@ -124,7 +124,7 @@ const Login = () => {
                                 placeholder='Enter Password'
                                 className='2xl:w-[500px]'
                                 setValue={setPassword} />
-                            <Link href="#forgot-password" className='text-[0.9em] sm:text-[0.8em] text-primary self-end'>Forgot Password?</Link>
+                            <Link href="#forgot-password" className='text-[0.9em] sm:text-[0.8em] 2xl:text-[1em] text-primary self-end'>Forgot Password?</Link>
                         </div>
 
                         <Button type='submit' className='flex_center gap-4 text-white' disabled={isLoading}>
@@ -136,7 +136,7 @@ const Login = () => {
                         </Button>
                     </form>
 
-                    <div className="flex_center gap-2 text-[0.9em] sm:text-[0.8em]">
+                    <div className="flex_center gap-2 text-[0.9em] sm:text-[0.8em] 2xl:text-[1em]">
                         Don&apos;t have an account yet?
                         <Link href="/signup" className='text-primary'>Signup</Link>
                     </div>
@@ -214,7 +214,7 @@ const Login = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden sm:inline-flex' offsetDirection="center" className='hidden sm:block' />
+            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden sm:inline-flex' offsetDirection="center" className='hidden sm:block 2xl:h-[80%]' />
         </main>
     )
 }
