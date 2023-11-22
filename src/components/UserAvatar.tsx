@@ -18,20 +18,6 @@ const UserAvatar = () => {
     const router = useRouter()
 
     useEffect(() => {
-        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
-
-        if (!localUser?.uid) {
-            router.push('/')
-        } else {
-            setUser(localUser)
-
-            setTimeout(() => {
-                setShowLoader(false)
-            }, 2500)
-        }
-    }, [router, setUser, setShowLoader])
-
-    useEffect(() => {
         console.log(session, status)
         if (status == "authenticated" && session !== null) {
             const formattedUser = {
@@ -46,6 +32,20 @@ const UserAvatar = () => {
             localStorage.setItem("arms-user", JSON.stringify(formattedUser));
         }
     }, [session, status, setUser, setIsAdmin])
+
+    useEffect(() => {
+        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
+
+        if (!localUser?.uid && status === "unauthenticated") {
+            router.push('/')
+        } else {
+            setUser(localUser)
+
+            setTimeout(() => {
+                setShowLoader(false)
+            }, 2500)
+        }
+    }, [router, status, setUser, setShowLoader])
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-black/40">
