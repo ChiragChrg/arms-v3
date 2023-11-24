@@ -17,6 +17,10 @@ const nextConfig = withPWA({
                 protocol: 'https',
                 hostname: "avatars.githubusercontent.com",
             },
+            {
+                protocol: 'https',
+                hostname: "gravatar.com",
+            },
         ],
     }
 })
