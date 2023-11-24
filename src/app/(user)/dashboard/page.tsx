@@ -24,8 +24,7 @@ const Dashboard = () => {
         queryFn: async () => {
             const { data } = await axios.get('/api/dashcount')
             return data as CountDataType
-        },
-        refetchOnWindowFocus: false
+        }
     })
 
     return (
