@@ -44,10 +44,10 @@ const Request = () => {
                                 className='rounded-full' />
 
                             <h3>{user?.username}</h3>
-                            <span>{user?.email}</span>
+                            <span className='text-[0.8em] opacity-80'>{user?.email}</span>
 
                             <div className="flex_center gap-4 mt-2 w-full px-8">
-                                <Button className='flex_center gap-2 w-full bg-green-500 hover:bg-green-600 text-white drop-shadow'>
+                                <Button className='flex_center gap-1 px-2 py-1 min-w-[90px] w-full h-fit text-[0.8em] bg-green-500 hover:bg-green-600 text-white drop-shadow'>
                                     {false ?
                                         <Loader size={20} className='animate-spin' />
                                         :
@@ -55,7 +55,7 @@ const Request = () => {
                                     <span>Approve</span>
                                 </Button>
 
-                                <Button variant="destructive" className='flex_center gap-2 w-full text-white drop-shadow'>
+                                <Button variant="destructive" className='flex_center gap-1 px-2 py-1 min-w-[90px] w-full h-fit text-[0.8em] text-white drop-shadow'>
                                     <X size={20} />
                                     <span>Reject</span>
                                 </Button>
