@@ -13,9 +13,9 @@ const MobileHeader = () => {
     const { status } = useSession()
 
     return (
-        <div className="flex sm:hidden justify-between items-center mb-4">
+        <div className="flex lg:hidden justify-between items-center mb-4">
             <div onClick={() => setShowSidebar(true)} >
-                <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white' />
+                <HamMenuSVG size="40" className='lg:hidden text-logoClr dark:text-white' />
             </div>
 
             <div className="flex_center w-fit aspect-square rounded-full overflow-hidden">

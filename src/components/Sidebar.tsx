@@ -13,17 +13,26 @@ import useUserStore from '@/store/useUserStore'
 
 const Sidebar = () => {
     const [isMobile, setIsMobile] = useState<boolean>(false)
+    const [isTablet, setIsTablet] = useState<boolean>(false)
     const { showSidebar, setShowSidebar } = useSidebarStore()
     const pathname = usePathname()
     const { isAdmin } = useUserStore()
 
     useEffect(() => {
         const updateScreenWidth = () => {
-            if (typeof window !== 'undefined' && window.innerWidth <= 640) {
+            if (typeof window === 'undefined') return
+
+            if (window.innerWidth <= 540) {
                 setIsMobile(true);
+                setIsTablet(false);
+                setShowSidebar(false);
+            } else if (window.innerWidth <= 1023) {
+                setIsMobile(true);
+                setIsTablet(true);
                 setShowSidebar(false);
             } else {
                 setIsMobile(false);
+                setIsTablet(false);
                 setShowSidebar(true);
             }
         }
@@ -39,10 +48,11 @@ const Sidebar = () => {
                 transform: isMobile ? `translateX(${showSidebar ? "0" : "-150%"})` : `translateX(0)`,
                 pointerEvents: showSidebar ? "auto" : "none",
                 userSelect: showSidebar ? "auto" : "none",
+                width: isTablet ? "50%" : "auto"
             }}
-            className='sm:min-w-[18em] fixed inset-2 sm:inset-auto sm:relative sm:h-full p-3 rounded-2xl sm:rounded-md flex flex-col gap-4 bg-baseClr z-10 transition-transform duration-500 ease-in-out'>
+            className='lg:min-w-[18em] fixed inset-2 lg:inset-auto lg:relative lg:h-full p-3 rounded-2xl lg:rounded-md flex flex-col gap-4 bg-baseClr z-10 transition-transform duration-500 ease-in-out'>
             <div
-                className="flex_center sm:hidden mx-auto border border-white text-white rounded-full p-1"
+                className="flex_center lg:hidden mx-auto border border-white text-white rounded-full p-1"
                 onClick={() => { isMobile && setShowSidebar(false) }}>
                 <X size={30} />
             </div>
@@ -59,7 +69,7 @@ const Sidebar = () => {
                 <ThemeButton />
             </div>
 
-            <nav className='flex justify-between items-center flex-col gap-4 sm:gap-2 w-full mt-4 font-medium'>
+            <nav className='flex justify-between items-center flex-col gap-4 lg:gap-2 w-full mt-4 font-medium'>
                 <Link href={`/dashboard`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
