@@ -1,11 +1,11 @@
 "use client"
 import Image from 'next/image'
+import axios from 'axios'
 import MobileHeader from '@/components/MobileHeader'
-import { useQueryClient } from '@tanstack/react-query'
-import React from 'react'
+import { useQuery } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
-import { CheckIcon, Loader, X } from 'lucide-react'
 import NavRoute from '@/components/NavRoutes'
+import { CheckIcon, Loader, X } from 'lucide-react'
 
 interface FacultyType {
     uid: string,
@@ -17,8 +17,13 @@ interface FacultyType {
 }
 
 const Request = () => {
-    const queryClient = useQueryClient()
-    const users: FacultyType[] | undefined = queryClient.getQueryData(["facultyList"])
+    const { data: users } = useQuery({
+        queryKey: ["facultyList", "facultyRequestList"],
+        queryFn: async () => {
+            const { data } = await axios.get("/api/getfaculty")
+            return data as FacultyType[]
+        }
+    })
 
     return (
         <section className='section_style'>
