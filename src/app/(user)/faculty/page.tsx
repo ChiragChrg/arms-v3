@@ -1,6 +1,13 @@
 "use client"
+import Image from 'next/image'
+import Link from 'next/link'
+import axios from 'axios'
+import { useQuery } from '@tanstack/react-query'
+import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
+import { MoreVerticalIcon, UserCheck } from 'lucide-react'
+
 import {
     Table,
     TableBody,
@@ -9,12 +16,6 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import useUserStore from '@/store/useUserStore'
-import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
-import { MoreVerticalIcon, UserCheck } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
 
 interface FacultyType {
     uid: string,
@@ -32,7 +33,6 @@ const Faculty = () => {
         queryKey: ["facultyList"],
         queryFn: async () => {
             const { data } = await axios.get("/api/getfaculty")
-            console.log(data)
             return data as FacultyType[]
         }
     })
@@ -48,10 +48,10 @@ const Faculty = () => {
                 </h1>
 
                 {isAdmin &&
-                    <Link href="./faculty/approval" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
+                    <Link href="./faculty/request" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <UserCheck />
-                        <span>Pending</span>
-                        <span className='hidden sm:block'>Faculty</span>
+                        <span className='hidden sm:block'>Pending</span>
+                        <span>Request</span>
                     </Link>
                 }
             </div>
@@ -68,6 +68,8 @@ const Faculty = () => {
                 </TableHeader>
                 <TableBody>
                     {data?.map((faculty, index) => {
+                        if (!faculty?.isApproved) return
+
                         // Date Formating
                         const date = new Date(faculty?.createdAt);
                         const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
