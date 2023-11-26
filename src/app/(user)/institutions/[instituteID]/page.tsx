@@ -152,11 +152,11 @@ const InstituteInfo = () => {
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Courses</h2>
                 {isAdmin &&
-                    <Button className='flex_center gap-2 text-[1em] text-white rounded-sm px-3'>
+                    <Link href={`./${institute?.collegeName.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
                         <span className='hidden sm:block'>Course</span>
-                    </Button>
+                    </Link>
                 }
             </div>
 
