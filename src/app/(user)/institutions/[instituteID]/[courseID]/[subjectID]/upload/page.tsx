@@ -1,16 +1,16 @@
 "use client"
 import { useState } from 'react'
-import Image from "next/image"
+import { useParams } from 'next/navigation'
+import useUserStore from '@/store/useUserStore'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
-import { Button } from '@/components/ui/button'
-import useUserStore from '@/store/useUserStore'
-import { NewCourseVector } from '@/assets'
-import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
-import { useParams } from 'next/navigation'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
+import { User2Icon } from 'lucide-react'
+
+import { MultiFileDropzone, type FileState } from './FileDropZone'
+import { useEdgeStore } from '@/lib/edgestore';
 
 type Params = {
     instituteID: string,
@@ -18,12 +18,66 @@ type Params = {
     subjectID: string
 }
 
+type FileUploadRes = {
+    url: string;
+    filename: string;
+}
+
 const UploadDocuments = () => {
-    const [instituteName, setInstituteName] = useState<string>("")
-    const [instituteDesc, setInstituteDesc] = useState<string>("")
-    const [isLoading, setIsLoading] = useState<boolean>(false)
     const { user } = useUserStore()
     const params = useParams<Params>()
+
+    const [fileStates, setFileStates] = useState<FileState[]>([]);
+    const [uploadRes, setUploadRes] = useState<FileUploadRes[]>([]);
+    const { edgestore } = useEdgeStore();
+
+    function updateFileProgress(key: string, progress: FileState['progress']) {
+        setFileStates((fileStates) => {
+            const newFileStates = structuredClone(fileStates);
+            const fileState = newFileStates.find(
+                (fileState) => fileState.key === key,
+            );
+            if (fileState) {
+                fileState.progress = progress;
+            }
+            return newFileStates;
+        });
+    }
+
+    // Uploading File
+    const uploadFiles = async () => {
+        await Promise.all(
+            fileStates.map(async (fileState) => {
+                try {
+                    if (fileState.progress !== 'PENDING') return;
+                    const res = await edgestore.publicFiles.upload({
+                        file: fileState.file,
+                        onProgressChange: async (progress) => {
+                            updateFileProgress(fileState.key, progress);
+                            if (progress === 100) {
+                                // wait 1 second to set it to complete
+                                // so that the user can see the progress bar
+                                await new Promise((resolve) => setTimeout(resolve, 1000));
+                                updateFileProgress(fileState.key, 'COMPLETE');
+                            }
+                        },
+                    });
+                    setUploadRes((uploadRes) => [
+                        ...uploadRes,
+                        {
+                            url: res.url,
+                            filename: fileState.file.name,
+                        },
+                    ]);
+                } catch (err) {
+                    updateFileProgress(fileState.key, 'ERROR');
+                }
+            }),
+        );
+
+        console.log("AfterUpload", uploadRes)
+    }
+
 
     return (
         <section className='section_style'>
@@ -40,7 +94,7 @@ const UploadDocuments = () => {
                 Upload new <span className="text-primary">Documents</span>
             </h1>
 
-            <div className='flex flex-col sm:flex-row gap-3 2xl:gap-4 w-full sm:px-8 mt-6'>
+            <div className='grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-3 2xl:gap-4 w-full sm:px-8 mt-6'>
                 <label className="relative w-full">
                     <span className='text-[0.9em] bg-background/0 px-1'>Institution</span>
 
@@ -98,8 +152,51 @@ const UploadDocuments = () => {
                     </div>
                 </label>
             </div>
+
+            <div className="w-full h-[2px] bg-input mt-4"></div>
+
+            <MultiFileDropzone
+                className='w-full h-[100px] mt-4'
+                value={fileStates}
+                onChange={(files) => {
+                    setFileStates(files);
+                }}
+                onFilesAdded={async (addedFiles) => {
+                    setFileStates([...fileStates, ...addedFiles]);
+                }}
+                setFileStates={setFileStates} //to reset the state
+                uploadFiles={uploadFiles}
+                dropzoneOptions={{
+                    maxFiles: 10,
+                    maxSize: 26214400
+                }}
+            />
         </section>
     )
 }
 
 export default UploadDocuments
+// onFilesAdded={async (addedFiles) => {
+//     setFileStates([...fileStates, ...addedFiles]);
+//     await Promise.all(
+//         addedFiles.map(async (addedFileState) => {
+//             try {
+//                 const res = await edgestore.publicFiles.upload({
+//                     file: addedFileState.file,
+//                     onProgressChange: async (progress) => {
+//                         updateFileProgress(addedFileState.key, progress);
+//                         if (progress === 100) {
+//                             // wait 1 second to set it to complete
+//                             // so that the user can see the progress bar at 100%
+//                             await new Promise((resolve) => setTimeout(resolve, 1000));
+//                             updateFileProgress(addedFileState.key, 'COMPLETE');
+//                         }
+//                     },
+//                 });
+//                 console.log(res);
+//             } catch (err) {
+//                 updateFileProgress(addedFileState.key, 'ERROR');
+//             }
+//         }),
+//     );
+// }}
