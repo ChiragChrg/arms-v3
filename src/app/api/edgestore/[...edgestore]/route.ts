@@ -4,7 +4,10 @@ import { createEdgeStoreNextHandler } from '@edgestore/server/adapters/next/app'
 const es = initEdgeStore.create();
 
 const edgeStoreRouter = es.router({
-    publicFiles: es.fileBucket(),
+    publicFiles: es.fileBucket({
+        maxSize: 1024 * 1024 * 25,
+        accept: ['application/pdf'],
+    }),
 });
 
 const handler = createEdgeStoreNextHandler({
