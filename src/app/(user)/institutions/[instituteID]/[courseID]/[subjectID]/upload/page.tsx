@@ -11,6 +11,9 @@ import { User2Icon } from 'lucide-react'
 
 import { MultiFileDropzone, type FileState } from './FileDropZone'
 import { useEdgeStore } from '@/lib/edgestore';
+import axios from 'axios'
+import { DataStoreTypes } from '@/types/dataStoreTypes'
+import { useQuery } from '@tanstack/react-query'
 
 type Params = {
     instituteID: string,
@@ -19,8 +22,11 @@ type Params = {
 }
 
 type FileUploadRes = {
-    url: string;
-    filename: string;
+    docId: string,
+    docName: string,
+    docSize: string,
+    docLink: string,
+    docUploader: string | null,
 }
 
 const UploadDocuments = () => {
@@ -30,6 +36,15 @@ const UploadDocuments = () => {
     const [fileStates, setFileStates] = useState<FileState[]>([]);
     const [uploadRes, setUploadRes] = useState<FileUploadRes[]>([]);
     const { edgestore } = useEdgeStore();
+
+    const { data: instituteData } = useQuery({
+        queryKey: ['getInstitutebyID', params.instituteID],
+        queryFn: async () => {
+            const collegeName = params?.instituteID.replaceAll("-", " ");
+            const { data } = await axios.post('/api/getinstitute', { collegeName });
+            return data as DataStoreTypes;
+        },
+    });
 
     function updateFileProgress(key: string, progress: FileState['progress']) {
         setFileStates((fileStates) => {
@@ -50,6 +65,7 @@ const UploadDocuments = () => {
             fileStates.map(async (fileState) => {
                 try {
                     if (fileState.progress !== 'PENDING') return;
+                    console.log("fileState", fileState)
                     const res = await edgestore.publicFiles.upload({
                         file: fileState.file,
                         onProgressChange: async (progress) => {
@@ -62,11 +78,16 @@ const UploadDocuments = () => {
                             }
                         },
                     });
-                    setUploadRes((uploadRes) => [
-                        ...uploadRes,
+
+                    if (!user?.username) return
+                    setUploadRes((prev) => [
+                        ...prev,
                         {
-                            url: res.url,
-                            filename: fileState.file.name,
+                            docId: fileState.file.name.toLowerCase().replaceAll(" ", "-").replace(".pdf", ""),
+                            docName: fileState.file.name,
+                            docSize: res.size.toString(),
+                            docLink: res.url,
+                            docUploader: user.username || null
                         },
                     ]);
                 } catch (err) {
@@ -75,7 +96,16 @@ const UploadDocuments = () => {
             }),
         );
 
-        console.log("AfterUpload", uploadRes)
+        // Uploading File info to DB
+        const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
+        const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
+        const DBRes = await axios.post("/api/postdocument", {
+            instituteId: instituteData?._id,
+            courseId: courseInfo?._id,
+            subjectId: subjectInfo?._id,
+            uploadedBy: user?.username,
+            FilesData: uploadRes
+        })
     }
 
 
@@ -176,27 +206,3 @@ const UploadDocuments = () => {
 }
 
 export default UploadDocuments
-// onFilesAdded={async (addedFiles) => {
-//     setFileStates([...fileStates, ...addedFiles]);
-//     await Promise.all(
-//         addedFiles.map(async (addedFileState) => {
-//             try {
-//                 const res = await edgestore.publicFiles.upload({
-//                     file: addedFileState.file,
-//                     onProgressChange: async (progress) => {
-//                         updateFileProgress(addedFileState.key, progress);
-//                         if (progress === 100) {
-//                             // wait 1 second to set it to complete
-//                             // so that the user can see the progress bar at 100%
-//                             await new Promise((resolve) => setTimeout(resolve, 1000));
-//                             updateFileProgress(addedFileState.key, 'COMPLETE');
-//                         }
-//                     },
-//                 });
-//                 console.log(res);
-//             } catch (err) {
-//                 updateFileProgress(addedFileState.key, 'ERROR');
-//             }
-//         }),
-//     );
-// }}

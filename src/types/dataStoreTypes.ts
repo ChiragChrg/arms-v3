@@ -5,6 +5,7 @@ export interface docsType {
     docLink: string,
     docCreated: Date,
     docUploader: string,
+    _id?: string
 }
 
 export interface subjectType {
@@ -12,6 +13,7 @@ export interface subjectType {
     subjectDesc: string,
     subjectCreator: string,
     subjectDocs?: docsType[] | null,
+    _id?: string
 }
 
 export interface courseType {
@@ -19,6 +21,7 @@ export interface courseType {
     courseDesc: string,
     courseCreator: string,
     subjects?: subjectType[] | null,
+    _id?: string
 }
 
 export interface DataStoreTypes {

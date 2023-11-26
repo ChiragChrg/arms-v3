@@ -186,7 +186,7 @@ const SubjectInfo = () => {
                                 <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 text-right flex_center flex-col sm:flex-row gap-2">
                                     <Button size='icon' title='Download' className='w-full text-white'>
-                                        <a href={doc?.docLink}>
+                                        <a href={doc?.docLink} target='_blank'>
                                             <DownloadCloudIcon />
                                         </a>
                                     </Button>
