@@ -27,7 +27,7 @@ const Settings = () => {
         return () => {
             window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
         };
-    }, []);
+    }, [deferredPrompt]);
 
     const HandlePWAInstall = async () => {
         if (deferredPrompt) {
