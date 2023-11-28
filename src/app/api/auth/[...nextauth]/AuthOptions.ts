@@ -93,6 +93,7 @@ export const AuthOptions: NextAuthOptions = {
                     // console.log("NewOAuth User")
                 } else {
                     user.uid = userExists._id;
+                    user.isApproved = userExists?.isApproved
                     // console.log("OAuth User Exisits")
                 }
                 return true
@@ -174,5 +175,5 @@ export const AuthOptions: NextAuthOptions = {
     //     },
     // },
     secret: process.env.NEXTAUTH_SECRET,
-    debug: process.env.NODE_ENV === "development",
+    // debug: process.env.NODE_ENV === "development",
 }

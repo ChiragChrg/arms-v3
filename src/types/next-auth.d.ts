@@ -10,6 +10,7 @@ declare module "next-auth" {
         phone?: string | null,
         emailVerified?: boolean | null,
         accessToken?: string | null,
+        isApproved?: boolean | null,
     }
 
     interface Session {
