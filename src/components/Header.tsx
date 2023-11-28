@@ -68,11 +68,11 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                     size='35'
                     fill={altLogo ? "#fff" : "var(--logoClr)"}
                     stroke={altLogo ? "var(--logoClr)" : "rgba(0, 0, 0, 0.5)"} />
-                <p
+                <h1
                     style={{
                         color: altLogo ? "#fff" : "var(--logoClr)"
                     }}
-                    className='text-[2em] font-bold leading-8'>ARMS</p>
+                    className='text-[2em] font-bold leading-8'>ARMS</h1>
             </div>
 
             <div onClick={() => setShowNav(true)} >
