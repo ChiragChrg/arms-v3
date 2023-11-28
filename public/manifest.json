@@ -25,6 +25,21 @@
             "type": "image/png"
         }
     ],
+    "screenshots": [
+        {
+            "src": "./Icons/ARMS-Screenshot.png",
+            "sizes": "768x359",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Welcome to ARMS"
+        },
+        {
+            "src": "./Icons/ARMS-Screenshot-Mobile.png",
+            "sizes": "354x787",
+            "type": "image/png",
+            "label": "Welcome to ARMS"
+        }
+    ],
     "start_url": ".",
     "id": "/",
     "display": "standalone",
@@ -34,7 +49,10 @@
     "dir": "ltr",
     "lang": "en",
     "orientation": "portrait",
-    "display_override": [],
+    "display_override": [
+        "standalone",
+        "fullscreen"
+    ],
     "categories": [
         "productivity",
         "education",
