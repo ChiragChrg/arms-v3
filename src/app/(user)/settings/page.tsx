@@ -9,6 +9,41 @@ import useModalStore from '@/store/useModalStore'
 const Settings = () => {
     const { user, isAdmin } = useUserStore()
     const { onOpen } = useModalStore()
+    const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+    useEffect(() => {
+        console.log("deferredPrompt", deferredPrompt);
+
+        const handleBeforeInstallPrompt = (e: Event) => {
+            console.log("handlePrompt", e)
+            if ('prompt' in e) {
+                e.preventDefault();
+                setDeferredPrompt(e as BeforeInstallPromptEvent);
+            }
+        };
+
+        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+        return () => {
+            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+        };
+    }, []);
+
+    const HandlePWAInstall = async () => {
+        if (deferredPrompt) {
+            try {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log("PWA Install: ", outcome);
+            } catch (error) {
+                console.error("PWA Install failed: ", error);
+            } finally {
+                setDeferredPrompt(null);
+            }
+        } else {
+            console.log("Prompt Failed", deferredPrompt);
+        }
+    };
 
     return (
         <section className='section_style'>
@@ -72,6 +107,7 @@ const Settings = () => {
                 <div className="flex gap-4">
                     <Button
                         variant="outline"
+                        onClick={HandlePWAInstall}
                         className='flex_center gap-2 w-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-200'>
                         <MonitorSmartphoneIcon />
                         <span>Install PWA App</span>
