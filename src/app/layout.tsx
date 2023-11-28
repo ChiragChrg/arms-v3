@@ -27,7 +27,7 @@ const poppins = localFont({
 
 export const metadata: Metadata = {
   title: 'ARMS | Academic Resource Management System',
-  description: 'ARMS is an educational platform designed to empower students with easy access to study materials for their respective subjects. Students can conveniently browse and download PDF documents uploaded by authorized faculties.',
+  description: 'ARMS is an educational platform designed to empower students with easy access to study materials. Students can conveniently browse & download PDFs files.',
   keywords: ["chiragchrg", "chirag", "chrgchirag", "ARMS", "Arms-v3", "Academic", "Resource", "Management", "System", "armss", "chiruchirag2001"],
   authors: [{ name: "ChiragChrg" }, { url: "https://chiragchrg.netlify.app/" }],
   creator: "ChiragChrg",
