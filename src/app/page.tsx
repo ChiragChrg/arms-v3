@@ -6,6 +6,8 @@ import { LandingVector } from '@/assets'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
 import useUserStore from '@/store/useUserStore'
+import { useEffect } from 'react'
+import PWA from '@/lib/pwa'
 
 export default function Home() {
   const { setUser } = useUserStore()
@@ -21,6 +23,11 @@ export default function Home() {
     localStorage.setItem("arms-user", JSON.stringify(formattedUser));
     router.push("/dashboard")
   }
+
+  useEffect(() => {
+    // Listening to PWA BeforeInstallPrompt
+    PWA()
+  }, [])
 
   return (
     <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>

@@ -3,47 +3,12 @@ import Image from 'next/image'
 import useUserStore from '@/store/useUserStore'
 import { User2, CheckIcon, RotateCcwIcon, LogOutIcon, MonitorSmartphoneIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useEffect, useState } from 'react'
 import useModalStore from '@/store/useModalStore'
+import { HandlePWAInstall } from '@/lib/pwa'
 
 const Settings = () => {
     const { user, isAdmin } = useUserStore()
     const { onOpen } = useModalStore()
-    const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-
-    useEffect(() => {
-        console.log("deferredPrompt", deferredPrompt);
-
-        const handleBeforeInstallPrompt = (e: Event) => {
-            console.log("handlePrompt", e)
-            if ('prompt' in e) {
-                e.preventDefault();
-                setDeferredPrompt(e as BeforeInstallPromptEvent);
-            }
-        };
-
-        window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-        return () => {
-            window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-        };
-    }, [deferredPrompt]);
-
-    const HandlePWAInstall = async () => {
-        if (deferredPrompt) {
-            try {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                console.log("PWA Install: ", outcome);
-            } catch (error) {
-                console.error("PWA Install failed: ", error);
-            } finally {
-                setDeferredPrompt(null);
-            }
-        } else {
-            console.log("Prompt Failed", deferredPrompt);
-        }
-    };
 
     return (
         <section className='section_style'>

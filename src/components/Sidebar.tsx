@@ -10,6 +10,7 @@ import UserAvatar from './UserAvatar'
 import ThemeButton from './CustomUI/ThemeButton'
 import { BadgeInfoIcon, PieChart, Settings2, Users2, X } from 'lucide-react'
 import useUserStore from '@/store/useUserStore'
+import PWA from '@/lib/pwa'
 
 const Sidebar = () => {
     const [isMobile, setIsMobile] = useState<boolean>(false)
@@ -41,6 +42,11 @@ const Sidebar = () => {
         window.addEventListener('resize', updateScreenWidth)
         return () => window.removeEventListener('resize', updateScreenWidth)
     }, [setShowSidebar])
+
+    useEffect(() => {
+        // Listening to PWA BeforeInstallPrompt
+        PWA()
+    }, [])
 
     return (
         <header
