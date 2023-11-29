@@ -24,8 +24,6 @@ export async function GET() {
             });
         });
 
-        console.log(counts);
-
         return new NextResponse(JSON.stringify(counts), { status: 200 });
     } catch (err) {
         console.error(err);
