@@ -35,10 +35,6 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
         if (localUser?.uid && !disableAuth) {
             setUser(localUser)
             router.push('/dashboard')
-
-            setTimeout(() => {
-                setShowLoader(false)
-            }, 2500)
         } else {
             setTimeout(() => {
                 setShowLoader(false)
