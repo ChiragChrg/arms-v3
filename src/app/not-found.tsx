@@ -18,7 +18,7 @@ const NotFound = () => {
 
     return (
         <main className='relative flex flex-col px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
-            <Header disableAuth={true} />
+            <Header disableAuthRedirect={true} />
 
             <section className='w-full h-full flex_center flex-grow flex-col gap-14 px-3 2xl:px-4'>
                 <Logo stroke='hsl(222.2 84% 4.9%)' size='150' className='z-10 rotate-[-65deg]' />

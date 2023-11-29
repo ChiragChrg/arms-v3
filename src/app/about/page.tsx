@@ -5,7 +5,7 @@ import Logo from '@/assets/Logo'
 const About = () => {
     return (
         <main className='relative flex flex-col px-4 py-3 w-full h-full min-h-screen overflow-hidden'>
-            <Header disableAuth={true} />
+            <Header disableAuthRedirect={true} />
 
             <section className='w-full h-full flex justify-between items-center flex-col px-3 2xl:px-4'>
                 <div className="relative flex_center w-full max-w-[240px] h-[240px]">

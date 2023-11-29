@@ -14,7 +14,7 @@ type Props = {
     altLogo?: boolean,
     altColor?: boolean,
     className?: string,
-    disableAuth?: boolean
+    disableAuthRedirect?: boolean
 }
 
 type HomeRouteType = {
@@ -22,7 +22,7 @@ type HomeRouteType = {
     name: string
 }
 
-const Header = ({ altLogo = false, altColor = false, className = "", disableAuth = false }: Props) => {
+const Header = ({ altLogo = false, altColor = false, className = "", disableAuthRedirect = false }: Props) => {
     const [showNav, setShowNav] = useState<boolean>(false)
     const [homeRoute, setHomeRoute] = useState<HomeRouteType>({ path: "/", name: "Home" })
     const router = useRouter()
@@ -32,7 +32,7 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
     useEffect(() => {
         const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
 
-        if (localUser?.uid && !disableAuth) {
+        if (localUser?.uid && !disableAuthRedirect) {
             setUser(localUser)
             router.push('/dashboard')
         } else {
@@ -40,7 +40,7 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                 setShowLoader(false)
             }, 2500)
         }
-    }, [setUser, router, setShowLoader, disableAuth])
+    }, [setUser, router, setShowLoader, disableAuthRedirect])
 
     useEffect(() => {
         if (showNav) {
@@ -49,7 +49,9 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
     }, [showNav])
 
     useEffect(() => {
-        if (user?.uid) {
+        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
+
+        if (localUser?.uid) {
             setHomeRoute({
                 path: "/dashboard",
                 name: "Dashboard"
