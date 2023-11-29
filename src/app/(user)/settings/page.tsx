@@ -5,6 +5,7 @@ import { User2, CheckIcon, RotateCcwIcon, LogOutIcon, MonitorSmartphoneIcon } fr
 import { Button } from '@/components/ui/button'
 import useModalStore from '@/store/useModalStore'
 import { HandlePWAInstall } from '@/lib/pwa'
+import { deferredPrompt } from '@/lib/pwa'
 
 const Settings = () => {
     const { user, isAdmin } = useUserStore()
@@ -70,17 +71,19 @@ const Settings = () => {
                 </div>}
 
                 <div className="flex gap-4">
-                    <Button
+                    {deferredPrompt && <Button
                         variant="outline"
                         onClick={HandlePWAInstall}
                         className='flex_center gap-2 w-full bg-gray-200 dark:bg-gray-500 hover:bg-gray-200'>
                         <MonitorSmartphoneIcon />
                         <span>Install PWA App</span>
-                    </Button>
+                    </Button>}
+
                     <Button
                         variant="destructive"
                         onClick={() => onOpen("LogoutModal")}
-                        className='flex_center gap-2 w-full'>
+                        style={{ margin: !deferredPrompt ? "2em auto" : "" }}
+                        className='flex_center gap-2 w-full sm:max-w-[300px]'>
                         <LogOutIcon />
                         <span>Logout</span>
                     </Button>
