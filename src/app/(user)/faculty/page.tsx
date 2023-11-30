@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
-import { MoreVerticalIcon, UserCheck } from 'lucide-react'
+import { MoreVerticalIcon, User2, UserCheck } from 'lucide-react'
 
 import {
     Table,
@@ -77,13 +77,21 @@ const Faculty = () => {
 
                         return (
                             <TableRow key={index}>
-                                <TableCell className="px-2 sm:px-4 py-2 flex items-center gap-2">
-                                    <Image
-                                        src={faculty?.avatarImg}
-                                        width={40}
-                                        height={40}
-                                        alt='User_Image'
-                                        className='rounded-full' />
+                                <TableCell className="px-2 sm:px-4 py-2 flex items-center gap-3">
+                                    {faculty?.avatarImg ?
+                                        <Image
+                                            src={faculty?.avatarImg}
+                                            alt='User_Avatar'
+                                            width={40}
+                                            height={40}
+                                            loading='eager'
+                                            className='rounded-full'
+                                        />
+                                        :
+                                        <div className="bg-slate-500 w-fit p-1.5 rounded-full">
+                                            <User2 size={30} />
+                                        </div>
+                                    }
                                     <span className='font-medium capitalize'>{faculty?.username}</span>
                                 </TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2">{faculty?.email}</TableCell>
