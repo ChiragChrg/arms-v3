@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt"
 import { NextResponse } from "next/server"
 
 interface RequestBody {
-    name: string,
+    username: string,
     email: string,
     password: string
 }
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     const body: RequestBody = await request.json()
 
     try {
-        if (!body?.name || !body?.email || !body?.password) {
+        if (!body?.username || !body?.email || !body?.password) {
             return new NextResponse("Missing Fields", { status: 400 })
         }
 
@@ -27,7 +27,7 @@ export async function POST(request: Request) {
         const hashedPassword = await bcrypt.hash(body?.password, salt);
 
         await UserModel.create({
-            username: body?.name,
+            username: body?.username,
             email: body?.email,
             password: hashedPassword
         })

@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { SignupVector } from '@/assets'
 import { Loader2Icon, UserPlusIcon } from 'lucide-react'
 import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const Signup = () => {
     const [providerList, setProviderList] = useState<any | null>({})
@@ -38,28 +39,35 @@ const Signup = () => {
     }, [])
 
 
-    const HandleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    const HandleSignup = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
-        const LoginToastID = toast.loading("Logging in...")
+
+        // Exit function if passwords do not match
+        if (password !== confirmpassword) {
+            toast.error("Passwords do not match")
+            return
+        }
+
+        const SignupToastID = toast.loading("Creating user...")
         setIsLoading(true)
+
         try {
-            const res = await signIn("credentials", {
-                email: email,
-                password: password,
-                redirect: false,
-                callbackUrl: callback || "/dashboard"
+            const res = await axios.post("/api/register", {
+                username,
+                email,
+                password
             })
-            console.log("LoginRes", res)
-            if (res?.status === 200) {
-                toast.success("Logged in Successfully!", {
-                    id: LoginToastID
+
+            if (res?.status === 201) {
+                toast.success("User created successfully!", {
+                    id: SignupToastID
                 })
 
-                router.push(res?.url as string)
+                router.push("./login")
             }
         } catch (err) {
             toast.error("Something went wrong!", {
-                id: LoginToastID
+                id: SignupToastID
             })
             console.log(err)
         } finally {
@@ -104,7 +112,7 @@ const Signup = () => {
                         Create new account
                     </h1>
 
-                    <form className='flex flex-col gap-3 2xl:gap-4'>
+                    <form onSubmit={HandleSignup} className='flex flex-col gap-3 2xl:gap-4'>
                         <Input
                             type='text'
                             label='Username'
@@ -131,7 +139,7 @@ const Signup = () => {
                             className='2xl:w-[500px]'
                             setValue={setConfirmPassword} />
 
-                        <Button className='flex_center gap-4 text-white' disabled={isLoading}>
+                        <Button type='submit' className='flex_center gap-4 text-white' disabled={isLoading}>
                             {isLoading ?
                                 <Loader2Icon className='animate-spin' />
                                 : <UserPlusIcon />
