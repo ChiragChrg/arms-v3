@@ -112,12 +112,20 @@ const Faculty = () => {
                 {data?.map((faculty, index) => (
                     <div key={index} className="flex justify-between items-center border border-secondary rounded-md px-1 py-0.5">
                         <div className="flex items-center gap-4">
-                            <Image
-                                src={faculty?.avatarImg}
-                                width={40}
-                                height={40}
-                                alt='User_Image'
-                                className='rounded-full' />
+                            {faculty?.avatarImg ?
+                                <Image
+                                    src={faculty?.avatarImg}
+                                    alt='User_Avatar'
+                                    width={40}
+                                    height={40}
+                                    loading='eager'
+                                    className='rounded-full'
+                                />
+                                :
+                                <div className="bg-slate-500 w-fit p-1.5 rounded-full">
+                                    <User2 size={30} />
+                                </div>
+                            }
 
                             <div className="flex flex-col">
                                 <span className='font-medium capitalize'>{faculty?.username}</span>
