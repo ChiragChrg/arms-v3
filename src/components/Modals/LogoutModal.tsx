@@ -1,26 +1,28 @@
 "use client"
-import React, { useState } from 'react'
 import Modal from './Modal'
+import { signOut } from "next-auth/react"
 import { useRouter } from 'next/navigation'
 import useModalStore from '@/store/useModalStore'
 import useUserStore from '@/store/useUserStore'
-import { Button } from '@/components/ui/button'
-import { Loader, LogOutIcon, X } from 'lucide-react'
-import { signOut } from "next-auth/react"
 import useSidebarStore from '@/store/useSidebarStore'
+import useLoaderStore from '@/store/useLoaderStore'
+import { Button } from '@/components/ui/button'
+import { LogOutIcon, X } from 'lucide-react'
 
 const LogoutModal = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false)
     const { isOpen, onClose } = useModalStore()
     const { deleteUser } = useUserStore()
-    const router = useRouter()
     const { setShowSidebar } = useSidebarStore()
+    const { setShowLoader } = useLoaderStore()
+    const router = useRouter()
 
     const HandleLogout = async () => {
-        setIsLoading(true)
+        setShowLoader(true)
+
         try {
             signOut({
-                callbackUrl: "/"
+                callbackUrl: "/",
+                redirect: false
             })
             deleteUser()
             onClose()
@@ -30,8 +32,6 @@ const LogoutModal = () => {
             router.push("/")
         } catch (error) {
             console.error('Logout error:', error);
-        } finally {
-            setIsLoading(false)
         }
     }
 
@@ -49,10 +49,7 @@ const LogoutModal = () => {
                 </Button>
 
                 <Button variant="destructive" onClick={HandleLogout} className='flex_center gap-2 w-full text-white'>
-                    {isLoading ?
-                        <Loader size={20} className='animate-spin' />
-                        :
-                        <LogOutIcon size={20} />}
+                    <LogOutIcon size={20} />
                     <span>Logout</span>
                 </Button>
             </div>
