@@ -23,10 +23,13 @@ export async function POST(request: Request) {
             return new NextResponse("User already Exists!", { status: 400 })
         }
 
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(body?.password, salt);
+
         await UserModel.create({
             username: body?.name,
             email: body?.email,
-            password: await bcrypt.hash(body?.password, 10)
+            password: hashedPassword
         })
 
         return new NextResponse("User Registered Successfully!", { status: 201 })
