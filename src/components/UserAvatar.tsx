@@ -18,13 +18,13 @@ const UserAvatar = () => {
     const router = useRouter()
 
     useEffect(() => {
-        // console.log(session, status)
+        console.log(session, status)
         if (status == "authenticated" && session !== null) {
             const formattedUser = {
                 uid: session?.user?.uid,
                 username: session?.user?.name,
                 email: session?.user?.email,
-                avatarImg: session?.user?.image,
+                avatarImg: session?.user?.avatarImg,
                 isApproved: session?.user?.isApproved,
                 accessToken: session?.user?.accessToken,
             }

@@ -130,10 +130,11 @@ export const AuthOptions: NextAuthOptions = {
             }
 
             if (account?.type === "oauth" && typeof user !== typeof undefined) {
-                const { id, ...restUser } = user
+                const { id, image, ...restUser } = user
                 const newToken = {
                     ...restToken,
                     ...restUser,
+                    avatarImg: image,
                     emailVerified: profile?.email_verified
                 }
                 const accessToken = SignToken(newToken)

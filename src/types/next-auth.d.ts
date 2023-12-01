@@ -7,6 +7,7 @@ declare module "next-auth" {
         name?: string | null,
         email?: string | null,
         image?: string | null,
+        avatarImg?: string | null,
         phone?: string | null,
         emailVerified?: boolean | null,
         accessToken?: string | null,
