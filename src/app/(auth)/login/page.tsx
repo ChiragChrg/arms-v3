@@ -124,7 +124,7 @@ const Login = () => {
                                 placeholder='Enter Password'
                                 className='2xl:w-[500px]'
                                 setValue={setPassword} />
-                            <Link href="#forgot-password" className='text-[0.9em] sm:text-[0.8em] 2xl:text-[1em] text-primary self-end'>Forgot Password?</Link>
+                            <Link href="./forgot-password" className='text-[0.9em] sm:text-[0.8em] 2xl:text-[1em] text-primary self-end'>Forgot Password?</Link>
                         </div>
 
                         <Button type='submit' className='flex_center gap-4 text-white' disabled={isLoading}>
