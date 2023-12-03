@@ -11,13 +11,7 @@ import Input from '@/components/CustomUI/Input'
 import { KeyRoundIcon, Loader2Icon } from 'lucide-react'
 import { ResetPasswordVector } from '@/assets'
 
-type UserInfoType = {
-    uid: string,
-    username: string,
-}
-
 const ResetPassword = () => {
-    const [userInfo, setUserInfo] = useState<UserInfoType | null>(null)
     const [password, setPassword] = useState<string>("")
     const [confirmpassword, setConfirmPassword] = useState<string>("")
     const [isLoading, setIsLoading] = useState(false)
@@ -25,25 +19,11 @@ const ResetPassword = () => {
     const { jwtToken } = useParams()
     const router = useRouter()
 
-    useEffect(() => {
-        try {
-            const decodedUrl = jose.decodeJwt(jwtToken as string)
-
-            if (!decodedUrl?.uid || !decodedUrl?.username) {
-                toast.error("Invalid Reset URL!")
-                router.push("/")
-            }
-
-            setUserInfo({
-                uid: decodedUrl.uid,
-                username: decodedUrl?.username
-            } as UserInfoType)
-        } catch (err) {
-            console.log(err)
-            router.push("/")
-            toast.error("Invalid Reset URL!")
-        }
-    }, [])
+    const decodedUrl = jose.decodeJwt(jwtToken as string)
+    if (!decodedUrl?.uid || !decodedUrl?.username) {
+        toast.error("Invalid Reset URL!")
+        router.push("/")
+    }
 
     const HandleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
@@ -59,7 +39,7 @@ const ResetPassword = () => {
 
         try {
             const res = await axios.post("/api/reset-password", {
-                uid: userInfo?.uid,
+                uid: decodedUrl?.uid,
                 password
             })
 
@@ -68,7 +48,7 @@ const ResetPassword = () => {
                     id: ResetToastID
                 })
 
-                router.push("./login")
+                router.push("../login")
             }
         } catch (err) {
             toast.error("Something went wrong!", {
@@ -88,7 +68,7 @@ const ResetPassword = () => {
                 <div className=" flex_center flex-col gap-8 mb-6 sm:mb-0 mt-4 sm:mt-0">
                     <h1 className='text-[1.6em] sm:text-[2.2em] font-bold text-center'>
                         Welcome
-                        <span className="text-primary"> {userInfo?.username}</span>
+                        <span className="text-primary"> {decodedUrl?.username as string}</span>
                     </h1>
                     <Image src={ResetPasswordVector} alt='ResetPasswordVector' className='w-[80%] sm:w-[280px] 2xl:w-[350px]' priority={true} />
                 </div>
