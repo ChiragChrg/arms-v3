@@ -1,24 +1,52 @@
 "use client"
 import { FormEvent, useState } from 'react'
 import Image from "next/image"
-import Header from '@/components/Header'
+import { useRouter } from 'next/navigation'
+import { send } from '@emailjs/browser'
+import axios from 'axios'
 import { ForgotPasswordVector } from '@/assets'
+import Header from '@/components/Header'
 import Input from '@/components/CustomUI/Input'
 import { Button } from '@/components/ui/button'
-import { KeyRoundIcon } from 'lucide-react'
-import axios from 'axios'
+import toast from 'react-hot-toast'
+import { KeyRoundIcon, Loader2Icon } from 'lucide-react'
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState<string>("")
+    const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const HandleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setIsLoading(true)
 
         try {
             const res = await axios.post("/api/forgot-password", { email })
-            console.log(res)
+
+            if (res.status === 201) {
+                //Sending Mail to User
+                let templateParams = {
+                    to_name: res.data.reset.username,
+                    to_email: res.data.reset.email,
+                    reset_link: res.data.reset.resetLink
+                }
+
+                const mailRes = await send(
+                    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string,
+                    process.env.NEXT_PUBLIC_EMAILJS_PASSWPRD_RESET_TEMPLATE as string,
+                    templateParams,
+                    process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string
+                );
+
+                if (mailRes.status == 200) {
+                    toast.success("Reset Link has been sent to your Email ID.")
+                    router.push("/login")
+                }
+            }
         } catch (error) {
             console.log(error)
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -34,7 +62,7 @@ const ForgotPassword = () => {
                     <Image src={ForgotPasswordVector} alt='ForgotPasswordVector' className='w-[280px] sm:w-[320px] 2xl:w-[400px]' priority={true} />
                 </div>
 
-                <form onSubmit={HandleSubmit} className='flex items-end gap-4'>
+                <form onSubmit={HandleSubmit} className='flex flex-col sm:flex-row items-end gap-4'>
                     <Input
                         type='email'
                         label='Email'
@@ -42,9 +70,12 @@ const ForgotPassword = () => {
                         className='block w-full 2xl:w-[600px]'
                         setValue={setEmail} />
 
-                    <Button type='submit' className='gap-2 text-white'>
-                        <KeyRoundIcon />
-                        <span>Reset Password</span>
+                    <Button type='submit' className='w-full sm:max-w-[300px] flex_center gap-4 text-white' disabled={isLoading}>
+                        {isLoading ?
+                            <Loader2Icon className='animate-spin' />
+                            : <KeyRoundIcon />
+                        }
+                        <span>GET RESET LINK</span>
                     </Button>
                 </form>
             </section>
