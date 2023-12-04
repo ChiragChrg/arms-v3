@@ -59,7 +59,7 @@ const UserCard = ({ user }: Props) => {
             <div className="flex_center gap-4 mt-2 w-full px-8">
                 <Button
                     onClick={() => mutate({ approval: "approve", uid: user?._id })}
-                    className='flex_center gap-1 px-2 py-1 min-w-[90px] w-full h-fit text-[0.8em] bg-green-600 hover:bg-green-700 text-white drop-shadow'>
+                    className='flex_center gap-1 p-2 min-w-[90px] w-full h-fit text-[0.8em] bg-green-600 hover:bg-green-700 text-white drop-shadow'>
                     {isPending ?
                         <Loader size={20} className='animate-spin' />
                         :
@@ -70,7 +70,7 @@ const UserCard = ({ user }: Props) => {
                 <Button
                     variant="destructive"
                     onClick={() => mutate({ approval: "reject", uid: user?._id })}
-                    className='flex_center gap-1 px-2 py-1 min-w-[90px] w-full h-fit text-[0.8em] text-white drop-shadow'>
+                    className='flex_center gap-1 p-2 min-w-[90px] w-full h-fit text-[0.8em] text-white drop-shadow'>
                     {isPending ?
                         <Loader size={20} className='animate-spin' />
                         :
