@@ -34,7 +34,8 @@ const Faculty = () => {
         queryFn: async () => {
             const { data } = await axios.get("/api/getfaculty")
             return data as FacultyType[]
-        }
+        },
+        refetchOnMount: true
     })
 
     return (
@@ -51,7 +52,7 @@ const Faculty = () => {
                     <Link href="./faculty/request" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <UserCheck />
                         <span className='hidden sm:block'>Pending</span>
-                        <span>Request ( {data?.filter(user => user?.isApproved === false).length} )</span>
+                        <span>Request ( {data?.filter(user => user?.isApproved === false).length || 0} )</span>
                     </Link>
                 }
             </div>
