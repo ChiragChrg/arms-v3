@@ -51,7 +51,7 @@ const Faculty = () => {
                     <Link href="./faculty/request" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <UserCheck />
                         <span className='hidden sm:block'>Pending</span>
-                        <span>Request</span>
+                        <span>Request ( {data?.filter(user => user?.isApproved === false).length} )</span>
                     </Link>
                 }
             </div>
@@ -88,7 +88,7 @@ const Faculty = () => {
                                             className='rounded-full'
                                         />
                                         :
-                                        <div className="bg-slate-500 w-fit p-1.5 rounded-full">
+                                        <div className="bg-slate-500 w-fit p-1.5 rounded-full text-white">
                                             <User2 size={30} />
                                         </div>
                                     }
