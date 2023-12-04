@@ -49,7 +49,7 @@ const UserAvatar = () => {
     }, [router, status, setUser, setShowLoader])
 
     return (
-        <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-black/40">
+        <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-sidebarLinkClr drop-shadow-md">
             <div className="flex_center w-fit aspect-square rounded-full overflow-hidden">
                 <CircleLoader size='40px' className={status == "loading" ? 'block' : "hidden"} />
                 {user?.avatarImg ?

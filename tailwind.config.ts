@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         logoClr: "var(--logoClr)",
         baseClr: "var(--baseClr)",
+        sidebarLinkClr: "var(--sidebarLink)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -88,6 +89,8 @@ module.exports = {
       backgroundImage: {
         'radialGradient': 'radial-gradient(circle at 10% 10%, hsla(var(--primary)/ 0.5) 0%, hsla(var(--primary)/ 0.175) 100%)',
         'radialGradientDark': 'radial-gradient(circle at 10% 10%, hsla(var(--primary)/ 0.3) 0%, hsla(var(--primary)/ 0.075) 100%)',
+        'sidebarGradient': 'radial-gradient(circle at 10% 10%, hsla(var(--sidebarClr)) 0%, hsla(var(--sidebarClr)/ 0.35) 100%)',
+        'sidebarGradientDark': 'radial-gradient(circle at 10% 10%, hsla(var(--sidebarClr)) 0%, hsla(var(--sidebarClr)/ 0.35) 100%)',
       },
     },
   },

@@ -9,7 +9,8 @@
     --trailClrA: rgba(0, 49, 141, 0.8);
     --trailClrB: rgba(250, 250, 250, 0.5);
     --baseClrLite: 45, 101, 206;
-
+    --sidebarClr: 219 64% 49%;
+    --sidebarLink: rgba(0, 49, 141, 0.35);
 
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -71,6 +72,10 @@
 
   .section_style {
     @apply w-full h-full overflow-y-auto px-2
+  }
+
+  .sidebar_link_style {
+    @apply flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-sidebarLinkClr drop-shadow
   }
 
   [data-scale="1.25"] {

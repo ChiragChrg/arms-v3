@@ -56,7 +56,7 @@ const Sidebar = () => {
                 userSelect: showSidebar ? "auto" : "none",
                 width: isTablet ? "50%" : "auto"
             }}
-            className='lg:min-w-[18em] fixed inset-2 lg:inset-auto lg:relative lg:h-full p-3 rounded-2xl lg:rounded-md flex flex-col gap-4 bg-baseClr z-10 transition-transform duration-500 ease-in-out'>
+            className='lg:min-w-[18em] fixed inset-2 lg:inset-auto lg:relative lg:h-full p-3 rounded-2xl lg:rounded-md flex flex-col gap-4 bg-background/10 backdrop-blur-xl z-10 transition-transform duration-500 ease-in-out overflow-hidden'>
             <div
                 className="flex_center lg:hidden mx-auto border border-white text-white rounded-full p-1"
                 onClick={() => { isMobile && setShowSidebar(false) }}>
@@ -78,7 +78,7 @@ const Sidebar = () => {
             <nav className='flex justify-between items-center flex-col gap-4 lg:gap-2 w-full mt-4 font-medium'>
                 <Link href={`/dashboard`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
-                    className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
+                    className={cn('sidebar_link_style',
                         pathname === `/dashboard` && "text-baseClr bg-white")}>
                     <PieChart size={20} />
                     <span>Dashboard</span>
@@ -86,7 +86,7 @@ const Sidebar = () => {
 
                 <Link href={`/institutions`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
-                    className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
+                    className={cn('sidebar_link_style',
                         pathname === `/institutions` && "text-baseClr bg-white")}>
                     <BuildingSVG size="20" />
                     <span>Institutions</span>
@@ -94,7 +94,7 @@ const Sidebar = () => {
 
                 {isAdmin && <Link href={`/faculty`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
-                    className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
+                    className={cn('sidebar_link_style',
                         pathname === `/faculty` && "text-baseClr bg-white")}>
                     <Users2 size="20" />
                     <span>Faculty</span>
@@ -102,7 +102,7 @@ const Sidebar = () => {
 
                 <Link href={`/settings`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
-                    className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
+                    className={cn('sidebar_link_style',
                         pathname === `/settings` && "text-baseClr bg-white")}>
                     <Settings2 size={20} />
                     <span>Settings</span>
@@ -110,7 +110,7 @@ const Sidebar = () => {
 
                 <Link href={`/about`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
-                    className={cn('flex justify-start items-center gap-4 w-full px-4 py-2 rounded text-white bg-black/40',
+                    className={cn('sidebar_link_style',
                         pathname === `/about` && "text-baseClr bg-white")}>
                     <BadgeInfoIcon size={20} />
                     <span>About</span>
@@ -120,6 +120,9 @@ const Sidebar = () => {
             <div className="flex_center flex-col gap-4 w-full mt-auto">
                 <UserAvatar />
             </div>
+
+            {/* Radial Gradient background Overlay */}
+            <div className="absolute inset-0 bg-sidebarGradient dark:bg-sidebarGradientDark -z-10"></div>
         </header>
     )
 }
