@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import useModalStore from '@/store/useModalStore'
 import { HandlePWAInstall } from '@/lib/pwa'
 import { deferredPrompt } from '@/lib/pwa'
+import MobileHeader from '@/components/MobileHeader'
 
 const Settings = () => {
     const { user, isAdmin } = useUserStore()
@@ -13,6 +14,8 @@ const Settings = () => {
 
     return (
         <section className='section_style'>
+            <MobileHeader />
+
             <h1 className='text-[2em] font-medium'>Settings</h1>
 
             <div className="flex_center flex-col gap-4 mt-10">
