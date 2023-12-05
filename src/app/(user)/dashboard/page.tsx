@@ -8,6 +8,7 @@ import DocumentsSVG from '@/assets/DocumentsSVG'
 import MobileHeader from '@/components/MobileHeader'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import { AlertCircle } from "lucide-react"
 
 interface CountDataType {
     institute: number,
@@ -69,6 +70,17 @@ const Dashboard = () => {
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>PDFs uploaded</p>
                 </div>
             </div>
+
+            {(user?.avatarImg && !user.isApproved) &&
+                <div className="bg-alertGradient border border-yellow-400/40 w-fit mx-auto my-2 mt-8 px-4 py-2 text-center rounded-md">
+                    <div className="flex_center gap-2 mb-2">
+                        <AlertCircle size={20} />
+                        User Approval Pending!
+                    </div>
+                    <p className="text-[0.9em]">You will gain CREATE / UPLOAD Access after approval by admin.</p>
+                    <p className="text-[0.9em]">An email will be sent to <span className="text-blue-600">{user.email}</span> after approval</p>
+                </div>
+            }
         </section>
     )
 }

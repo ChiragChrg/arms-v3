@@ -91,6 +91,7 @@ module.exports = {
         'radialGradientDark': 'radial-gradient(circle at 10% 10%, hsla(var(--primary)/ 0.3) 0%, hsla(var(--primary)/ 0.075) 100%)',
         'sidebarGradient': 'radial-gradient(circle at 10% 10%, hsla(var(--sidebarClr)) 0%, hsla(var(--sidebarClr)/ 0.35) 100%)',
         'sidebarGradientDark': 'radial-gradient(circle at 10% 10%, hsla(var(--sidebarClr)) 0%, hsla(var(--sidebarClr)/ 0.35) 100%)',
+        'alertGradient': 'radial-gradient(circle at 50% 50%, transparent 0%, hsl(60deg 100% 50% / 0.3) 100%)',
       },
     },
   },
