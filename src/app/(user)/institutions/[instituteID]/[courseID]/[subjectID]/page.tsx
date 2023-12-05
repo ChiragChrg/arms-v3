@@ -35,7 +35,7 @@ const SubjectInfo = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
     const { data: globalData } = useDataStore()
-    const { isAdmin } = useUserStore()
+    const { user, isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
@@ -140,7 +140,7 @@ const SubjectInfo = () => {
 
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Documents</h2>
-                {isAdmin &&
+                {user?.isApproved &&
                     <Link href={`./${subject?.subjectName.toLowerCase().replaceAll(" ", "-")}/upload`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Upload</span>

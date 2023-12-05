@@ -27,7 +27,7 @@ const CourseInfo = () => {
     const [docsCount, setDocsCount] = useState<number>(0)
 
     const { data: globalData } = useDataStore()
-    const { isAdmin } = useUserStore()
+    const { user } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
@@ -142,7 +142,7 @@ const CourseInfo = () => {
 
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Subjects</h2>
-                {isAdmin &&
+                {user?.isApproved &&
                     <Link href={`./${course?.courseName.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
