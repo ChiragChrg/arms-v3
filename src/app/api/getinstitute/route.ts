@@ -11,7 +11,10 @@ export async function POST(request: Request) {
 
     try {
         await connectDB();
-        const Institute = await DocsModel.findOne({ collegeName: { '$regex': body?.collegeName, $options: 'i' } })
+        const Institute = await DocsModel.findOne({ collegeName: { '$regex': body?.collegeName, $options: 'i' } }).populate({
+            path: "course.subjects.subjectDocs.docUploader",
+            select: 'username email avatarImg'
+        });
 
         if (Institute == null) {
             return new NextResponse("Invalid Institute!", { status: 400 })

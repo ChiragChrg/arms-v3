@@ -5,7 +5,10 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         await connectDB();
-        const DocsDB = await DocsModel.find({});
+        const DocsDB = await DocsModel.find({}).populate({
+            path: "course.subjects.subjectDocs.docUploader",
+            select: 'username email avatarImg'
+        });
 
         return new NextResponse(JSON.stringify(DocsDB), { status: 200 });
     } catch (err) {
