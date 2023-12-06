@@ -87,7 +87,7 @@ const UploadDocuments = () => {
                             docName: fileState.file.name,
                             docSize: res.size.toString(),
                             docLink: res.url,
-                            docUploader: user.username || null
+                            docUploader: user.uid || null
                         },
                     ]);
                 } catch (err) {
@@ -103,7 +103,7 @@ const UploadDocuments = () => {
             instituteId: instituteData?._id,
             courseId: courseInfo?._id,
             subjectId: subjectInfo?._id,
-            uploadedBy: user?.username,
+            uploaderId: user?.uid,
             FilesData: uploadRes
         })
     }

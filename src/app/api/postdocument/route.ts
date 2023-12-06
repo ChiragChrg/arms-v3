@@ -3,11 +3,11 @@ import DocsModel from "@/models/DocsModel";
 import { NextResponse, NextRequest } from "next/server";
 
 export async function POST(request: NextRequest) {
-    const { instituteId, courseId, subjectId, uploadedBy, FilesData } = await request.json();
+    const { instituteId, courseId, subjectId, uploaderId, FilesData } = await request.json();
 
     try {
         await connectDB();
-        const DocsDB = await DocsModel.findOne({ "_id": instituteId })
+        const DocsDB = await DocsModel.findOne({ "_id": instituteId });
         const courseObj = DocsDB.course.find((obj: Record<string, any>) => obj._id == courseId);
 
         if (courseObj) {
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
                         docName: file.docName,
                         docSize: file.docSize,
                         docLink: file.docLink,
-                        docUploader: uploadedBy,
+                        docUploader: uploaderId,
                     });
                 })
             }
