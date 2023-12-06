@@ -56,6 +56,7 @@ const SubjectInfo = () => {
         queryKey: ['getSubjectbyID', params.subjectID],
         queryFn: fetchInstitute,
         enabled: globalData === null, //Fetch only if globalData is Null
+        refetchOnMount: true
     });
 
     if (isError) {
@@ -182,7 +183,7 @@ const SubjectInfo = () => {
                             <TableRow key={index}>
                                 <TableCell className="px-2 sm:px-4 py-2 font-medium capitalize">{doc?.docName}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 ">{formatDataSize(parseInt(doc?.docSize))}</TableCell>
-                                <TableCell className='px-2 sm:px-4 py-2 hidden sm:table-cell'>{doc?.docUploader}</TableCell>
+                                <TableCell className='px-2 sm:px-4 py-2 hidden sm:table-cell'>{doc?.docUploader?.username}</TableCell>
                                 <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 text-right flex_center flex-col sm:flex-row gap-2">
                                     <Button size='icon' title='Download' className='w-full text-white'>

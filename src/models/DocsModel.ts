@@ -66,7 +66,8 @@ const DocsSchema = new Schema({
                     default: Date.now,
                 },
                 docUploader: {
-                    type: String,
+                    type: Schema.Types.ObjectId,
+                    ref: 'User',
                     required: true,
                 },
             }],

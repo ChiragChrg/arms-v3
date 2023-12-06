@@ -4,7 +4,12 @@ export interface docsType {
     docSize: string,
     docLink: string,
     docCreated: Date,
-    docUploader: string,
+    docUploader: {
+        _id: string,
+        username: string,
+        email: string,
+        avatarImg: string
+    },
     _id?: string
 }
 
