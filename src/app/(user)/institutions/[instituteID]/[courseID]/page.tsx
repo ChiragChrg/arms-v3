@@ -34,7 +34,7 @@ const CourseInfo = () => {
 
     const fetchInstitute = async () => {
         const collegeName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/getinstitute', { collegeName });
+        const { data, status } = await axios.post('/api/post/getinstitute', { collegeName });
 
         if (status == 200) {
             setIsLoading(false)

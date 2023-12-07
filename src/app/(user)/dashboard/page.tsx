@@ -23,7 +23,7 @@ const Dashboard = () => {
     const { data: count } = useQuery({
         queryKey: ["dashCount"],
         queryFn: async () => {
-            const { data } = await axios.get('/api/dashcount')
+            const { data } = await axios.get('/api/get/dashcount')
             return data as CountDataType
         }
     })

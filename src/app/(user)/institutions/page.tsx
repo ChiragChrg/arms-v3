@@ -18,7 +18,7 @@ const Institutions = () => {
     const { data, isLoading } = useQuery({
         queryKey: ["getInstitution"],
         queryFn: async () => {
-            const { data } = await axios.get('/api/institutions')
+            const { data } = await axios.get('/api/get/institutions')
             setData(data)
             return data as DataStoreTypes[]
         },

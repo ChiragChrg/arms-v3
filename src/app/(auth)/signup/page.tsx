@@ -52,7 +52,7 @@ const Signup = () => {
         setIsLoading(true)
 
         try {
-            const res = await axios.post("/api/register", {
+            const res = await axios.post("/api/post/register", {
                 username,
                 email,
                 password
