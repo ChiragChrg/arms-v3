@@ -1,5 +1,5 @@
 "use client"
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Image from "next/image"
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
@@ -7,19 +7,47 @@ import { Button } from '@/components/ui/button'
 import useUserStore from '@/store/useUserStore'
 import { NewCourseVector } from '@/assets'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import BookStackSVG from '@/assets/BookStackSVG'
+import axios from 'axios'
+import { useMutation } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
 
 type Params = {
     instituteID: string,
 }
 
 const CreateCourse = () => {
-    const [instituteName, setInstituteName] = useState<string>("")
-    const [instituteDesc, setInstituteDesc] = useState<string>("")
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [courseName, setCourseName] = useState<string>("")
+    const [courseDesc, setCourseDesc] = useState<string>("")
     const { user } = useUserStore()
     const params = useParams<Params>()
+    const router = useRouter()
+
+    const CreateCourse = async (e: FormEvent<HTMLFormElement>) => {
+        e?.preventDefault()
+        const instituteName = params?.instituteID.replaceAll("-", " ");
+
+        const res = await axios.post("/api/post/createcourse", {
+            instituteName,
+            courseName,
+            courseDesc,
+            registeredBy: user?.uid
+        })
+        return res
+    }
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: CreateCourse,
+        onSuccess: async () => {
+            toast.success("Course Created Successfully!")
+            router.push(`../${params?.instituteID}`)
+        },
+        onError(error) {
+            console.log(error)
+            toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+        }
+    })
 
     return (
         <section className='section_style'>
@@ -31,7 +59,7 @@ const CreateCourse = () => {
             </h1>
 
             <div className="flex justify-around items-center flex-col-reverse sm:flex-row gap-6 mt-8">
-                <form className='flex flex-col gap-3 2xl:gap-4'>
+                <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>Course Name</span>
 
@@ -40,7 +68,7 @@ const CreateCourse = () => {
                                 type="text"
                                 required={true}
                                 placeholder='Enter Course Name'
-                                onChange={(e) => setInstituteName(e.target.value)}
+                                onChange={(e) => setCourseName(e.target.value)}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <BookStackSVG size="24" className="absolute right-2 text-slate-400" />
@@ -54,11 +82,11 @@ const CreateCourse = () => {
                             <textarea
                                 rows={2}
                                 placeholder='Enter Course Description'
-                                onChange={(e) => setInstituteDesc(e?.target?.value)}
+                                onChange={(e) => setCourseDesc(e?.target?.value)}
                                 maxLength={40}
                                 className='resize-none text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                            <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{instituteDesc.length}/40</p>
+                            <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{courseDesc.length}/40</p>
                         </div>
                     </label>
 
@@ -77,8 +105,8 @@ const CreateCourse = () => {
                         </div>
                     </label>
 
-                    <Button className='flex_center gap-4 text-white' disabled={isLoading}>
-                        {isLoading ?
+                    <Button className='flex_center gap-4 text-white' disabled={isPending}>
+                        {isPending ?
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />
                         }
