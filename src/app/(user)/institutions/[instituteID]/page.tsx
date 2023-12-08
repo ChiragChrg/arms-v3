@@ -1,18 +1,19 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import useDataStore from '@/store/useDataStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
 import axios from 'axios'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
-import { RectLoader } from '@/components/CustomUI/Skeletons'
+import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import { Button } from '@/components/ui/button'
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import toast from 'react-hot-toast'
-import { PlusIcon, Settings2Icon } from 'lucide-react'
+import { PlusIcon, Settings2Icon, User2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
 
@@ -139,11 +140,32 @@ const InstituteInfo = () => {
                         }
                     </div>
 
-                    <div className="w-full flex justify-end items-center text-[0.8em] opacity-70">
+                    <div className="w-full flex justify-end items-center gap-2 text-[0.8em]">
+                        <span>RegisteredBy : </span>
                         {!isLoading ?
-                            <span>Registered by: {institute?.registeredBy}</span>
+                            <div className="flex_center gap-2">
+                                {institute?.registeredBy?.avatarImg ?
+                                    <Image
+                                        src={institute?.registeredBy?.avatarImg}
+                                        alt='User_Avatar'
+                                        width={25}
+                                        height={25}
+                                        loading='eager'
+                                        className='rounded-full'
+                                    />
+                                    :
+                                    <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
+                                        <User2 size={20} />
+                                    </div>
+                                }
+
+                                <span>{institute?.registeredBy?.username}</span>
+                            </div>
                             :
-                            <RectLoader />
+                            <div className="w-[150px] flex_center gap-2">
+                                <CircleLoader size='25px' />
+                                <RectLoader height='20px' />
+                            </div>
                         }
                     </div>
                 </div>

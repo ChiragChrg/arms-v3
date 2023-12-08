@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -9,10 +10,10 @@ import { DataStoreTypes, courseType } from '@/types/dataStoreTypes'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
-import { RectLoader } from '@/components/CustomUI/Skeletons'
+import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
-import { PlusIcon, Settings2Icon } from 'lucide-react'
+import { PlusIcon, Settings2Icon, User2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
 
@@ -130,11 +131,32 @@ const CourseInfo = () => {
                         }
                     </div>
 
-                    <div className="w-full flex justify-end items-center text-[0.8em] opacity-70">
+                    <div className="w-full flex justify-end items-center gap-2 text-[0.8em]">
+                        <span>RegisteredBy : </span>
                         {!isLoading ?
-                            <span>Registered by: {course?.courseCreator}</span>
+                            <div className="flex_center gap-2">
+                                {course?.courseCreator?.avatarImg ?
+                                    <Image
+                                        src={course?.courseCreator?.avatarImg}
+                                        alt='User_Avatar'
+                                        width={25}
+                                        height={25}
+                                        loading='eager'
+                                        className='rounded-full'
+                                    />
+                                    :
+                                    <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
+                                        <User2 size={20} />
+                                    </div>
+                                }
+
+                                <span>{course?.courseCreator?.username}</span>
+                            </div>
                             :
-                            <RectLoader />
+                            <div className="w-[150px] flex_center gap-2">
+                                <CircleLoader size='25px' />
+                                <RectLoader height='20px' />
+                            </div>
                         }
                     </div>
                 </div>

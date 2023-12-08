@@ -1,6 +1,7 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { useParams, usePathname, useRouter } from 'next/navigation'
+import Image from 'next/image'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import useDataStore from '@/store/useDataStore'
@@ -8,9 +9,9 @@ import { DataStoreTypes, subjectType } from '@/types/dataStoreTypes'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
-import { RectLoader } from '@/components/CustomUI/Skeletons'
+import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import OpenBookSVG from '@/assets/OpenBookSVG'
-import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon } from 'lucide-react'
+import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon, User2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 
 import {
@@ -129,11 +130,32 @@ const SubjectInfo = () => {
                         }
                     </div>
 
-                    <div className="w-full flex justify-end items-center text-[0.8em] opacity-70">
+                    <div className="w-full flex justify-end items-center gap-2 text-[0.8em]">
+                        <span>RegisteredBy : </span>
                         {!isLoading ?
-                            <span>Registered by: {subject?.subjectCreator}</span>
+                            <div className="flex_center gap-2">
+                                {subject?.subjectCreator?.avatarImg ?
+                                    <Image
+                                        src={subject?.subjectCreator?.avatarImg}
+                                        alt='User_Avatar'
+                                        width={25}
+                                        height={25}
+                                        loading='eager'
+                                        className='rounded-full'
+                                    />
+                                    :
+                                    <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
+                                        <User2 size={20} />
+                                    </div>
+                                }
+
+                                <span>{subject?.subjectCreator?.username}</span>
+                            </div>
                             :
-                            <RectLoader />
+                            <div className="w-[150px] flex_center gap-2">
+                                <CircleLoader size='25px' />
+                                <RectLoader height='20px' />
+                            </div>
                         }
                     </div>
                 </div>
@@ -183,7 +205,26 @@ const SubjectInfo = () => {
                             <TableRow key={index}>
                                 <TableCell className="px-2 sm:px-4 py-2 font-medium capitalize">{doc?.docName}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 ">{formatDataSize(parseInt(doc?.docSize))}</TableCell>
-                                <TableCell className='px-2 sm:px-4 py-2 hidden sm:table-cell'>{doc?.docUploader?.username}</TableCell>
+                                <TableCell className='px-2 sm:px-4 py-2 hidden sm:table-cell'>
+                                    <div className="flex items-center gap-2">
+                                        {doc?.docUploader?.avatarImg ?
+                                            <Image
+                                                src={doc?.docUploader?.avatarImg}
+                                                alt='User_Avatar'
+                                                width={25}
+                                                height={25}
+                                                loading='eager'
+                                                className='rounded-full'
+                                            />
+                                            :
+                                            <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
+                                                <User2 size={20} />
+                                            </div>
+                                        }
+
+                                        <span>{doc?.docUploader?.username}</span>
+                                    </div>
+                                </TableCell>
                                 <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 text-right flex_center flex-col sm:flex-row gap-2">
                                     <Button size='icon' title='Download' className='w-full text-white'>
