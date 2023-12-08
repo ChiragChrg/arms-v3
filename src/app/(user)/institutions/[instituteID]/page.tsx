@@ -34,8 +34,8 @@ const InstituteInfo = () => {
     const router = useRouter()
 
     const fetchInstitute = async () => {
-        const collegeName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/post/getinstitute', { collegeName });
+        const instituteName = params?.instituteID.replaceAll("-", " ");
+        const { data, status } = await axios.post('/api/post/getinstitute', { instituteName });
 
         if (status == 200) {
             setIsLoading(false)
@@ -59,7 +59,7 @@ const InstituteInfo = () => {
     useEffect(() => {
         if (globalData !== null) {
             const instituteInfo = globalData.find(
-                (obj) => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase()
+                (obj) => obj.instituteName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase()
             );
             if (instituteInfo) {
                 setInstitute(instituteInfo);
@@ -111,7 +111,7 @@ const InstituteInfo = () => {
                     <div className="flex_center flex-col gap-2 w-full">
                         {!isLoading ?
                             <>
-                                <h1 className='text-[1.8em] sm:text-[2em] font-medium drop-shadow'>{institute?.collegeName}</h1>
+                                <h1 className='text-[1.8em] sm:text-[2em] font-medium drop-shadow'>{institute?.instituteName}</h1>
                                 <p className='opacity-90 text-center'>{institute?.description}</p>
                             </>
                             :
@@ -174,7 +174,7 @@ const InstituteInfo = () => {
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Courses</h2>
                 {user?.isApproved &&
-                    <Link href={`./${institute?.collegeName.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
+                    <Link href={`./${institute?.instituteName.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
                         <span className='hidden sm:block'>Course</span>

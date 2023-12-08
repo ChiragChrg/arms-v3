@@ -3,7 +3,7 @@ import DocsModel from "@/models/DocsModel";
 import { NextResponse } from "next/server";
 
 interface RequestBody {
-    collegeName: string,
+    instituteName: string,
 }
 
 export async function POST(request: Request) {
@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
     try {
         await connectDB();
-        const Institute = await DocsModel.findOne({ collegeName: { '$regex': body?.collegeName, $options: 'i' } })
+        const Institute = await DocsModel.findOne({ instituteName: { '$regex': body?.instituteName, $options: 'i' } })
             .populate({
                 path: 'registeredBy',
                 select: 'username email avatarImg',

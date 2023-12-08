@@ -1,7 +1,7 @@
 import { Schema, model, models } from "mongoose";
 
 const DocsSchema = new Schema({
-    collegeName: {
+    instituteName: {
         type: String,
         required: true,
         unique: true,

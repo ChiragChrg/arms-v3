@@ -42,8 +42,8 @@ const SubjectInfo = () => {
     const router = useRouter()
 
     const fetchInstitute = async () => {
-        const collegeName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/post/getinstitute', { collegeName });
+        const instituteName = params?.instituteID.replaceAll("-", " ");
+        const { data, status } = await axios.post('/api/post/getinstitute', { instituteName });
 
         if (status == 200) {
             setIsLoading(false)
@@ -67,7 +67,7 @@ const SubjectInfo = () => {
 
     useEffect(() => {
         if (globalData !== null) {
-            const instituteInfo = globalData.find(obj => obj.collegeName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
+            const instituteInfo = globalData.find(obj => obj.instituteName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
             const courseInfo = instituteInfo?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
             const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
             setSubject(subjectInfo)

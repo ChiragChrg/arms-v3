@@ -44,13 +44,13 @@ const Institutions = () => {
                 {!isLoading ?
                     data?.map(obj => (
                         <Link
-                            href={`./institutions/${obj?.collegeName?.toLowerCase().replaceAll(" ", "-")}`}
+                            href={`./institutions/${obj?.instituteName?.toLowerCase().replaceAll(" ", "-")}`}
                             key={obj?._id}
                             className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark p-2 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
                             <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
                                 <BuildingSVG size='40' />
                             </div>
-                            <span className="text-[1.4em] font-medium">{obj?.collegeName}</span>
+                            <span className="text-[1.4em] font-medium">{obj?.instituteName}</span>
                             <p className="w-full min-h-[45px] text-center text-[0.925em] opacity-80">{obj?.description}</p>
                         </Link>
                     ))

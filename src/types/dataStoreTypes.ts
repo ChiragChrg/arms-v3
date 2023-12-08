@@ -40,7 +40,7 @@ export interface courseType {
 }
 
 export interface DataStoreTypes {
-    collegeName: string,
+    instituteName: string,
     description: string,
     registeredBy: {
         _id: string,

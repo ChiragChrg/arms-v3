@@ -40,8 +40,8 @@ const UploadDocuments = () => {
     const { data: instituteData } = useQuery({
         queryKey: ['getInstitutebyID', params.instituteID],
         queryFn: async () => {
-            const collegeName = params?.instituteID.replaceAll("-", " ");
-            const { data } = await axios.post('/api/post/getinstitute', { collegeName });
+            const instituteName = params?.instituteID.replaceAll("-", " ");
+            const { data } = await axios.post('/api/post/getinstitute', { instituteName });
             return data as DataStoreTypes;
         },
     });
