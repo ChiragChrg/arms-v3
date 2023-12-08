@@ -22,6 +22,7 @@ const Institutions = () => {
             setData(data)
             return data as DataStoreTypes[]
         },
+        refetchOnMount: true
     })
 
     return (

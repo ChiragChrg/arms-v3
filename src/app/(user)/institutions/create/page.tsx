@@ -1,6 +1,8 @@
 "use client"
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Image from "next/image"
+import { useRouter } from 'next/navigation'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
@@ -8,12 +10,36 @@ import useUserStore from '@/store/useUserStore'
 import { NewInstituteVector } from '@/assets'
 import BuildingSVG from '@/assets/BuildingSVG'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const CreateInstitute = () => {
     const [instituteName, setInstituteName] = useState<string>("")
     const [instituteDesc, setInstituteDesc] = useState<string>("")
-    const [isLoading, setIsLoading] = useState<boolean>(false)
     const { user } = useUserStore()
+    const router = useRouter()
+
+    const CreateInstitute = async (e: FormEvent<HTMLFormElement>) => {
+        e?.preventDefault()
+        const res = await axios.post("/api/post/createinstitute", {
+            instituteName,
+            instituteDesc,
+            registeredBy: user?.uid
+        })
+        return res
+    }
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: CreateInstitute,
+        onSuccess: async () => {
+            toast.success("Institution Created Successfully!")
+            router.push("../institutions")
+        },
+        onError(error) {
+            console.log(error)
+            toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+        }
+    })
 
     return (
         <section className='section_style'>
@@ -25,7 +51,7 @@ const CreateInstitute = () => {
             </h1>
 
             <div className="flex justify-around items-center flex-col-reverse sm:flex-row gap-6 mt-8">
-                <form className='flex flex-col gap-3 2xl:gap-4'>
+                <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>Institute Name</span>
 
@@ -71,8 +97,8 @@ const CreateInstitute = () => {
                         </div>
                     </label>
 
-                    <Button className='flex_center gap-4 text-white' disabled={isLoading}>
-                        {isLoading ?
+                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending}>
+                        {isPending ?
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />
                         }
