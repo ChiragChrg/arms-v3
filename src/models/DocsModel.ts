@@ -11,7 +11,8 @@ const DocsSchema = new Schema({
         required: true,
     },
     registeredBy: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'User',
         required: true,
     },
     createdOn: {
@@ -28,7 +29,8 @@ const DocsSchema = new Schema({
             required: true,
         },
         courseCreator: {
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: 'User',
             required: true,
         },
         subjects: [{
@@ -41,7 +43,8 @@ const DocsSchema = new Schema({
                 required: true,
             },
             subjectCreator: {
-                type: String,
+                type: Schema.Types.ObjectId,
+                ref: 'User',
                 required: true,
             },
             subjectDocs: [{

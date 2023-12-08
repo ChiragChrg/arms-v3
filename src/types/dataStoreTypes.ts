@@ -16,7 +16,12 @@ export interface docsType {
 export interface subjectType {
     subjectName: string,
     subjectDesc: string,
-    subjectCreator: string,
+    subjectCreator: {
+        _id: string,
+        username: string,
+        email: string,
+        avatarImg: string
+    },
     subjectDocs?: docsType[] | null,
     _id?: string
 }
@@ -24,7 +29,12 @@ export interface subjectType {
 export interface courseType {
     courseName: string,
     courseDesc: string,
-    courseCreator: string,
+    courseCreator: {
+        _id: string,
+        username: string,
+        email: string,
+        avatarImg: string
+    },
     subjects?: subjectType[] | null,
     _id?: string
 }
@@ -32,7 +42,12 @@ export interface courseType {
 export interface DataStoreTypes {
     collegeName: string,
     description: string,
-    registeredBy: string,
+    registeredBy: {
+        _id: string,
+        username: string,
+        email: string,
+        avatarImg: string
+    },
     createdOn: Date,
     course?: courseType[] | null,
     _id?: string
