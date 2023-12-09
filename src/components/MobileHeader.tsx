@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import Link from "next/link"
 import { useSession } from 'next-auth/react'
 import useSidebarStore from '@/store/useSidebarStore'
 import useUserStore from '@/store/useUserStore'
@@ -18,7 +19,7 @@ const MobileHeader = () => {
                 <HamMenuSVG size="40" className='lg:hidden text-logoClr dark:text-white' />
             </div>
 
-            <div className="flex_center w-fit aspect-square rounded-full overflow-hidden">
+            <Link href="/settings" className="flex_center w-fit aspect-square rounded-full overflow-hidden">
                 <CircleLoader size='40px' className={status == "loading" ? 'block' : "hidden"} />
                 {user?.avatarImg ?
                     <Image
@@ -34,7 +35,7 @@ const MobileHeader = () => {
                         <User2 size={30} />
                     </div>
                 }
-            </div>
+            </Link>
         </div>
     )
 }
