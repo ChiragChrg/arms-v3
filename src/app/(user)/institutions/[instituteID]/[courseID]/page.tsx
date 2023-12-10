@@ -49,6 +49,7 @@ const CourseInfo = () => {
         queryKey: ['getCoursebyID', params.courseID],
         queryFn: fetchInstitute,
         enabled: globalData === null, //Fetch only if globalData is Null
+        refetchOnMount: true
     });
 
     if (isError) {
