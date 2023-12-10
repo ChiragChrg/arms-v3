@@ -1,13 +1,16 @@
 "use client"
-import { useState } from 'react'
+import { FormEvent, useState } from 'react'
 import Image from "next/image"
+import { useMutation } from '@tanstack/react-query'
+import axios from 'axios'
+import toast from 'react-hot-toast'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
 import useUserStore from '@/store/useUserStore'
 import { NewCourseVector } from '@/assets'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 
 type Params = {
@@ -17,11 +20,38 @@ type Params = {
 }
 
 const CreateSubject = () => {
-    const [instituteName, setInstituteName] = useState<string>("")
-    const [instituteDesc, setInstituteDesc] = useState<string>("")
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [subjectName, setSubjectName] = useState<string>("")
+    const [subjectDesc, setSubjectDesc] = useState<string>("")
     const { user } = useUserStore()
     const params = useParams<Params>()
+    const router = useRouter()
+
+    const HandleCreateCourse = async (e: FormEvent<HTMLFormElement>) => {
+        e?.preventDefault()
+        const instituteName = params?.instituteID.replaceAll("-", " ");
+        const courseName = params?.courseID.replaceAll("-", " ");
+
+        const res = await axios.post("/api/post/createsubject", {
+            instituteName,
+            courseName,
+            subjectName,
+            subjectDesc,
+            registeredBy: user?.uid
+        })
+        return res
+    }
+
+    const { mutate, isPending } = useMutation({
+        mutationFn: HandleCreateCourse,
+        onSuccess: async () => {
+            toast.success("Subject Created Successfully!")
+            router.push(`../${params?.courseID}`)
+        },
+        onError(error) {
+            console.log(error)
+            toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+        }
+    })
 
     return (
         <section className='section_style'>
@@ -38,7 +68,7 @@ const CreateSubject = () => {
             </h1>
 
             <div className="flex justify-around items-center flex-col-reverse sm:flex-row gap-6 mt-8">
-                <form className='flex flex-col gap-3 2xl:gap-4'>
+                <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>Subject Name</span>
 
@@ -47,7 +77,7 @@ const CreateSubject = () => {
                                 type="text"
                                 required={true}
                                 placeholder='Enter Subject Name'
-                                onChange={(e) => setInstituteName(e.target.value)}
+                                onChange={(e) => setSubjectName(e.target.value)}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <OpenBookSVG size="24" className="absolute right-2 text-slate-400" />
@@ -61,11 +91,11 @@ const CreateSubject = () => {
                             <textarea
                                 rows={2}
                                 placeholder='Enter Subject Description'
-                                onChange={(e) => setInstituteDesc(e?.target?.value)}
+                                onChange={(e) => setSubjectDesc(e?.target?.value)}
                                 maxLength={40}
                                 className='resize-none text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                            <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{instituteDesc.length}/40</p>
+                            <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{subjectDesc.length}/40</p>
                         </div>
                     </label>
 
@@ -84,8 +114,8 @@ const CreateSubject = () => {
                         </div>
                     </label>
 
-                    <Button className='flex_center gap-4 text-white' disabled={isLoading}>
-                        {isLoading ?
+                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending}>
+                        {isPending ?
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />
                         }
