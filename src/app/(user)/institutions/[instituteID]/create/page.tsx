@@ -24,7 +24,7 @@ const CreateCourse = () => {
     const params = useParams<Params>()
     const router = useRouter()
 
-    const CreateCourse = async (e: FormEvent<HTMLFormElement>) => {
+    const HandleCreateCourse = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
         const instituteName = params?.instituteID.replaceAll("-", " ");
 
@@ -38,7 +38,7 @@ const CreateCourse = () => {
     }
 
     const { mutate, isPending } = useMutation({
-        mutationFn: CreateCourse,
+        mutationFn: HandleCreateCourse,
         onSuccess: async () => {
             toast.success("Course Created Successfully!")
             router.push(`../${params?.instituteID}`)

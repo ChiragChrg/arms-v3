@@ -19,7 +19,7 @@ const CreateInstitute = () => {
     const { user } = useUserStore()
     const router = useRouter()
 
-    const CreateInstitute = async (e: FormEvent<HTMLFormElement>) => {
+    const HandleCreateInstitute = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
         const res = await axios.post("/api/post/createinstitute", {
             instituteName,
@@ -30,7 +30,7 @@ const CreateInstitute = () => {
     }
 
     const { mutate, isPending } = useMutation({
-        mutationFn: CreateInstitute,
+        mutationFn: HandleCreateInstitute,
         onSuccess: async () => {
             toast.success("Institution Created Successfully!")
             router.push("../institutions")
