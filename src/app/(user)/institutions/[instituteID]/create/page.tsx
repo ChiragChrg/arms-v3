@@ -105,7 +105,7 @@ const CreateCourse = () => {
                         </div>
                     </label>
 
-                    <Button className='flex_center gap-4 text-white' disabled={isPending}>
+                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending}>
                         {isPending ?
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />
