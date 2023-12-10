@@ -47,7 +47,7 @@ const UserCard = ({ user }: Props) => {
                     className='rounded-full'
                 />
                 :
-                <div className="bg-slate-500 w-fit max-w-[80px] p-3 rounded-full">
+                <div className="bg-slate-400 w-fit max-w-[80px] p-3 rounded-full">
                     <User2 size={56} />
                 </div>
             }

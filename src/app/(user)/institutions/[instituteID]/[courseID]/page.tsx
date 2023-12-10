@@ -16,6 +16,7 @@ import OpenBookSVG from '@/assets/OpenBookSVG'
 import { PlusIcon, Settings2Icon, User2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
+import AvatarImage from '@/components/CustomUI/AvatarImage'
 
 type Params = {
     instituteID: string,
@@ -136,21 +137,7 @@ const CourseInfo = () => {
                         <span>RegisteredBy : </span>
                         {!isLoading ?
                             <div className="flex_center gap-2">
-                                {course?.courseCreator?.avatarImg ?
-                                    <Image
-                                        src={course?.courseCreator?.avatarImg}
-                                        alt='User_Avatar'
-                                        width={25}
-                                        height={25}
-                                        loading='eager'
-                                        className='rounded-full'
-                                    />
-                                    :
-                                    <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
-                                        <User2 size={20} />
-                                    </div>
-                                }
-
+                                <AvatarImage url={course?.courseCreator?.avatarImg} size={25} />
                                 <span>{course?.courseCreator?.username}</span>
                             </div>
                             :

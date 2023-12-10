@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/table"
 import useUserStore from '@/store/useUserStore'
 import Link from 'next/link'
+import AvatarImage from '@/components/CustomUI/AvatarImage'
 
 type Params = {
     instituteID: string,
@@ -134,21 +135,7 @@ const SubjectInfo = () => {
                         <span>RegisteredBy : </span>
                         {!isLoading ?
                             <div className="flex_center gap-2">
-                                {subject?.subjectCreator?.avatarImg ?
-                                    <Image
-                                        src={subject?.subjectCreator?.avatarImg}
-                                        alt='User_Avatar'
-                                        width={25}
-                                        height={25}
-                                        loading='eager'
-                                        className='rounded-full'
-                                    />
-                                    :
-                                    <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
-                                        <User2 size={20} />
-                                    </div>
-                                }
-
+                                <AvatarImage url={subject?.subjectCreator?.avatarImg} size={25} />
                                 <span>{subject?.subjectCreator?.username}</span>
                             </div>
                             :
@@ -207,21 +194,7 @@ const SubjectInfo = () => {
                                 <TableCell className="px-2 sm:px-4 py-2 ">{formatDataSize(parseInt(doc?.docSize))}</TableCell>
                                 <TableCell className='px-2 sm:px-4 py-2 hidden sm:table-cell'>
                                     <div className="flex items-center gap-2">
-                                        {doc?.docUploader?.avatarImg ?
-                                            <Image
-                                                src={doc?.docUploader?.avatarImg}
-                                                alt='User_Avatar'
-                                                width={25}
-                                                height={25}
-                                                loading='eager'
-                                                className='rounded-full'
-                                            />
-                                            :
-                                            <div className="bg-slate-500 w-fit p-[2.5px] rounded-full text-white">
-                                                <User2 size={20} />
-                                            </div>
-                                        }
-
+                                        <AvatarImage url={doc?.docUploader?.avatarImg} size={25} />
                                         <span>{doc?.docUploader?.username}</span>
                                     </div>
                                 </TableCell>

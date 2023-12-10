@@ -16,6 +16,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import AvatarImage from '@/components/CustomUI/AvatarImage'
 
 interface FacultyType {
     uid: string,
@@ -79,20 +80,7 @@ const Faculty = () => {
                         return (
                             <TableRow key={index}>
                                 <TableCell className="px-2 sm:px-4 py-2 flex items-center gap-3">
-                                    {faculty?.avatarImg ?
-                                        <Image
-                                            src={faculty?.avatarImg}
-                                            alt='User_Avatar'
-                                            width={40}
-                                            height={40}
-                                            loading='eager'
-                                            className='rounded-full'
-                                        />
-                                        :
-                                        <div className="bg-slate-500 w-fit p-1.5 rounded-full text-white">
-                                            <User2 size={30} />
-                                        </div>
-                                    }
+                                    <AvatarImage url={faculty?.avatarImg} size={40} />
                                     <span className='font-medium capitalize'>{faculty?.username}</span>
                                 </TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2">{faculty?.email}</TableCell>

@@ -7,8 +7,11 @@ import useModalStore from '@/store/useModalStore'
 import { HandlePWAInstall } from '@/lib/pwa'
 import { deferredPrompt } from '@/lib/pwa'
 import MobileHeader from '@/components/MobileHeader'
+import { useState } from 'react'
+import { CircleLoader } from '@/components/CustomUI/Skeletons'
 
 const Settings = () => {
+    const [isLoading, setIsLoading] = useState<boolean>(true)
     const { user, isAdmin } = useUserStore()
     const { onOpen } = useModalStore()
 
@@ -20,20 +23,24 @@ const Settings = () => {
 
             <div className="flex_center flex-col gap-4 mt-10">
                 <div className="relative">
-                    {user?.avatarImg ?
-                        <Image
-                            src={user?.avatarImg}
-                            alt='User_Avatar'
-                            width={125}
-                            height={125}
-                            loading='eager'
-                            className="block object-cover rounded-full"
-                        />
-                        :
-                        <div className="block bg-slate-400 text-white w-[125px] aspect-square p-4 rounded-full">
-                            <User2 className='w-full h-full' />
-                        </div>
-                    }
+                    <div className="flex_center w-[125px] aspect-square rounded-full overflow-hidden">
+                        <CircleLoader size='125px' className={isLoading ? 'block' : "hidden"} />
+                        {user?.avatarImg ?
+                            <Image
+                                src={user?.avatarImg}
+                                alt='User_Avatar'
+                                width={125}
+                                height={125}
+                                onLoadingComplete={() => setIsLoading(false)}
+                                loading='eager'
+                                className={isLoading ? 'hidden' : "block object-cover"}
+                            />
+                            :
+                            <div style={{ width: 125, height: 125 }} className={isLoading ? 'hidden' : "flex_center bg-slate-400 aspect-square p-1.5 rounded-full"}>
+                                <User2 className='w-full h-full' />
+                            </div>
+                        }
+                    </div>
                     <div className="absolute top-0 scale-[1.12] w-full h-full border-[3px] border-dashed border-primary rounded-full animate-border-spin"></div>
                 </div>
 

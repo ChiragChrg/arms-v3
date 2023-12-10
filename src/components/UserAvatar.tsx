@@ -9,6 +9,7 @@ import { Button } from './ui/button'
 import { LogOutIcon, User2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import useLoaderStore from '@/store/useLoaderStore'
+import AvatarImage from './CustomUI/AvatarImage'
 
 const UserAvatar = () => {
     const { user, setUser, setIsAdmin } = useUserStore()
@@ -50,23 +51,7 @@ const UserAvatar = () => {
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-sidebarLinkClr drop-shadow-md">
-            <div className="flex_center w-fit aspect-square rounded-full overflow-hidden">
-                <CircleLoader size='40px' className={status == "loading" ? 'block' : "hidden"} />
-                {user?.avatarImg ?
-                    <Image
-                        src={user?.avatarImg}
-                        alt='User_Avatar'
-                        width={40}
-                        height={40}
-                        loading='eager'
-                        className={status == "loading" ? 'hidden' : "block object-cover"}
-                    />
-                    :
-                    <div className={status == "loading" ? 'hidden' : "block bg-slate-500 w-fit p-1.5"}>
-                        <User2 size={30} />
-                    </div>
-                }
-            </div>
+            <AvatarImage url={user?.avatarImg} />
 
             <div className="flex_center flex-col w-full max-w-[9.5em]">
                 {status == "loading" ?
