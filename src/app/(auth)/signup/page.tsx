@@ -29,7 +29,7 @@ const Signup = () => {
     useEffect(() => {
         const FetchProviders = async () => {
             const response = await getProviders()
-            console.log(response)
+
             if (response) {
                 setProviderList(response)
                 setProvidersLoading(false)
@@ -85,7 +85,6 @@ const Signup = () => {
             })
             // redirect: callback !== "" ? true : false,
 
-            console.log("LoginRes", res)
             toast.success("Logged in Successfully!", {
                 id: OAuthTostID
             })

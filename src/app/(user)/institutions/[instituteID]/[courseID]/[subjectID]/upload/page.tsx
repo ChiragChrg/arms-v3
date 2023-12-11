@@ -65,7 +65,7 @@ const UploadDocuments = () => {
             fileStates.map(async (fileState) => {
                 try {
                     if (fileState.progress !== 'PENDING') return;
-                    console.log("fileState", fileState)
+
                     const res = await edgestore.publicFiles.upload({
                         file: fileState.file,
                         onProgressChange: async (progress) => {

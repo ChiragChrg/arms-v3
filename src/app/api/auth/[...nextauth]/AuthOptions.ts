@@ -116,7 +116,7 @@ export const AuthOptions: NextAuthOptions = {
                 try {
                     await connectDB()
                     const userExists = await UserModel.findOne({ email: token?.email })
-                    console.log("\nUpdatedToken", userExists)
+
                     const userData = {
                         uid: userExists?._id,
                         username: userExists?.username,

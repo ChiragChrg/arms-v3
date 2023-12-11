@@ -31,10 +31,8 @@ export async function POST(request: Request) {
                 expiresIn: "10min",
             }
         )
-        console.log("key", key)
 
         const encryptedLink = `${process.env.NEXTAUTH_URL}/reset-password/${key}`
-        console.log("encryptedLink", encryptedLink)
 
         const reset = {
             username: userExists?.username,

@@ -26,7 +26,6 @@ const Login = () => {
     useEffect(() => {
         const FetchProviders = async () => {
             const response = await getProviders()
-            console.log(response)
             if (response) {
                 setProviderList(response)
                 setProvidersLoading(false)
@@ -47,7 +46,7 @@ const Login = () => {
                 redirect: false,
                 callbackUrl: callback || "/dashboard"
             })
-            console.log("LoginRes", res)
+
             if (res?.status === 200) {
                 toast.success("Logged in Successfully!", {
                     id: LoginToastID
@@ -77,7 +76,6 @@ const Login = () => {
             })
             // redirect: callback !== "" ? true : false,
 
-            // console.log("LoginRes", res)
             toast.success("Logged in Successfully!", {
                 id: OAuthTostID
             })
