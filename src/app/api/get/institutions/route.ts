@@ -22,6 +22,7 @@ export async function GET() {
                 path: 'course.subjects.subjectDocs.docUploader',
                 select: 'username email avatarImg',
             })
+            .sort({ createdOn: "asc" })
 
         return new NextResponse(JSON.stringify(DocsDB), { status: 200 });
     } catch (err) {
