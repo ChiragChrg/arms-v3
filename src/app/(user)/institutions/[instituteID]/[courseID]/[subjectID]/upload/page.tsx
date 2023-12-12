@@ -186,7 +186,7 @@ const UploadDocuments = () => {
             <div className="w-full h-[2px] bg-input mt-4"></div>
 
             <MultiFileDropzone
-                className='w-full h-[100px] mt-4'
+                className='w-full h-[380px] mt-10'
                 value={fileStates}
                 onChange={(files) => {
                     setFileStates(files);

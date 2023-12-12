@@ -54,11 +54,11 @@ const CreateCourse = () => {
             <NavRoute routes={["Institutions", `Institutions/${params?.instituteID}`, `Institutions/${params?.instituteID}/Create`]} />
             <MobileHeader />
 
-            <h1 className="text-[1.8em] sm:text-[2em] 2xl:text-[3em] font-medium my-2">
+            <h1 className="text-[1.8em] sm:text-[2em] 2xl:text-[3em] font-medium my-2 text-center">
                 Create new <span className="text-primary">Course</span>
             </h1>
 
-            <div className="flex justify-around items-center flex-col-reverse sm:flex-row gap-6 mt-8">
+            <div className="flex justify-around items-center flex-col-reverse sm:flex-row gap-6 mt-20">
                 <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>Course Name</span>
