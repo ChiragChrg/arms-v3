@@ -120,7 +120,7 @@ const UploadDocuments = () => {
             ]} />
             <MobileHeader />
 
-            <h1 className="text-[1.8em] sm:text-[2em] 2xl:text-[3em] font-medium my-2">
+            <h1 className="text-[1.8em] sm:text-[2em] 2xl:text-[3em] font-medium my-2 text-center">
                 Upload new <span className="text-primary">Documents</span>
             </h1>
 
