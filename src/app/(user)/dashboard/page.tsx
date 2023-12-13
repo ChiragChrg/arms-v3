@@ -33,7 +33,7 @@ const Dashboard = () => {
             <MobileHeader />
 
             <h1 className='text-[1.6em] text-center sm:text-[2em] font-medium'>
-                Welcome back,
+                Welcome,
                 <span className="text-primary"> {user?.username?.split(" ")[0]}!</span>
             </h1>
 
