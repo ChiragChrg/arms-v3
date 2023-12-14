@@ -13,6 +13,9 @@ import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon, User2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
+import useUserStore from '@/store/useUserStore'
+import Link from 'next/link'
+import AvatarImage from '@/components/CustomUI/AvatarImage'
 
 import {
     Table,
@@ -22,9 +25,14 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import useUserStore from '@/store/useUserStore'
-import Link from 'next/link'
-import AvatarImage from '@/components/CustomUI/AvatarImage'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 type Params = {
     instituteID: string,
@@ -92,13 +100,31 @@ const SubjectInfo = () => {
                     <OpenBookSVG size='80' />
                 </div>
 
-                <Button
-                    variant='secondary'
-                    size='icon'
-                    disabled={isLoading}
-                    className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-background/80">
-                    <Settings2Icon />
-                </Button>
+                <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                            <Button
+                                variant='secondary'
+                                size='icon'
+                                disabled={isLoading}
+                                className="bg-background/80">
+                                <Settings2Icon />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className='mr-7 border border-primary/50 bg-background/80 backdrop-blur'>
+                            <DropdownMenuLabel>Manage Subject</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem>Creator Profile</DropdownMenuItem>
+                            <Button
+                                variant='destructive'
+                                disabled={isLoading}
+                                className="w-full h-8 flex_center gap-2 rounded mt-2">
+                                <Trash2Icon size={20} />
+                                <span>Delete Subject</span>
+                            </Button>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
 
                 <div className="w-full flex_center flex-col gap-2 px-4 mt-8 sm:mt-0">
                     <div className="flex_center flex-col gap-2 w-full">
