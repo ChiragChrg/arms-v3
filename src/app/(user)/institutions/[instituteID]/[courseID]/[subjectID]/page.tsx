@@ -200,11 +200,9 @@ const SubjectInfo = () => {
                                 </TableCell>
                                 <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 text-right flex_center flex-col sm:flex-row gap-2">
-                                    <Button size='icon' title='Download' className='w-full text-white'>
-                                        <a href={doc?.docLink} target='_blank'>
-                                            <DownloadCloudIcon />
-                                        </a>
-                                    </Button>
+                                    <a href={doc?.docLink} target='_blank' title='Download' className=' flex_center bg-primary text-white rounded-md h-10 w-full'>
+                                        <DownloadCloudIcon />
+                                    </a>
                                     {isAdmin &&
                                         <Button variant='destructive' size='icon' title='Delete' className='w-full bg-red-500 hover:bg-red-500/90 text-white'>
                                             <Trash2Icon />
