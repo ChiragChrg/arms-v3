@@ -1,7 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -9,7 +8,6 @@ import useDataStore from '@/store/useDataStore'
 import { DataStoreTypes, courseType } from '@/types/dataStoreTypes'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
-import { Button } from '@/components/ui/button'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
@@ -104,26 +102,20 @@ const CourseInfo = () => {
 
                 <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
                     <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <Button
-                                variant='secondary'
-                                size='icon'
-                                disabled={isLoading}
-                                className="bg-background/80">
-                                <Settings2Icon />
-                            </Button>
+                        <DropdownMenuTrigger className='bg-background/80 p-2 rounded-md'>
+                            <Settings2Icon />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className='mr-7 border border-primary/50 bg-background/80 backdrop-blur'>
                             <DropdownMenuLabel>Manage Course</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Creator Profile</DropdownMenuItem>
-                            <Button
-                                variant='destructive'
-                                disabled={isLoading}
-                                className="w-full h-8 flex_center gap-2 rounded mt-2">
-                                <Trash2Icon size={20} />
+                            <DropdownMenuItem className='flex_center gap-2 cursor-pointer'>
+                                <User2 size={18} />
+                                <span>Creator Profile</span>
+                            </DropdownMenuItem>
+                            <DropdownMenuItem className='flex_center gap-2 !text-red-600 cursor-pointer'>
+                                <Trash2Icon size={18} />
                                 <span>Delete Course</span>
-                            </Button>
+                            </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
