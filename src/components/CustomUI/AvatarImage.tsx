@@ -26,7 +26,7 @@ const AvatarImage = ({ url, size = 40 }: Props) => {
                     alt='User_Avatar'
                     width={size}
                     height={size}
-                    onLoadingComplete={() => setIsLoading(false)}
+                    onLoad={() => setIsLoading(false)}
                     loading='eager'
                     className={isLoading ? 'hidden' : "block object-cover"}
                 />
