@@ -81,6 +81,10 @@ const Dashboard = () => {
                     <p className="text-[0.9em]">An email will be sent to <span className="text-blue-600">{user.email}</span> after approval</p>
                 </div>
             }
+
+            <div>
+                <h2>Recents</h2>
+            </div>
         </section>
     )
 }
