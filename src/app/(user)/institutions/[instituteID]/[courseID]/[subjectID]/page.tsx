@@ -39,6 +39,12 @@ type Params = {
     subjectID: string
 }
 
+type RecentDataType = {
+    url: string,
+    title: string,
+    subtitle: string
+}
+
 const SubjectInfo = () => {
     const [subject, setSubject] = useState<subjectType | null | undefined>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -88,6 +94,40 @@ const SubjectInfo = () => {
             setSubject(subjectInfo)
         }
     }, [globalData, params, fetchedData]);
+
+    // Add subject to Recents dash usin LocalStorage
+    useEffect(() => {
+        if (!subject?.subjectName) return
+
+        const newData = {
+            url: `./institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`,
+            title: subject?.subjectName,
+            subtitle: `${params?.instituteID.replaceAll("-", " ")} / ${params?.courseID.replaceAll("-", " ")}`
+        }
+
+        const recentData: RecentDataType[] = JSON.parse(localStorage.getItem("arms-recents") as string)
+
+        if (!recentData || !Array.isArray(recentData)) {
+            const newRecentData = [newData]
+            localStorage.setItem("arms-recents", JSON.stringify(newRecentData))
+        } else {
+            if (recentData[0]?.title === newData?.title) return //return if curr subject already at index 0
+
+            const oldData = recentData?.find((data: RecentDataType) => data?.title === newData?.title)
+            if (oldData) {
+                //if subject exists, move to top of array ie index 0
+                let filteredData = recentData.filter((data: RecentDataType) => data?.title !== newData?.title)
+                filteredData?.unshift(newData)
+                localStorage.setItem("arms-recents", JSON.stringify(filteredData))
+            } else {
+                // if subject doesnt exisit in array, add to top of array ie index 0
+                recentData.unshift(newData)
+                if (recentData.length > 6) recentData.pop() //if more than 6, remove data at end
+
+                localStorage.setItem("arms-recents", JSON.stringify(recentData))
+            }
+        }
+    }, [subject, params])
 
     return (
         <section className='section_style'>
