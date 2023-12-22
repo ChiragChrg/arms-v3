@@ -16,7 +16,7 @@ export const HandlePWAInstall = async () => {
         console.log("PWA Install prompt choice:", outcome)
         deferredPrompt = null;
     } else {
-        toast.error("Something went wrong")
+        toast.error("PWA not installed")
     }
 };
 
@@ -28,7 +28,9 @@ const PWA = () => {
 
     window.addEventListener("appinstalled", () => {
         deferredPrompt = null;
-        toast.success("PWA App installed 👍🏻")
+        toast.success("PWA App installed 👍🏻", {
+            id: 'pwaToast',
+        })
         console.log("PWA was installed");
     });
 };
