@@ -16,7 +16,6 @@ export async function POST(request: NextRequest) {
             if (subjectObj) {
                 FilesData.forEach((file: Record<string, any>) => {
                     subjectObj.subjectDocs.push({
-                        docId: file.docId,
                         docName: file.docName,
                         docSize: file.docSize,
                         docLink: file.docLink,

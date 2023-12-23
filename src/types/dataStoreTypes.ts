@@ -1,5 +1,4 @@
 export interface docsType {
-    docId: string,
     docName: string,
     docSize: string,
     docLink: string,
@@ -10,7 +9,7 @@ export interface docsType {
         email: string,
         avatarImg: string
     },
-    _id?: string
+    _id: string
 }
 
 export interface subjectType {

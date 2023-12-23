@@ -22,7 +22,6 @@ type Params = {
 }
 
 type FileUploadRes = {
-    docId: string,
     docName: string,
     docSize: string,
     docLink: string,
@@ -83,7 +82,6 @@ const UploadDocuments = () => {
                     setUploadRes((prev) => [
                         ...prev,
                         {
-                            docId: fileState.file.name.toLowerCase().replaceAll(" ", "-").replace(".pdf", ""),
                             docName: fileState.file.name,
                             docSize: res.size.toString(),
                             docLink: res.url,

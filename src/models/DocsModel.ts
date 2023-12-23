@@ -48,10 +48,6 @@ const DocsSchema = new Schema({
                 required: true,
             },
             subjectDocs: [{
-                docId: {
-                    type: String,
-                    required: true,
-                },
                 docName: {
                     type: String,
                     required: true,
