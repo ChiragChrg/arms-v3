@@ -4,10 +4,15 @@ import { createEdgeStoreNextHandler } from '@edgestore/server/adapters/next/app'
 const es = initEdgeStore.create();
 
 const edgeStoreRouter = es.router({
-    publicFiles: es.fileBucket({
-        maxSize: 1024 * 1024 * 25,
-        accept: ['application/pdf'],
-    }),
+    publicFiles: es
+        .fileBucket({
+            maxSize: 1024 * 1024 * 25,
+            accept: ['application/pdf'],
+        })
+        .beforeDelete(({ ctx, fileInfo }) => {
+            console.log('beforeDelete', ctx, fileInfo);
+            return true;
+        }),
 });
 
 const handler = createEdgeStoreNextHandler({

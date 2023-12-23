@@ -1,20 +1,21 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import { useParams, usePathname, useRouter } from 'next/navigation'
+import Link from 'next/link'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import useDataStore from '@/store/useDataStore'
+import { useEdgeStore } from '@/lib/edgestore'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { DataStoreTypes, subjectType } from '@/types/dataStoreTypes'
+import useDataStore from '@/store/useDataStore'
+import useUserStore from '@/store/useUserStore'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
+import AvatarImage from '@/components/CustomUI/AvatarImage'
 import { Button } from '@/components/ui/button'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import OpenBookSVG from '@/assets/OpenBookSVG'
-import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon, User2 } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import useUserStore from '@/store/useUserStore'
-import Link from 'next/link'
-import AvatarImage from '@/components/CustomUI/AvatarImage'
+import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon, User2, XIcon } from 'lucide-react'
 
 import {
     Table,
@@ -32,6 +33,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+    DialogFooter,
+    DialogClose
+} from "@/components/ui/dialog"
 
 type Params = {
     instituteID: string,
@@ -48,12 +59,15 @@ type RecentDataType = {
 const SubjectInfo = () => {
     const [subject, setSubject] = useState<subjectType | null | undefined>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
 
     const { data: globalData } = useDataStore()
     const { user, isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
+    const { edgestore } = useEdgeStore();
+    const queryClient = useQueryClient()
 
     const fetchInstitute = async () => {
         const instituteName = params?.instituteID.replaceAll("-", " ");
@@ -128,6 +142,43 @@ const SubjectInfo = () => {
             }
         }
     }, [subject, params])
+
+    // Deleting files
+    const deleteFiles = async (urlToDelete: string, fileId: string) => {
+        const deleteToast = toast.loading("Deleting Document")
+        try {
+            await edgestore.publicFiles.delete({
+                url: urlToDelete,
+            });
+
+            const res = await axios.delete('/api/delete/document', {
+                data: {
+                    instituteName: params?.instituteID.replaceAll("-", " ").toLowerCase(),
+                    courseName: params?.courseID.replaceAll("-", " ").toLowerCase(),
+                    subjectName: params?.subjectID.replaceAll("-", " ").toLowerCase(),
+                    documentID: fileId,
+                }
+            });
+
+            if (res.status == 200) {
+                toast.success("Document Deleted 👍🏻", { id: deleteToast })
+            }
+        } catch (err) {
+            console.log("Error while Deleting file: ", err)
+            toast.error("Error while Deleting Document", { id: deleteToast })
+        } finally {
+            // refetch and update data
+            await queryClient.invalidateQueries({ queryKey: ['getSubjectbyID', params.subjectID] })
+        }
+    }
+
+    // Grant DELETE access if user is ADMIN or the CREATOR
+    useEffect(() => {
+        if (isAdmin || user?.uid === subject?.subjectCreator?._id)
+            setIsAuthorized(true)
+        else
+            setIsAuthorized(false)
+    }, [user, isAdmin])
 
     return (
         <section className='section_style'>
@@ -262,11 +313,45 @@ const SubjectInfo = () => {
                                     <a href={doc?.docLink} target='_blank' title='Download' className=' flex_center bg-primary text-white rounded-md h-10 w-full'>
                                         <DownloadCloudIcon />
                                     </a>
-                                    {isAdmin &&
-                                        <Button variant='destructive' size='icon' title='Delete' className='w-full bg-red-500 hover:bg-red-500/90 text-white'>
-                                            <Trash2Icon />
-                                        </Button>
+
+                                    {isAuthorized &&
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button
+                                                    variant='destructive'
+                                                    size='icon'
+                                                    title='Delete'
+                                                    className='w-full bg-red-500 hover:bg-red-500/90 text-white'>
+                                                    <Trash2Icon />
+                                                </Button>
+                                            </DialogTrigger>
+                                            <DialogContent className='w-[90%] mx-auto rounded-md'>
+                                                <DialogHeader>
+                                                    <DialogTitle>Delete <span className='text-red-600'>{doc?.docName}</span> ?</DialogTitle>
+                                                    <DialogDescription>
+                                                        This action cannot be undone. This will permanently delete the document.
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <DialogFooter className="flex-row gap-12 mt-4">
+                                                    <DialogClose asChild>
+                                                        <Button variant="secondary" className='flex_center gap-2 w-full'>
+                                                            <XIcon size={20} />
+                                                            <span>Cancel</span>
+                                                        </Button>
+                                                    </DialogClose>
+
+                                                    <Button
+                                                        variant="destructive"
+                                                        onClick={() => deleteFiles(doc?.docLink, doc?._id)}
+                                                        className='flex_center gap-2 w-full text-white'>
+                                                        <Trash2Icon size={20} />
+                                                        <span>Delete</span>
+                                                    </Button>
+                                                </DialogFooter>
+                                            </DialogContent>
+                                        </Dialog>
                                     }
+
                                 </TableCell>
                             </TableRow>
                         )
