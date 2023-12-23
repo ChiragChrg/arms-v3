@@ -34,6 +34,7 @@ const UploadDocuments = () => {
 
     const [fileStates, setFileStates] = useState<FileState[]>([]);
     const [uploadRes, setUploadRes] = useState<FileUploadRes[]>([]);
+    const [isUploadComplete, setIsUploadComplete] = useState<boolean>(false);
     const { edgestore } = useEdgeStore();
 
     const { data: instituteData } = useQuery({
@@ -104,6 +105,10 @@ const UploadDocuments = () => {
             uploaderId: user?.uid,
             FilesData: uploadRes
         })
+
+        if (DBRes.status == 201) {
+            setIsUploadComplete(true)
+        }
     }
 
 
@@ -194,6 +199,7 @@ const UploadDocuments = () => {
                 }}
                 setFileStates={setFileStates} //to reset the state
                 uploadFiles={uploadFiles}
+                isUploadComplete={isUploadComplete}
                 dropzoneOptions={{
                     maxFiles: 10,
                     maxSize: 26214400

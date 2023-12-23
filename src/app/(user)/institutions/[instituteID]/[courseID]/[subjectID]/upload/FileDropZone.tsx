@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import {
     CheckCircleIcon,
     FileIcon,
+    Loader2Icon,
     LucideFileWarning,
     RotateCcwIcon,
     Trash2Icon,
@@ -39,6 +40,7 @@ type InputProps = {
     dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
     setFileStates: React.Dispatch<React.SetStateAction<FileState[]>>;
     uploadFiles: () => void
+    isUploadComplete: boolean;
 };
 
 const ERROR_MESSAGES = {
@@ -64,11 +66,11 @@ type Params = {
 
 const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
     (
-        { dropzoneOptions, value, className, disabled, onFilesAdded, onChange, setFileStates, uploadFiles },
+        { dropzoneOptions, value, className, disabled, onFilesAdded, onChange, setFileStates, uploadFiles, isUploadComplete },
         ref
     ) => {
         const [customError, setCustomError] = React.useState<string>();
-        const [disableUpload, setDisableUpload] = React.useState<boolean>(false);
+        const [disableUploadButton, setDisableUploadButton] = React.useState<boolean>(false);
         const params = useParams<Params>()
 
         if (dropzoneOptions?.maxFiles && value?.length) {
@@ -181,7 +183,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                                         variant="secondary"
                                         onClick={() => {
                                             setFileStates([]);
-                                            setDisableUpload(false)
+                                            setDisableUploadButton(false)
                                         }
                                         }
                                         className='flex_center gap-2 text-white'>
@@ -189,22 +191,27 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                                         <span className='hidden sm:block'>Reset</span>
                                     </Button>
 
-                                    {disableUpload ?
-                                        <Link
-                                            href={`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`}
-                                            onClick={() => {
-                                                uploadFiles()
-                                                setDisableUpload(true)
-                                            }}
-                                            className='flex_center gap-2 bg-primary text-white h-10 px-4 py-2 rounded-md'>
-                                            <CheckCircleIcon />
-                                            <span>Done</span>
-                                        </Link>
+                                    {disableUploadButton ?
+                                        <>
+                                            {isUploadComplete ?
+                                                <Link
+                                                    href={`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`}
+                                                    className='flex_center gap-2 bg-primary text-white w-[110px] h-10 px-4 py-2 rounded-md'>
+                                                    <CheckCircleIcon />
+                                                    <span>Done</span>
+                                                </Link>
+                                                :
+                                                <Button disabled className='flex_center gap-2 bg-primary text-white w-[110px] h-10 px-4 py-2 rounded-md'>
+                                                    <Loader2Icon className='animate-spin' />
+                                                </Button>
+                                            }
+                                        </>
+
                                         :
                                         <Button
                                             onClick={() => {
                                                 uploadFiles()
-                                                setDisableUpload(true)
+                                                setDisableUploadButton(true)
                                             }}
                                             className='flex_center gap-2 text-white'>
                                             <UploadCloudIcon />

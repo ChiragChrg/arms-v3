@@ -2,8 +2,21 @@ import { connectDB } from "@/lib/database";
 import DocsModel from "@/models/DocsModel";
 import { NextResponse, NextRequest } from "next/server";
 
+type RequestBody = {
+    instituteId: string,
+    courseId: string,
+    subjectId: string,
+    uploaderId: string,
+    FilesData: {
+        docName: string,
+        docSize: string,
+        docLink: string,
+        docUploader: string | null,
+    }[],
+}
+
 export async function POST(request: NextRequest) {
-    const { instituteId, courseId, subjectId, uploaderId, FilesData } = await request.json();
+    const { instituteId, courseId, subjectId, uploaderId, FilesData }: RequestBody = await request.json();
 
     try {
         await connectDB();
@@ -26,7 +39,7 @@ export async function POST(request: NextRequest) {
         }
         await DocsDB.save();
 
-        return new NextResponse(JSON.stringify({ message: "Files Uploaded Successfully", }), { status: 201 });
+        return new NextResponse(JSON.stringify({ message: "Files Uploaded Successfully", DocsDB }), { status: 201 });
     } catch (err) {
         console.error(err);
         return new NextResponse(JSON.stringify(err), { status: 500 });
