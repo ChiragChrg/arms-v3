@@ -178,7 +178,7 @@ const SubjectInfo = () => {
             setIsAuthorized(true)
         else
             setIsAuthorized(false)
-    }, [user, isAdmin])
+    }, [user, isAdmin, subject?.subjectCreator?._id])
 
     return (
         <section className='section_style'>
