@@ -298,6 +298,8 @@ const SubjectInfo = () => {
                         const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
                         const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
 
+                        const singleFileAccess = doc?.docUploader?._id === user?.uid
+
                         return (
                             <TableRow key={index}>
                                 <TableCell className="px-2 sm:px-4 py-2 font-medium capitalize">{doc?.docName}</TableCell>
@@ -314,7 +316,7 @@ const SubjectInfo = () => {
                                         <DownloadCloudIcon />
                                     </a>
 
-                                    {isAuthorized &&
+                                    {(isAuthorized || singleFileAccess) &&
                                         <Dialog>
                                             <DialogTrigger asChild>
                                                 <Button
