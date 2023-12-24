@@ -1,12 +1,11 @@
 "use client"
 import { useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import useUserStore from '@/store/useUserStore'
 import useModalStore from '@/store/useModalStore'
-import { CircleLoader, RectLoader } from "./CustomUI/Skeletons"
+import { RectLoader } from "./CustomUI/Skeletons"
 import { Button } from './ui/button'
-import { LogOutIcon, User2 } from 'lucide-react'
+import { LogOutIcon } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import useLoaderStore from '@/store/useLoaderStore'
 import AvatarImage from './CustomUI/AvatarImage'
@@ -22,7 +21,7 @@ const UserAvatar = () => {
         // console.log(session, status)
         if (status == "authenticated" && session !== null) {
             const formattedUser = {
-                uid: session?.user?.uid,
+                uid: session?.user?.uid!,
                 username: session?.user?.name,
                 email: session?.user?.email,
                 avatarImg: session?.user?.avatarImg,
