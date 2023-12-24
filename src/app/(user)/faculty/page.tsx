@@ -33,7 +33,7 @@ const Faculty = () => {
     const { data } = useQuery({
         queryKey: ["facultyList"],
         queryFn: async () => {
-            const { data } = await axios.get("/api/get/getfaculty")
+            const { data } = await axios.get("/api/get/faculty")
             return data as FacultyType[]
         },
         refetchOnMount: true

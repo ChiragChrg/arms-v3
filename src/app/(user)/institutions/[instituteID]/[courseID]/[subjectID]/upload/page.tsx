@@ -41,7 +41,7 @@ const UploadDocuments = () => {
         queryKey: ['getInstitutebyID', params.instituteID],
         queryFn: async () => {
             const instituteName = params?.instituteID.replaceAll("-", " ");
-            const { data } = await axios.post('/api/post/getinstitute', { instituteName });
+            const { data } = await axios.post('/api/post/getInstitute', { instituteName });
             return data as DataStoreTypes;
         },
     });
@@ -98,7 +98,7 @@ const UploadDocuments = () => {
         // Uploading File info to DB
         const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
         const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-        const DBRes = await axios.post("/api/post/fileupload", {
+        const DBRes = await axios.post("/api/post/uploadFiles", {
             instituteId: instituteData?._id,
             courseId: courseInfo?._id,
             subjectId: subjectInfo?._id,

@@ -38,7 +38,7 @@ const ResetPassword = () => {
         setIsLoading(true)
 
         try {
-            const res = await axios.post("/api/post/reset-password", {
+            const res = await axios.post("/api/post/resetPassword", {
                 uid: decodedUrl?.uid,
                 password
             })

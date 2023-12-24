@@ -28,7 +28,7 @@ const CreateCourse = () => {
         e?.preventDefault()
         const instituteName = params?.instituteID.replaceAll("-", " ");
 
-        const res = await axios.post("/api/post/createcourse", {
+        const res = await axios.post("/api/post/createCourse", {
             instituteName,
             courseName,
             courseDesc,
