@@ -97,7 +97,7 @@ export const AuthOptions: NextAuthOptions = {
                     // console.log("OAuth User Exisits")
 
                     // Update profile picture only if they dont match
-                    if (userExists.avatarImg !== profile?.picture) {
+                    if (profile?.picture?.length !== 0 && userExists.avatarImg !== profile?.picture) {
                         userExists.avatarImg = profile?.picture
                         await userExists.save()
                     }
