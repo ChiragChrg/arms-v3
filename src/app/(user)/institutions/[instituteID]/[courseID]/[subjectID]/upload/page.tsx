@@ -33,7 +33,6 @@ const UploadDocuments = () => {
     const params = useParams<Params>()
 
     const [fileStates, setFileStates] = useState<FileState[]>([]);
-    const [uploadRes, setUploadRes] = useState<FileUploadRes[]>([]);
     const [isUploadComplete, setIsUploadComplete] = useState<boolean>(false);
     const { edgestore } = useEdgeStore();
 
@@ -61,6 +60,10 @@ const UploadDocuments = () => {
 
     // Uploading File
     const uploadFiles = async () => {
+        if (!user?.uid) return
+
+        let uploadMeta: FileUploadRes[] = []
+
         await Promise.all(
             fileStates.map(async (fileState) => {
                 try {
@@ -79,16 +82,12 @@ const UploadDocuments = () => {
                         },
                     });
 
-                    if (!user?.username) return
-                    setUploadRes((prev) => [
-                        ...prev,
-                        {
-                            docName: fileState.file.name,
-                            docSize: res.size.toString(),
-                            docLink: res.url,
-                            docUploader: user.uid || null
-                        },
-                    ]);
+                    uploadMeta.push({
+                        docName: fileState.file.name,
+                        docSize: res.size.toString(),
+                        docLink: res.url,
+                        docUploader: user?.uid
+                    })
                 } catch (err) {
                     updateFileProgress(fileState.key, 'ERROR');
                 }
@@ -98,15 +97,15 @@ const UploadDocuments = () => {
         // Uploading File info to DB
         const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
         const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-        const DBRes = await axios.post("/api/post/uploadFiles", {
+        const UploadRes = await axios.post("/api/post/uploadFiles", {
             instituteId: instituteData?._id,
             courseId: courseInfo?._id,
             subjectId: subjectInfo?._id,
             uploaderId: user?.uid,
-            FilesData: uploadRes
+            FilesMeta: uploadMeta
         })
 
-        if (DBRes.status == 201) {
+        if (UploadRes.status == 201) {
             setIsUploadComplete(true)
         }
     }

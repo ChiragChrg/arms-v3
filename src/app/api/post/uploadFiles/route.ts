@@ -7,27 +7,25 @@ type RequestBody = {
     courseId: string,
     subjectId: string,
     uploaderId: string,
-    FilesData: {
+    FilesMeta: {
         docName: string,
         docSize: string,
         docLink: string,
-        docUploader: string | null,
+        docUploader: string,
     }[],
 }
 
 export async function POST(request: NextRequest) {
-    const { instituteId, courseId, subjectId, uploaderId, FilesData }: RequestBody = await request.json();
+    const { instituteId, courseId, subjectId, uploaderId, FilesMeta }: RequestBody = await request.json();
 
     try {
         await connectDB();
         const DocsDB = await DocsModel.findOne({ "_id": instituteId });
         const courseObj = DocsDB.course.find((obj: Record<string, any>) => obj._id == courseId);
-
         if (courseObj) {
             const subjectObj = courseObj.subjects.find((subj: Record<string, any>) => subj._id == subjectId);
-
             if (subjectObj) {
-                FilesData.forEach((file: Record<string, any>) => {
+                FilesMeta.forEach((file) => {
                     subjectObj.subjectDocs.push({
                         docName: file.docName,
                         docSize: file.docSize,

@@ -1,7 +1,7 @@
 import { create } from "zustand"
 
 interface UserTypes {
-    uid?: string | null,
+    uid: string,
     username?: string | null,
     email?: string | null,
     avatarImg?: string | null,
