@@ -60,6 +60,7 @@ const SubjectInfo = () => {
     const [subject, setSubject] = useState<subjectType | null | undefined>(null)
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
+    const [open, setOpen] = useState<boolean>(false)
 
     const { data: globalData } = useDataStore()
     const { user, isAdmin } = useUserStore()
@@ -167,6 +168,7 @@ const SubjectInfo = () => {
             console.log("Error while Deleting file: ", err)
             toast.error("Error while Deleting Document", { id: deleteToast })
         } finally {
+            setOpen(false)
             // refetch and update data
             await queryClient.invalidateQueries({ queryKey: ['getSubjectbyID', params.subjectID] })
         }
@@ -317,7 +319,7 @@ const SubjectInfo = () => {
                                     </a>
 
                                     {(isAuthorized || singleFileAccess) &&
-                                        <Dialog>
+                                        <Dialog open={open} onOpenChange={setOpen}>
                                             <DialogTrigger asChild>
                                                 <Button
                                                     variant='destructive'
