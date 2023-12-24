@@ -41,6 +41,7 @@ type InputProps = {
     setFileStates: React.Dispatch<React.SetStateAction<FileState[]>>;
     uploadFiles: () => void
     isUploadComplete: boolean;
+    setIsUploadComplete: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const ERROR_MESSAGES = {
@@ -66,7 +67,7 @@ type Params = {
 
 const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
     (
-        { dropzoneOptions, value, className, disabled, onFilesAdded, onChange, setFileStates, uploadFiles, isUploadComplete },
+        { dropzoneOptions, value, className, disabled, onFilesAdded, onChange, setFileStates, uploadFiles, isUploadComplete, setIsUploadComplete },
         ref
     ) => {
         const [customError, setCustomError] = React.useState<string>();
@@ -184,6 +185,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                                         onClick={() => {
                                             setFileStates([]);
                                             setDisableUploadButton(false)
+                                            setIsUploadComplete(false)
                                         }
                                         }
                                         className='flex_center gap-2 text-white'>

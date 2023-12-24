@@ -200,6 +200,7 @@ const UploadDocuments = () => {
                 setFileStates={setFileStates} //to reset the state
                 uploadFiles={uploadFiles}
                 isUploadComplete={isUploadComplete}
+                setIsUploadComplete={setIsUploadComplete}
                 dropzoneOptions={{
                     maxFiles: 10,
                     maxSize: 26214400
