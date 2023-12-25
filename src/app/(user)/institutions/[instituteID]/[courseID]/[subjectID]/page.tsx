@@ -51,9 +51,11 @@ type Params = {
 }
 
 type RecentDataType = {
-    url: string,
-    title: string,
-    subtitle: string
+    [key: string]: {
+        url: string,
+        title: string,
+        subtitle: string
+    }[]
 }
 
 const SubjectInfo = () => {
@@ -120,29 +122,36 @@ const SubjectInfo = () => {
             subtitle: `${params?.instituteID.replaceAll("-", " ")} / ${params?.courseID.replaceAll("-", " ")}`
         }
 
-        const recentData: RecentDataType[] = JSON.parse(localStorage.getItem("arms-recents") as string)
+        const userID = user?.uid as string
+        const recentDataUsers: RecentDataType = JSON.parse(localStorage.getItem("arms-recents") as string) || []
+        const recentData = recentDataUsers[userID]
 
         if (!recentData || !Array.isArray(recentData)) {
-            const newRecentData = [newData]
-            localStorage.setItem("arms-recents", JSON.stringify(newRecentData))
+            const newRecentData = {
+                [userID]: [newData]
+            }
+            localStorage.setItem("arms-recents", JSON.stringify({ ...recentDataUsers, ...newRecentData }))
         } else {
             if (recentData[0]?.title === newData?.title) return //return if curr subject already at index 0
 
-            const oldData = recentData?.find((data: RecentDataType) => data?.title === newData?.title)
+            const oldData = recentData?.find((data) => data?.title === newData?.title)
             if (oldData) {
                 //if subject exists, move to top of array ie index 0
-                let filteredData = recentData.filter((data: RecentDataType) => data?.title !== newData?.title)
-                filteredData?.unshift(newData)
-                localStorage.setItem("arms-recents", JSON.stringify(filteredData))
+                let filteredData = recentData.filter((data) => data?.title !== newData?.title) // remove old data
+                filteredData?.unshift(newData) // add back data to top index
+
+                recentDataUsers[userID] = filteredData
+                localStorage.setItem("arms-recents", JSON.stringify(recentDataUsers))
             } else {
                 // if subject doesnt exisit in array, add to top of array ie index 0
                 recentData.unshift(newData)
                 if (recentData.length > 6) recentData.pop() //if more than 6, remove data at end
 
-                localStorage.setItem("arms-recents", JSON.stringify(recentData))
+                recentDataUsers[userID] = recentData
+                localStorage.setItem("arms-recents", JSON.stringify(recentDataUsers))
             }
         }
-    }, [subject, params])
+    }, [subject, params, user?.uid])
 
     // Deleting files
     const deleteFiles = async (urlToDelete: string, fileId: string) => {

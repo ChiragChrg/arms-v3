@@ -38,9 +38,11 @@ const Dashboard = () => {
     })
 
     useEffect(() => {
+        const userID = user?.uid as string
         const recentsData = JSON.parse(localStorage.getItem("arms-recents") as string)
-        setRecentTopic(recentsData)
-    }, [])
+        const userRecents = recentsData[userID]
+        setRecentTopic(userRecents)
+    }, [user])
 
     return (
         <section className='section_style'>
