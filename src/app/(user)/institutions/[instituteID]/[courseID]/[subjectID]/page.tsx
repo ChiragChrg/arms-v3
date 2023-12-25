@@ -5,6 +5,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useEdgeStore } from '@/lib/edgestore'
+import { getDownloadUrl } from '@edgestore/react/utils';
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { DataStoreTypes, subjectType } from '@/types/dataStoreTypes'
 import useDataStore from '@/store/useDataStore'
@@ -191,6 +192,14 @@ const SubjectInfo = () => {
             setIsAuthorized(false)
     }, [user, isAdmin, subject?.subjectCreator?._id])
 
+    const handleDownload = async (fileUrl: string, fileName: string) => {
+        const downloadLink = getDownloadUrl(fileUrl, fileName)
+
+        const Button = document.createElement('a');
+        Button.href = downloadLink;
+        Button.click();
+    }
+
     return (
         <section className='section_style'>
             <NavRoute routes={["Institutions", `Institutions/${params?.instituteID}`, `Institutions/${params?.instituteID}/${params?.courseID}`, `.${pathname}`]} />
@@ -323,9 +332,13 @@ const SubjectInfo = () => {
                                 </TableCell>
                                 <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 text-right flex_center flex-col sm:flex-row gap-2">
-                                    <a href={doc?.docLink} target='_blank' title='Download' className=' flex_center bg-primary text-white rounded-md h-10 w-full'>
+                                    <Button
+                                        size='icon'
+                                        title='Download'
+                                        onClick={() => handleDownload(doc?.docLink, doc?.docName)}
+                                        className='flex_center bg-primary text-white rounded-md h-10 w-full'>
                                         <DownloadCloudIcon />
-                                    </a>
+                                    </Button>
 
                                     {(isAuthorized || singleFileAccess) &&
                                         <Dialog open={open} onOpenChange={setOpen}>
