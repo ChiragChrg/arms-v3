@@ -18,7 +18,7 @@ const UserCard = ({ user }: Props) => {
     const queryClient = useQueryClient()
 
     const HandleRequest = async ({ approval, uid }: MutationType) => {
-        const res = await axios.post("/api/post/manageApproval", { approval, uid })
+        const res = await axios.post("/api/post/manage-approval", { approval, uid })
         return res
     }
 

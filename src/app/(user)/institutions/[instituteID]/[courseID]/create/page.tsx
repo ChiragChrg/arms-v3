@@ -31,7 +31,7 @@ const CreateSubject = () => {
         const instituteName = params?.instituteID.replaceAll("-", " ");
         const courseName = params?.courseID.replaceAll("-", " ");
 
-        const res = await axios.post("/api/post/createSubject", {
+        const res = await axios.post("/api/post/create-subject", {
             instituteName,
             courseName,
             subjectName,

@@ -72,7 +72,7 @@ const SubjectInfo = () => {
 
     const fetchInstitute = async () => {
         const instituteName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/post/getInstitute', { instituteName });
+        const { data, status } = await axios.post('/api/post/get-institute', { instituteName });
 
         if (status == 200) {
             setIsLoading(false)

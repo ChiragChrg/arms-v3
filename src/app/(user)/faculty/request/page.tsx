@@ -20,7 +20,7 @@ const Request = () => {
     const { data: users } = useQuery({
         queryKey: ["facultyRequestList"],
         queryFn: async () => {
-            const { data } = await axios.get("/api/get/pendingApproval")
+            const { data } = await axios.get("/api/get/pending-approval")
             return data as FacultyType[]
         }
     })

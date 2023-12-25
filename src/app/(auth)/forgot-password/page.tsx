@@ -21,7 +21,7 @@ const ForgotPassword = () => {
         setIsLoading(true)
 
         try {
-            const res = await axios.post("/api/post/forgotPassword", { email })
+            const res = await axios.post("/api/post/forgot-password", { email })
 
             if (res.status === 201) {
                 //Sending Mail to User

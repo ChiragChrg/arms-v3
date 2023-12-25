@@ -21,7 +21,7 @@ const CreateInstitute = () => {
 
     const HandleCreateInstitute = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
-        const res = await axios.post("/api/post/createInstitute", {
+        const res = await axios.post("/api/post/create-institute", {
             instituteName,
             instituteDesc,
             registeredBy: user?.uid
