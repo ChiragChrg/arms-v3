@@ -10,7 +10,7 @@ import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import BookStackSVG from '@/assets/BookStackSVG'
 import axios from 'axios'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 
 type Params = {
@@ -23,6 +23,7 @@ const CreateCourse = () => {
     const { user } = useUserStore()
     const params = useParams<Params>()
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const HandleCreateCourse = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
@@ -39,13 +40,14 @@ const CreateCourse = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: HandleCreateCourse,
-        onSuccess: async () => {
-            toast.success("Course Created Successfully!")
-            router.push(`../${params?.instituteID}`)
-        },
         onError(error) {
             console.log(error)
             toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+        },
+        onSuccess: async () => {
+            toast.success("Course Created Successfully!")
+            router.push(`../${params?.instituteID}`)
+            await queryClient.invalidateQueries({ queryKey: ['getInstitutebyID', params.instituteID] })
         }
     })
 

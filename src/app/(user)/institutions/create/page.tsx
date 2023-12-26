@@ -18,6 +18,7 @@ const CreateInstitute = () => {
     const [instituteDesc, setInstituteDesc] = useState<string>("")
     const { user } = useUserStore()
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const HandleCreateInstitute = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
@@ -31,13 +32,14 @@ const CreateInstitute = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: HandleCreateInstitute,
-        onSuccess: async () => {
-            toast.success("Institution Created Successfully!")
-            router.push("../institutions")
-        },
         onError(error) {
             console.log(error)
             toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+        },
+        onSuccess: async () => {
+            toast.success("Institution Created Successfully!")
+            router.push("../institutions")
+            await queryClient.invalidateQueries({ queryKey: ["getInstitution"] })
         }
     })
 

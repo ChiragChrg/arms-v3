@@ -1,7 +1,7 @@
 "use client"
 import { FormEvent, useState } from 'react'
 import Image from "next/image"
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import NavRoute from '@/components/NavRoutes'
@@ -16,7 +16,6 @@ import OpenBookSVG from '@/assets/OpenBookSVG'
 type Params = {
     instituteID: string,
     courseID: string,
-    // subjectID: string
 }
 
 const CreateSubject = () => {
@@ -25,6 +24,7 @@ const CreateSubject = () => {
     const { user } = useUserStore()
     const params = useParams<Params>()
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const HandleCreateCourse = async (e: FormEvent<HTMLFormElement>) => {
         e?.preventDefault()
@@ -43,13 +43,14 @@ const CreateSubject = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: HandleCreateCourse,
-        onSuccess: async () => {
-            toast.success("Subject Created Successfully!")
-            router.push(`../${params?.courseID}`)
-        },
         onError(error) {
             console.log(error)
             toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+        },
+        onSuccess: async () => {
+            toast.success("Subject Created Successfully!")
+            router.push(`../${params?.courseID}`)
+            await queryClient.invalidateQueries({ queryKey: ['getCoursebyID', params.courseID] })
         }
     })
 
