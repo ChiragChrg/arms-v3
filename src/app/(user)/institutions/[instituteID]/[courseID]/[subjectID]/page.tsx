@@ -16,7 +16,7 @@ import AvatarImage from '@/components/CustomUI/AvatarImage'
 import { Button } from '@/components/ui/button'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import OpenBookSVG from '@/assets/OpenBookSVG'
-import { DownloadCloudIcon, PlusIcon, Settings2Icon, Trash2Icon, User2, XIcon } from 'lucide-react'
+import { DownloadCloudIcon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react'
 
 import {
     Table,
