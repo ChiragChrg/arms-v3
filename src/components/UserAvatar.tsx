@@ -49,7 +49,7 @@ const UserAvatar = () => {
     }, [router, status, setUser, setShowLoader])
 
     return (
-        <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-sidebarLinkClr drop-shadow-md">
+        <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-primary/50 dark:bg-sidebarLinkClr drop-shadow-md">
             <AvatarImage url={user?.avatarImg} />
 
             <div className="flex_center flex-col w-full max-w-[9.5em]">

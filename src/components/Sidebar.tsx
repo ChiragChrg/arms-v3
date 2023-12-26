@@ -79,7 +79,7 @@ const Sidebar = () => {
                 <Link href={`/dashboard`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('sidebar_link_style',
-                        pathname === `/dashboard` && "text-baseClr bg-white")}>
+                        pathname === `/dashboard` && "text-baseClr bg-white dark:bg-white")}>
                     <PieChart size={20} />
                     <span>Dashboard</span>
                 </Link>
@@ -87,7 +87,7 @@ const Sidebar = () => {
                 <Link href={`/institutions`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('sidebar_link_style',
-                        pathname === `/institutions` && "text-baseClr bg-white")}>
+                        pathname === `/institutions` && "text-baseClr bg-white dark:bg-white")}>
                     <BuildingSVG size="20" />
                     <span>Institutions</span>
                 </Link>
@@ -95,7 +95,7 @@ const Sidebar = () => {
                 {isAdmin && <Link href={`/faculty`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('sidebar_link_style',
-                        pathname === `/faculty` && "text-baseClr bg-white")}>
+                        pathname === `/faculty` && "text-baseClr bg-white dark:bg-white")}>
                     <Users2 size="20" />
                     <span>Faculty</span>
                 </Link>}
@@ -103,7 +103,7 @@ const Sidebar = () => {
                 <Link href={`/settings`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('sidebar_link_style',
-                        pathname === `/settings` && "text-baseClr bg-white")}>
+                        pathname === `/settings` && "text-baseClr bg-white dark:bg-white")}>
                     <Settings2 size={20} />
                     <span>Settings</span>
                 </Link>
@@ -111,7 +111,7 @@ const Sidebar = () => {
                 <Link href={`/about`}
                     onClick={() => { isMobile && setShowSidebar(false) }}
                     className={cn('sidebar_link_style',
-                        pathname === `/about` && "text-baseClr bg-white")}>
+                        pathname === `/about` && "text-baseClr bg-white dark:bg-white")}>
                     <BadgeInfoIcon size={20} />
                     <span>About</span>
                 </Link>
