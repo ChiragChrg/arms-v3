@@ -27,14 +27,6 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
     Dialog,
     DialogContent,
     DialogDescription,
@@ -44,6 +36,7 @@ import {
     DialogFooter,
     DialogClose
 } from "@/components/ui/dialog"
+import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 
 type Params = {
     instituteID: string,
@@ -192,6 +185,7 @@ const SubjectInfo = () => {
             setIsAuthorized(false)
     }, [user, isAdmin, subject?.subjectCreator?._id])
 
+    // Convert file url to a download link
     const handleDownload = async (fileUrl: string, fileName: string) => {
         const downloadLink = getDownloadUrl(fileUrl, fileName)
 
@@ -210,25 +204,11 @@ const SubjectInfo = () => {
                     <OpenBookSVG size='80' />
                 </div>
 
-                <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className='bg-background/80 p-2 rounded-md'>
-                            <Settings2Icon />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className='mr-7 border border-primary/50 bg-background/80 backdrop-blur'>
-                            <DropdownMenuLabel>Manage Subject</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className='flex_center gap-2 cursor-pointer'>
-                                <User2 size={18} />
-                                <span>Creator Profile</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className='flex_center gap-2 !text-red-600 cursor-pointer'>
-                                <Trash2Icon size={18} />
-                                <span>Delete Subject</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                <DropdownSettings
+                    title='Subject'
+                    toDeleteName={subject?.subjectName as string}
+                    isAuthorized={isAuthorized}
+                    userID={user?.uid as string} />
 
                 <div className="w-full flex_center flex-col gap-2 px-4 mt-8 sm:mt-0">
                     <div className="flex_center flex-col gap-2 w-full">
@@ -377,7 +357,6 @@ const SubjectInfo = () => {
                                             </DialogContent>
                                         </Dialog>
                                     }
-
                                 </TableCell>
                             </TableRow>
                         )

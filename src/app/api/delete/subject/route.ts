@@ -6,11 +6,10 @@ type RequestBody = {
     instituteName: string,
     courseName: string,
     subjectName: string,
-    documentID: string,
 }
 
 export async function DELETE(request: Request) {
-    const { instituteName, courseName, subjectName, documentID }: RequestBody = await request.json()
+    const { instituteName, courseName, subjectName }: RequestBody = await request.json()
 
     try {
         await connectDB();
@@ -22,22 +21,18 @@ export async function DELETE(request: Request) {
 
         Institute.course.forEach((course: any) => {
             if (course?.courseName.toLowerCase() == courseName) {
-                course?.subjects?.forEach((subject: any) => {
-                    if (subject?.subjectName.toLowerCase() == subjectName) {
-                        const docIndex = subject.subjectDocs.findIndex((doc: any) => doc._id == documentID);
+                const deleteIndex = course?.subjects.findIndex((subject: any) => subject.subjectName.toLowerCase() == subjectName);
 
-                        if (docIndex !== -1) {
-                            subject.subjectDocs.pull(subject.subjectDocs[docIndex]);
-                            Institute.save();
-                        } else {
-                            console.log('Document not found.');
-                        }
-                    }
-                })
+                if (deleteIndex !== -1) {
+                    course?.subjects.pull(course?.subjects[deleteIndex]);
+                    Institute.save();
+                } else {
+                    console.log('Subject not found.');
+                }
             }
         })
 
-        return new NextResponse("Document deleted successfully!", { status: 200 });
+        return new NextResponse("Subject deleted successfully!", { status: 200 });
     } catch (err) {
         console.error(err);
         return new NextResponse(JSON.stringify(err), { status: 500 });
