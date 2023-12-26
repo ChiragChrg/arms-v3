@@ -208,7 +208,8 @@ const SubjectInfo = () => {
                     title='Subject'
                     toDeleteName={subject?.subjectName as string}
                     isAuthorized={isAuthorized}
-                    userID={user?.uid as string} />
+                    userID={user?.uid as string}
+                    documentData={subject as subjectType} />
 
                 <div className="w-full flex_center flex-col gap-2 px-4 mt-8 sm:mt-0">
                     <div className="flex_center flex-col gap-2 w-full">
