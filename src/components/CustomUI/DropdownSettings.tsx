@@ -85,6 +85,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID }: Props) 
                 });
 
                 if (res?.status === 200) {
+                    await deleteRecentTopics()
                     toast.success(`${title} deleted successfully!`)
                     setOpen(false)
                     router.push(`/institutions`)
@@ -98,6 +99,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID }: Props) 
                 });
 
                 if (res?.status === 200) {
+                    await deleteRecentTopics()
                     toast.success(`${title} deleted successfully!`)
                     setOpen(false)
                     router.push(`/institutions/${params?.instituteID}`)
@@ -164,7 +166,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID }: Props) 
 
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>
-                            Type " <span className='text-red-500'>Delete {toDeleteName}</span> " to confirm.
+                            Type &quot; <span className='text-red-500'>Delete {toDeleteName}</span> &quot; to confirm.
                         </span>
 
                         <div className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1 mt-3">

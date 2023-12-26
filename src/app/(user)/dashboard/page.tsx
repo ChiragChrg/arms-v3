@@ -19,6 +19,10 @@ interface CountDataType {
     document: number,
 }
 
+type RecentTopicsType = {
+    [key: string]: RecentDataType[]
+}
+
 type RecentDataType = {
     url: string,
     title: string,
@@ -39,8 +43,8 @@ const Dashboard = () => {
 
     useEffect(() => {
         const userID = user?.uid as string
-        const recentsData = JSON.parse(localStorage.getItem("arms-recents") as string)
-        const userRecents = recentsData[userID]
+        const recentDataUsers: RecentTopicsType = JSON.parse(localStorage.getItem("arms-recents") as string) || []
+        const userRecents = recentDataUsers[userID]
         setRecentTopic(userRecents)
     }, [user])
 
