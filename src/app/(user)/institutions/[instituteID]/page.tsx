@@ -15,15 +15,7 @@ import { PlusIcon, Settings2Icon, Trash2Icon, User2 } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
 import AvatarImage from '@/components/CustomUI/AvatarImage'
-
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 
 type Params = {
     instituteID: string,
@@ -34,9 +26,10 @@ const InstituteInfo = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
     const [subjectCount, setSubjectCount] = useState<number>(0)
     const [docsCount, setDocsCount] = useState<number>(0)
+    const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
 
     const { data: globalData } = useDataStore()
-    const { user } = useUserStore()
+    const { user, isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
@@ -98,6 +91,14 @@ const InstituteInfo = () => {
         }
     }, [institute])
 
+    // Grant DELETE access if user is ADMIN or the CREATOR
+    useEffect(() => {
+        if (isAdmin || user?.uid === institute?.registeredBy?._id)
+            setIsAuthorized(true)
+        else
+            setIsAuthorized(false)
+    }, [user, isAdmin, institute?.registeredBy?._id])
+
     return (
         <section className='section_style'>
             <NavRoute routes={["Institutions", `.${pathname}`]} />
@@ -108,25 +109,11 @@ const InstituteInfo = () => {
                     <BuildingSVG size='80' />
                 </div>
 
-                <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger className='bg-background/80 p-2 rounded-md'>
-                            <Settings2Icon />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent className='mr-7 border border-primary/50 bg-background/80 backdrop-blur'>
-                            <DropdownMenuLabel>Manage Institute</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className='flex_center gap-2 cursor-pointer'>
-                                <User2 size={18} />
-                                <span>Creator Profile</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuItem className='flex_center gap-2 !text-red-600 cursor-pointer'>
-                                <Trash2Icon size={18} />
-                                <span>Delete Institute</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                <DropdownSettings
+                    title='Institute'
+                    toDeleteName={institute?.instituteName as string}
+                    isAuthorized={isAuthorized}
+                    userID={user?.uid as string} />
 
                 <div className="w-full flex_center flex-col gap-2 px-4 mt-8 sm:mt-0">
                     <div className="flex_center flex-col gap-2 w-full">
