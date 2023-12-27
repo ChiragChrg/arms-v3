@@ -3,6 +3,9 @@ import localFont from "next/font/local"
 import './globals.css'
 import Provider from '@/providers/Provider'
 
+// Disabling Vercel Data Cache
+export const fetchCache = 'force-no-store';
+
 const poppins = localFont({
   src: [
     {
