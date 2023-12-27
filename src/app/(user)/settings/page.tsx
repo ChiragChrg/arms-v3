@@ -7,7 +7,7 @@ import useModalStore from '@/store/useModalStore'
 import { HandlePWAInstall } from '@/lib/pwa'
 import { deferredPrompt } from '@/lib/pwa'
 import MobileHeader from '@/components/MobileHeader'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CircleLoader } from '@/components/CustomUI/Skeletons'
 
 const Settings = () => {
@@ -15,10 +15,14 @@ const Settings = () => {
     const { user, isAdmin } = useUserStore()
     const { onOpen } = useModalStore()
 
+    useEffect(() => {
+        if (!user?.avatarImg)
+            setIsLoading(false)
+    }, [user?.avatarImg])
+
     return (
         <section className='section_style'>
             <MobileHeader />
-
             <h1 className='text-[2em] font-medium'>Settings</h1>
 
             <div className="flex_center flex-col gap-4 mt-10">
@@ -31,13 +35,13 @@ const Settings = () => {
                                 alt='User_Avatar'
                                 width={125}
                                 height={125}
-                                onLoadingComplete={() => setIsLoading(false)}
+                                onLoad={() => setIsLoading(false)}
                                 loading='eager'
                                 className={isLoading ? 'hidden' : "block object-cover"}
                             />
                             :
                             <div style={{ width: 125, height: 125 }} className={isLoading ? 'hidden' : "flex_center bg-slate-400 aspect-square p-1.5 rounded-full"}>
-                                <User2 className='w-full h-full' />
+                                <User2 className='w-full h-full p-1.5' />
                             </div>
                         }
                     </div>
