@@ -1,11 +1,15 @@
 "use client"
+import { useLayoutEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import axios from 'axios'
+import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
 import { useQuery } from '@tanstack/react-query'
 import NavRoute from '@/components/NavRoutes'
 import { EmptyApprovalVector } from '@/assets'
 import UserCard from './UserCard'
+
 
 export interface FacultyType {
     _id: string,
@@ -17,6 +21,16 @@ export interface FacultyType {
 }
 
 const Request = () => {
+    const { isAdmin } = useUserStore()
+    const router = useRouter()
+
+    // Redirect NON-ADMIN users back to dashboard
+    useLayoutEffect(() => {
+        if (!isAdmin) {
+            router.push("/dashboard")
+        }
+    }, [isAdmin, router])
+
     const { data: users } = useQuery({
         queryKey: ["facultyRequestList"],
         queryFn: async () => {

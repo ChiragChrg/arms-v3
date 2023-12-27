@@ -1,4 +1,6 @@
 "use client"
+import { useLayoutEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import axios from 'axios'
@@ -29,6 +31,14 @@ interface FacultyType {
 
 const Faculty = () => {
     const { isAdmin } = useUserStore()
+    const router = useRouter()
+
+    // Redirect NON-ADMIN users back to dashboard
+    useLayoutEffect(() => {
+        if (!isAdmin) {
+            router.push("/dashboard")
+        }
+    }, [isAdmin, router])
 
     const { data } = useQuery({
         queryKey: ["facultyList"],
