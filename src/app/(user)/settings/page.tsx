@@ -40,8 +40,8 @@ const Settings = () => {
                                 className={isLoading ? 'hidden' : "block object-cover"}
                             />
                             :
-                            <div style={{ width: 125, height: 125 }} className={isLoading ? 'hidden' : "flex_center bg-slate-400 aspect-square p-1.5 rounded-full"}>
-                                <User2 className='w-full h-full p-1.5' />
+                            <div style={{ width: 125, height: 125 }} className={isLoading ? 'hidden' : "flex_center bg-slate-400 text-white aspect-square p-1.5 rounded-full"}>
+                                <User2 className='w-full h-full p-4' />
                             </div>
                         }
                     </div>
