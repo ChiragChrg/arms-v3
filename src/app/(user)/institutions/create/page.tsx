@@ -39,7 +39,7 @@ const CreateInstitute = () => {
         onSuccess: async () => {
             toast.success("Institution Created Successfully!")
             router.push("../institutions")
-            await queryClient.invalidateQueries({ queryKey: ["getInstitution"] })
+            await queryClient.invalidateQueries({ queryKey: ["getInstitution", "all-institutions"] })
         }
     })
 
