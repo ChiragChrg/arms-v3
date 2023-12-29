@@ -2,7 +2,7 @@ import { connectDB } from "@/lib/database";
 import DocsModel from "@/models/DocsModel";
 import { NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
         await connectDB();
         const DocsDB = await DocsModel.find({});
