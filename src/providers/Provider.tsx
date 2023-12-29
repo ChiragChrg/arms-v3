@@ -24,6 +24,7 @@ const queryClient = new QueryClient({
 
 // Disabling Cache
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
+export const dynamic = 'force-dynamic'
 
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)
