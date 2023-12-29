@@ -6,7 +6,6 @@ import axios from 'axios';
 
 // Disabling Vercel Data Cache & axios cache
 export const fetchCache = 'force-no-store';
-export const dynamic = 'force-dynamic'
 axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 const poppins = localFont({
