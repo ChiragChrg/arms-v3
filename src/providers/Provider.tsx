@@ -10,7 +10,6 @@ import LoaderUI from "@/components/LoaderUI"
 import useLoaderStore from "@/store/useLoaderStore"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
-import axios from "axios"
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -21,10 +20,6 @@ const queryClient = new QueryClient({
         },
     },
 })
-
-// Disabling Cache
-axios.defaults.headers.common['Cache-Control'] = 'no-cache';
-export const dynamic = 'force-dynamic'
 
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)

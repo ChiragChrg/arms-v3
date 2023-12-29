@@ -2,9 +2,12 @@ import type { Metadata, Viewport } from 'next'
 import localFont from "next/font/local"
 import './globals.css'
 import Provider from '@/providers/Provider'
+import axios from 'axios';
 
-// Disabling Vercel Data Cache
+// Disabling Vercel Data Cache & axios cache
 export const fetchCache = 'force-no-store';
+export const dynamic = 'force-dynamic'
+axios.defaults.headers.common['Cache-Control'] = 'no-cache';
 
 const poppins = localFont({
   src: [
