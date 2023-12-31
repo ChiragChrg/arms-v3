@@ -39,7 +39,7 @@ const CreateInstitute = () => {
         },
         onSuccess: async () => {
             toast.success("Institution Created Successfully!")
-            revalidatePath("/", "layout")
+            revalidatePath('/')
             await queryClient.invalidateQueries()
             router.push("../institutions")
         }

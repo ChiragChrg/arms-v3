@@ -21,8 +21,7 @@ const Institutions = () => {
             const { data } = await axios.get('/api/get/institutions')
             setData(data)
             return data as DataStoreTypes[]
-        },
-        refetchOnMount: true
+        }
     })
 
     return (
