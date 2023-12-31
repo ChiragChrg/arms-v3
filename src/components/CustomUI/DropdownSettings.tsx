@@ -185,10 +185,10 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
                     <DropdownMenuContent className='mr-7 border border-primary/50 bg-background/80 backdrop-blur'>
                         <DropdownMenuLabel>Manage {title}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className='flex_center gap-2 cursor-pointer'>
+                        {/* <DropdownMenuItem className='flex_center gap-2 cursor-pointer'>
                             <User2 size={18} />
                             <span>Creator Profile</span>
-                        </DropdownMenuItem>
+                        </DropdownMenuItem> */}
                         {(isAuthorized) &&
                             <DropdownMenuItem>
                                 <DialogTrigger className='flex_center gap-2 !text-red-600 cursor-pointer'>
