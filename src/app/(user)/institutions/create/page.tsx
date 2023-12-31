@@ -2,7 +2,7 @@
 import { FormEvent, useState } from 'react'
 import Image from "next/image"
 import { useRouter } from 'next/navigation'
-// import { revalidatePath } from "next/cache"
+import { revalidatePath } from "next/cache"
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
@@ -39,7 +39,7 @@ const CreateInstitute = () => {
         },
         onSuccess: async () => {
             toast.success("Institution Created Successfully!")
-            // revalidatePath("/", "layout")
+            revalidatePath("/", "layout")
             await queryClient.invalidateQueries()
             router.push("../institutions")
         }
