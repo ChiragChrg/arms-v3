@@ -2,7 +2,6 @@
 import { FormEvent, useState } from 'react'
 import Image from "next/image"
 import { useRouter } from 'next/navigation'
-import { revalidatePath } from "next/cache"
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
@@ -13,6 +12,7 @@ import BuildingSVG from '@/assets/BuildingSVG'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import revalidateCache from '@/lib/revalidateCache'
 
 const CreateInstitute = () => {
     const [instituteName, setInstituteName] = useState<string>("")
@@ -39,7 +39,7 @@ const CreateInstitute = () => {
         },
         onSuccess: async () => {
             toast.success("Institution Created Successfully!")
-            revalidatePath('/')
+            revalidateCache()
             await queryClient.invalidateQueries()
             router.push("../institutions")
         }
