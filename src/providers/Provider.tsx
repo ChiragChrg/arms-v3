@@ -11,18 +11,17 @@ import useLoaderStore from "@/store/useLoaderStore"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnMount: true,
-            retry: 1,
-        },
-    },
-})
-
 const Provider = ({ children, ...props }: ThemeProviderProps) => {
     const [isMounted, setIsMounted] = useState<boolean>(false)
     const { showLoader } = useLoaderStore()
+
+    const [queryClient] = useState(() => new QueryClient({
+        defaultOptions: {
+            queries: {
+                staleTime: 60 * 1000,
+            },
+        },
+    }))
 
     useEffect(() => {
         if (typeof window !== 'undefined') {

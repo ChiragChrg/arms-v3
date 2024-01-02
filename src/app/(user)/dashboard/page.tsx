@@ -1,11 +1,10 @@
 "use client"
-import { useEffect, useState } from "react"
-import Link from "next/link"
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import CountUp from "react-countup"
 import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
+import RecentSubjects from "@/components/RecentSubjects"
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
@@ -19,18 +18,7 @@ interface CountDataType {
     document: number,
 }
 
-type RecentTopicsType = {
-    [key: string]: RecentDataType[]
-}
-
-type RecentDataType = {
-    url: string,
-    title: string,
-    subtitle: string
-}
-
 const Dashboard = () => {
-    const [recentTopic, setRecentTopic] = useState<RecentDataType[]>([])
     const { user } = useUserStore()
 
     const { data: count } = useQuery({
@@ -40,13 +28,6 @@ const Dashboard = () => {
             return data as CountDataType
         }
     })
-
-    useEffect(() => {
-        const userID = user?.uid as string
-        const recentDataUsers: RecentTopicsType = JSON.parse(localStorage.getItem("arms-recents") as string) || []
-        const userRecents = recentDataUsers[userID]
-        setRecentTopic(userRecents)
-    }, [user])
 
     return (
         <section className='section_style'>
@@ -102,26 +83,7 @@ const Dashboard = () => {
                 </div>
             }
 
-            {recentTopic &&
-                <>
-                    <h2 className='text-[1.3em] sm:text-[1.6em] font-medium mt-6 mb-2'>
-                        Recent
-                        <span className="text-primary"> Topics</span>
-                    </h2>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                        {recentTopic?.map((data, index) => (
-                            <Link href={data?.url} key={index} className="bg-primary/60 p-2 px-4 flex justify-start gap-6 rounded-md text-white">
-                                <OpenBookSVG size='50' />
-                                <div className="flex flex-col">
-                                    <span className="text-[0.8em] opacity-70 capitalize">{data?.subtitle}</span>
-                                    <h3 className="text-[1.2em] font-bold uppercase">{data?.title}</h3>
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                </>
-            }
+            <RecentSubjects />
         </section>
     )
 }
