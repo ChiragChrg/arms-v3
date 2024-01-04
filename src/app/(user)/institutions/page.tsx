@@ -10,19 +10,23 @@ import { RectLoader } from '@/components/CustomUI/Skeletons'
 import { PlusIcon } from 'lucide-react'
 import BuildingSVG from '@/assets/BuildingSVG'
 import useUserStore from '@/store/useUserStore'
+import { getInstitutions } from '@/app/actions'
 
 const Institutions = () => {
-    const { setData } = useDataStore()
     const { user } = useUserStore()
 
     const { data, isLoading } = useQuery({
         queryKey: ["getInstitution", "all-institutions"],
         queryFn: async () => {
-            const { data } = await axios.get('/api/get/institutions')
-            setData(data)
-            return data as DataStoreTypes[]
-        },
-        refetchOnMount: true
+            try {
+                const res = await getInstitutions();
+                console.log(res);
+                return res as DataStoreTypes[];
+            } catch (error) {
+                console.error('Error fetching institutions:', error);
+                throw new Error('Failed to fetch institutions data');
+            }
+        }
     })
 
     return (
