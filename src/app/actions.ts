@@ -68,9 +68,8 @@ export async function getInstitution(instituteName: string) {
             })
 
         const data = JSON.parse(JSON.stringify(Institute)) //Converting to plain object
-        // console.log("server: ", data)
 
-        return data as DataStoreTypes[]
+        return data as DataStoreTypes
     } catch (err) {
         console.error(err);
         return err
