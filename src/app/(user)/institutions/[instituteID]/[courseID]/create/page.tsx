@@ -49,8 +49,8 @@ const CreateSubject = () => {
         },
         onSuccess: async () => {
             toast.success("Subject Created Successfully!")
-            router.push(`../${params?.courseID}`)
             await queryClient.invalidateQueries({ queryKey: ['getCoursebyID', params.courseID] })
+            router.push(`../${params?.courseID}`)
         }
     })
 

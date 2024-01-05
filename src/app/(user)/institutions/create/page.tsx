@@ -12,6 +12,7 @@ import BuildingSVG from '@/assets/BuildingSVG'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
+import revalidateCache from '@/lib/revalidateCache'
 
 const CreateInstitute = () => {
     const [instituteName, setInstituteName] = useState<string>("")
@@ -38,8 +39,9 @@ const CreateInstitute = () => {
         },
         onSuccess: async () => {
             toast.success("Institution Created Successfully!")
-            router.push("../institutions")
+            await revalidateCache()
             await queryClient.invalidateQueries()
+            router.push("../institutions")
         }
     })
 
