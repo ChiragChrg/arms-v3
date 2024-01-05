@@ -53,18 +53,22 @@ export async function getInstitution(instituteName: string) {
         const Institute = await DocsModel.findOne({ instituteName: { '$regex': instituteName, $options: 'i' } })
             .populate({
                 path: 'registeredBy',
+                model: UserModel,
                 select: 'username email avatarImg',
             })
             .populate({
                 path: 'course.courseCreator',
+                model: UserModel,
                 select: 'username email avatarImg',
             })
             .populate({
                 path: 'course.subjects.subjectCreator',
+                model: UserModel,
                 select: 'username email avatarImg',
             })
             .populate({
                 path: 'course.subjects.subjectDocs.docUploader',
+                model: UserModel,
                 select: 'username email avatarImg',
             })
 
