@@ -16,7 +16,7 @@ const Institutions = () => {
     const { user } = useUserStore()
 
     const { data, isLoading } = useQuery({
-        queryKey: ["getInstitution", "all-institutions"],
+        queryKey: ["getAllInstitution"],
         queryFn: async () => {
             try {
                 const res = await getInstitutions();

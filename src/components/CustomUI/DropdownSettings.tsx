@@ -169,7 +169,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
             toast.error(`Error while deleting ${title}`)
         } finally {
             queryCache.clear()
-            await queryClient.invalidateQueries()
+            await queryClient.invalidateQueries({ queryKey: ["getAllInstitution"] })
             setIsLoading(false)
             setIsDisabled(false)
         }
