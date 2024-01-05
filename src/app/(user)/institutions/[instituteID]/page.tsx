@@ -30,12 +30,12 @@ const InstituteInfo = () => {
     const router = useRouter()
 
     const { data: institute, isError, isLoading } = useQuery({
-        queryKey: ['getInstitutebyName', params.instituteID],
+        queryKey: ['getInstitutebyName', params?.instituteID],
         queryFn: async () => {
             try {
-                const instituteName = params?.instituteID.replaceAll("-", " ");
-                const res = await getInstitution(instituteName);
-                return res as DataStoreTypes;
+                const instituteName = params?.instituteID?.replaceAll("-", " ");
+                const res = await getInstitution(instituteName) as DataStoreTypes;
+                return res;
             } catch (error) {
                 console.error('Error fetching institutions:', error);
                 throw new Error('Failed to fetch institutions data');
