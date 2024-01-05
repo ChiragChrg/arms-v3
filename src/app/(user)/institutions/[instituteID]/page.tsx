@@ -1,56 +1,46 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import useDataStore from '@/store/useDataStore'
+import { useQuery } from '@tanstack/react-query'
+import { getInstitution } from '@/app/actions'
+import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
-import axios from 'axios'
+
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
+import AvatarImage from '@/components/CustomUI/AvatarImage'
+import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
+
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import toast from 'react-hot-toast'
 import { PlusIcon } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import useUserStore from '@/store/useUserStore'
-import AvatarImage from '@/components/CustomUI/AvatarImage'
-import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 
 type Params = {
     instituteID: string,
 }
 
 const InstituteInfo = () => {
-    const [institute, setInstitute] = useState<DataStoreTypes | null | undefined>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [subjectCount, setSubjectCount] = useState<number>(0)
-    const [docsCount, setDocsCount] = useState<number>(0)
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
-
-    const { data: globalData } = useDataStore()
     const { user, isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
 
-    const fetchInstitute = async () => {
-        const instituteName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/post/get-institute', { instituteName });
-
-        if (status == 200) {
-            setIsLoading(false)
-            return data as DataStoreTypes;
-        } else {
-            console.error(data)
+    const { data: institute, isError, isLoading } = useQuery({
+        queryKey: ['getInstitutebyName', params.instituteID],
+        queryFn: async () => {
+            try {
+                const instituteName = params?.instituteID.replaceAll("-", " ");
+                const res = await getInstitution(instituteName);
+                return res as DataStoreTypes;
+            } catch (error) {
+                console.error('Error fetching institutions:', error);
+                throw new Error('Failed to fetch institutions data');
+            }
         }
-    }
-
-    const { data: fetchedData, isError } = useQuery({
-        queryKey: ['getInstitutebyID', params.instituteID],
-        queryFn: fetchInstitute,
-        enabled: globalData === null, //Fetch only if globalData is Null
-        refetchOnMount: true
     });
 
     if (isError) {
@@ -58,38 +48,26 @@ const InstituteInfo = () => {
         router.push('/institutions')
     }
 
-    useEffect(() => {
-        if (globalData !== null) {
-            const instituteInfo = globalData.find(
-                (obj) => obj.instituteName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase()
-            );
-            if (instituteInfo) {
-                setInstitute(instituteInfo);
-                setIsLoading(false);
-            }
-        } else if (fetchedData) {
-            // Set data fetched from TanstackQuery
-            setInstitute(fetchedData);
-        }
-    }, [globalData, params, fetchedData]);
+    // Course,Subjects, Docs Count
+    const contentCount = useMemo(() => {
+        let totalSubject = 0;
+        let totalDocs = 0;
 
-    useEffect(() => {
         if (institute) {
-            let totalSubject = 0
-            let totalDocs = 0
+            institute?.course?.forEach((courseObj) => {
+                totalSubject += courseObj?.subjects?.length || 0;
 
-            institute?.course?.forEach((courseObj: any) => {
-                totalSubject += courseObj?.subjects?.length
-
-                courseObj?.subjects?.forEach((subjectObj: any) => {
-                    totalDocs += subjectObj?.subjectDocs?.length
-                })
-            })
-
-            setSubjectCount(totalSubject)
-            setDocsCount(totalDocs)
+                courseObj?.subjects?.forEach((subjectObj) => {
+                    totalDocs += subjectObj?.subjectDocs?.length || 0;
+                });
+            });
         }
-    }, [institute])
+
+        return {
+            subjectCount: totalSubject,
+            docsCount: totalDocs,
+        };
+    }, [institute]);
 
     // Grant DELETE access if user is ADMIN or the CREATOR
     useEffect(() => {
@@ -137,8 +115,8 @@ const InstituteInfo = () => {
                         {!isLoading ?
                             <>
                                 <span>Courses: {institute?.course?.length || 0}</span>
-                                <span>Subjects: {subjectCount}</span>
-                                <span>Documents: {docsCount}</span>
+                                <span>Subjects: {contentCount.subjectCount}</span>
+                                <span>Documents: {contentCount.docsCount}</span>
                             </>
                             :
                             <>

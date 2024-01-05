@@ -45,3 +45,34 @@ export async function getAllInstitutions() {
         return err
     }
 }
+
+export async function getInstitution(instituteName: string) {
+    try {
+        await connectDB();
+        const Institute = await DocsModel.findOne({ instituteName: { '$regex': instituteName, $options: 'i' } })
+            .populate({
+                path: 'registeredBy',
+                select: 'username email avatarImg',
+            })
+            .populate({
+                path: 'course.courseCreator',
+                select: 'username email avatarImg',
+            })
+            .populate({
+                path: 'course.subjects.subjectCreator',
+                select: 'username email avatarImg',
+            })
+            .populate({
+                path: 'course.subjects.subjectDocs.docUploader',
+                select: 'username email avatarImg',
+            })
+
+        const data = JSON.parse(JSON.stringify(Institute)) //Converting to plain object
+        // console.log("server: ", data)
+
+        return data as DataStoreTypes[]
+    } catch (err) {
+        console.error(err);
+        return err
+    }
+}
