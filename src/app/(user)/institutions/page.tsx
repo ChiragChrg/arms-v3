@@ -2,15 +2,13 @@
 import { useQuery } from '@tanstack/react-query'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
 import Link from 'next/link'
-import axios from 'axios'
-import useDataStore from '@/store/useDataStore'
 import MobileHeader from '@/components/MobileHeader'
 import NavRoute from '@/components/NavRoutes'
 import { RectLoader } from '@/components/CustomUI/Skeletons'
 import { PlusIcon } from 'lucide-react'
 import BuildingSVG from '@/assets/BuildingSVG'
 import useUserStore from '@/store/useUserStore'
-import { getInstitutions } from '@/app/actions'
+import { getAllInstitutions } from '@/app/actions'
 
 const Institutions = () => {
     const { user } = useUserStore()
@@ -19,8 +17,7 @@ const Institutions = () => {
         queryKey: ["getInstitution", "all-institutions"],
         queryFn: async () => {
             try {
-                const res = await getInstitutions();
-                console.log(res);
+                const res = await getAllInstitutions();
                 return res as DataStoreTypes[];
             } catch (error) {
                 console.error('Error fetching institutions:', error);

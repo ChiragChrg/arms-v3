@@ -32,7 +32,7 @@ export async function getDashCount() {
     }
 }
 
-export async function getInstitutions() {
+export async function getAllInstitutions() {
     try {
         await connectDB();
         const DocsDB = await DocsModel.find({}, 'instituteName description');
