@@ -1,6 +1,7 @@
 "use server"
 import { connectDB } from "@/lib/database";
 import DocsModel from "@/models/DocsModel";
+import UserModel from "@/models/UserModel";
 import { DataStoreTypes } from "@/types/dataStoreTypes";
 
 export async function getDashCount() {
@@ -67,7 +68,7 @@ export async function getInstitution(instituteName: string) {
                 select: 'username email avatarImg',
             })
 
-        const data = JSON.parse(JSON.stringify(Institute.toObject())) //Converting to plain object
+        const data = JSON.parse(JSON.stringify(Institute)) //Converting to plain object
 
         return data as DataStoreTypes
     } catch (err) {
