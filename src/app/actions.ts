@@ -67,7 +67,7 @@ export async function getInstitution(instituteName: string) {
                 select: 'username email avatarImg',
             })
 
-        const data = JSON.parse(JSON.stringify(Institute)) //Converting to plain object
+        const data = JSON.parse(JSON.stringify(Institute.toObject())) //Converting to plain object
 
         return data as DataStoreTypes
     } catch (err) {
