@@ -1,6 +1,5 @@
 "use client"
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import CountUp from "react-countup"
 import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
@@ -10,6 +9,7 @@ import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import DocumentsSVG from '@/assets/DocumentsSVG'
 import { AlertCircle } from "lucide-react"
+import { getDashCount } from '@/app/actions'
 
 interface CountDataType {
     institute: number,
@@ -24,9 +24,9 @@ const Dashboard = () => {
     const { data: count } = useQuery({
         queryKey: ["dashCount"],
         queryFn: async () => {
-            const { data } = await axios.get('/api/get/dashcount')
+            const data = await getDashCount()
             return data as CountDataType
-        }
+        },
     })
 
     return (
