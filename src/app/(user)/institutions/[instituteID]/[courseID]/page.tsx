@@ -1,21 +1,22 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import useDataStore from '@/store/useDataStore'
+import { useQuery } from '@tanstack/react-query'
+import { getInstitution } from '@/app/actions'
+import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes, courseType } from '@/types/dataStoreTypes'
+
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
-import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
-import BookStackSVG from '@/assets/BookStackSVG'
-import OpenBookSVG from '@/assets/OpenBookSVG'
-import { PlusIcon } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import useUserStore from '@/store/useUserStore'
 import AvatarImage from '@/components/CustomUI/AvatarImage'
 import DropdownSettings from '@/components/CustomUI/DropdownSettings'
+import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
+
+import BookStackSVG from '@/assets/BookStackSVG'
+import OpenBookSVG from '@/assets/OpenBookSVG'
+import toast from 'react-hot-toast'
+import { PlusIcon } from 'lucide-react'
 
 type Params = {
     instituteID: string,
@@ -23,64 +24,42 @@ type Params = {
 }
 
 const CourseInfo = () => {
-    const [course, setCourse] = useState<courseType | null | undefined>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [docsCount, setDocsCount] = useState<number>(0)
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
-
-    const { data: globalData } = useDataStore()
     const { user, isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
 
-    const fetchInstitute = async () => {
-        const instituteName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/post/get-institute', { instituteName });
-
-        if (status == 200) {
-            setIsLoading(false)
-            return data as DataStoreTypes;
-        } else {
-            console.error(data)
+    const { data: course, isError, isLoading } = useQuery({
+        queryKey: ['getInstitutebyName', params?.instituteID],
+        queryFn: async () => {
+            try {
+                const instituteName = params?.instituteID?.replaceAll("-", " ");
+                const res = await getInstitution(instituteName) as DataStoreTypes;
+                const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
+                return courseData;
+            } catch (error) {
+                console.error('Error fetching institutions:', error);
+                throw new Error('Failed to fetch institutions data');
+            }
         }
-    }
-
-    const { data: fetchedData, isError } = useQuery({
-        queryKey: ['getCoursebyID', params.courseID],
-        queryFn: fetchInstitute,
-        enabled: globalData === null, //Fetch only if globalData is Null
-        refetchOnMount: true
     });
 
     if (isError) {
-        toast.error("Error while fetching Institute")
+        toast.error("Error while fetching Course")
         router.push('/institutions')
     }
 
-    useEffect(() => {
-        if (globalData !== null) {
-            const instituteInfo = globalData.find(obj => obj.instituteName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
-            const courseInfo = instituteInfo?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-            setCourse(courseInfo)
-            setIsLoading(false)
-        } else if (fetchedData) {
-            // Set data fetched from TanstackQuery
-            const courseInfo = fetchedData?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-            setCourse(courseInfo);
-        }
-    }, [globalData, params, fetchedData]);
+    const docsCount = useMemo(() => {
+        let totalDocs = 0
 
-    useEffect(() => {
         if (course) {
-            let totalDocs = 0
-
-            course?.subjects?.forEach((subjectObj: any) => {
-                totalDocs += subjectObj?.subjectDocs?.length
+            course?.subjects?.forEach((subjectObj) => {
+                totalDocs += subjectObj?.subjectDocs?.length || 0
             })
-
-            setDocsCount(totalDocs)
         }
+
+        return totalDocs
     }, [course])
 
     // Grant DELETE access if user is ADMIN or the CREATOR
@@ -160,7 +139,7 @@ const CourseInfo = () => {
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Subjects</h2>
                 {user?.isApproved &&
-                    <Link href={`./${course?.courseName.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
+                    <Link href={`./${course?.courseName?.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
                         <span className='hidden sm:block'>Subject</span>
