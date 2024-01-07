@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getInstitution } from '@/app/actions'
 import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes, courseType } from '@/types/dataStoreTypes'
@@ -29,6 +29,7 @@ const CourseInfo = () => {
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const { data: course, isError, isLoading } = useQuery({
         queryKey: ['getInstitutebyName', params?.instituteID],
@@ -42,7 +43,13 @@ const CourseInfo = () => {
                 console.error('Error fetching institutions:', error);
                 throw new Error('Failed to fetch institutions data');
             }
-        }
+        },
+        initialData: () => {
+            const init = queryClient.getQueryData(['getInstitutebyName', params?.instituteID]) as DataStoreTypes
+            const courseData = init?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase()) as courseType
+            console.log("initDataCorce", init)
+            return courseData
+        },
     });
 
     if (isError) {

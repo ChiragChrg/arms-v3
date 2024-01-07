@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { getInstitution } from '@/app/actions'
 import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
@@ -28,6 +28,7 @@ const InstituteInfo = () => {
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
+    const queryClient = useQueryClient()
 
     const { data: institute, isError, isLoading } = useQuery({
         queryKey: ['getInstitutebyName', params?.instituteID],
@@ -35,12 +36,14 @@ const InstituteInfo = () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
                 const res = await getInstitution(instituteName) as DataStoreTypes;
+
+                queryClient.setQueryData(['getInstitutebyName', params?.instituteID], res);
                 return res;
             } catch (error) {
                 console.error('Error fetching institutions:', error);
                 throw new Error('Failed to fetch institutions data');
             }
-        }
+        },
     });
 
     if (isError) {
@@ -148,7 +151,7 @@ const InstituteInfo = () => {
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Courses</h2>
                 {user?.isApproved &&
-                    <Link href={`./${institute?.instituteName.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
+                    <Link href={`./${institute?.instituteName?.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
                         <span className='hidden sm:block'>Course</span>
