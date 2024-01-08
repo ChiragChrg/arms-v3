@@ -158,7 +158,7 @@ const SubjectInfo = () => {
         } finally {
             setOpen(false)
             // refetch and update data
-            await queryClient.invalidateQueries({ queryKey: ['getSubjectbyID', params.subjectID] })
+            await queryClient.invalidateQueries()
         }
     }
 

@@ -13,7 +13,7 @@ import { MultiFileDropzone, type FileState } from './FileDropZone'
 import { useEdgeStore } from '@/lib/edgestore';
 import axios from 'axios'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 type Params = {
     instituteID: string,
@@ -35,6 +35,7 @@ const UploadDocuments = () => {
     const [fileStates, setFileStates] = useState<FileState[]>([]);
     const [isUploadComplete, setIsUploadComplete] = useState<boolean>(false);
     const { edgestore } = useEdgeStore();
+    const queryClient = useQueryClient()
 
     const { data: instituteData } = useQuery({
         queryKey: ['getInstitutebyID', params.instituteID],
@@ -107,6 +108,7 @@ const UploadDocuments = () => {
 
         if (UploadRes.status == 201) {
             setIsUploadComplete(true)
+            await queryClient.invalidateQueries()
         }
     }
 
