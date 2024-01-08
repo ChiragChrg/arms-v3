@@ -1,21 +1,24 @@
 "use client"
-import React, { useEffect, useState } from 'react'
-import { useParams, usePathname, useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import axios from 'axios'
-import toast from 'react-hot-toast'
-import { useEdgeStore } from '@/lib/edgestore'
-import { getDownloadUrl } from '@edgestore/react/utils';
+import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { DataStoreTypes, subjectType } from '@/types/dataStoreTypes'
-import useDataStore from '@/store/useDataStore'
+import { useEdgeStore } from '@/lib/edgestore'
+import { getInstitution } from '@/app/actions'
 import useUserStore from '@/store/useUserStore'
+import { DataStoreTypes, courseType, subjectType } from '@/types/dataStoreTypes'
+import { getDownloadUrl } from '@edgestore/react/utils';
+import axios from 'axios'
+
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import AvatarImage from '@/components/CustomUI/AvatarImage'
-import { Button } from '@/components/ui/button'
+import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
+import { Button } from '@/components/ui/button'
+
 import OpenBookSVG from '@/assets/OpenBookSVG'
+import toast from 'react-hot-toast'
 import { DownloadCloudIcon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react'
 
 import {
@@ -36,7 +39,6 @@ import {
     DialogFooter,
     DialogClose
 } from "@/components/ui/dialog"
-import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 
 type Params = {
     instituteID: string,
@@ -53,12 +55,8 @@ type RecentDataType = {
 }
 
 const SubjectInfo = () => {
-    const [subject, setSubject] = useState<subjectType | null | undefined>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(true)
     const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
     const [open, setOpen] = useState<boolean>(false)
-
-    const { data: globalData } = useDataStore()
     const { user, isAdmin } = useUserStore()
     const pathname = usePathname()
     const params = useParams<Params>()
@@ -66,45 +64,32 @@ const SubjectInfo = () => {
     const { edgestore } = useEdgeStore();
     const queryClient = useQueryClient()
 
-    const fetchInstitute = async () => {
-        const instituteName = params?.instituteID.replaceAll("-", " ");
-        const { data, status } = await axios.post('/api/post/get-institute', { instituteName });
-
-        if (status == 200) {
-            setIsLoading(false)
-            return data as DataStoreTypes;
-        } else {
-            console.error(data)
-        }
-    }
-
-    const { data: fetchedData, isError } = useQuery({
-        queryKey: ['getSubjectbyID', params.subjectID],
-        queryFn: fetchInstitute,
-        enabled: globalData === null, //Fetch only if globalData is Null
-        refetchOnMount: true
+    const { data: subject, isError, isLoading } = useQuery({
+        queryKey: ['getInstitutebyName', params?.subjectID],
+        queryFn: async () => {
+            try {
+                const instituteName = params?.instituteID?.replaceAll("-", " ");
+                const res = await getInstitution(instituteName) as DataStoreTypes;
+                const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
+                const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+                return subjectData
+            } catch (error) {
+                console.error('Error fetching institutions:', error);
+                throw new Error('Failed to fetch institutions data');
+            }
+        },
+        initialData: () => {
+            const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
+            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+            return subjectData
+        },
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.instituteID])?.dataUpdatedAt,
     });
 
     if (isError) {
         toast.error("Error while fetching Institute")
         router.push('/institutions')
     }
-
-    useEffect(() => {
-        if (globalData !== null) {
-            const instituteInfo = globalData.find(obj => obj.instituteName.toLowerCase().replaceAll(" ", "-") === params?.instituteID.toLowerCase())
-            const courseInfo = instituteInfo?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-            const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-            setSubject(subjectInfo)
-            setIsLoading(false)
-        } else if (fetchedData) {
-            // Set data fetched from TanstackQuery
-            const courseInfo = fetchedData?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-            const subjectInfo = courseInfo?.subjects?.find((subj) => subj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-
-            setSubject(subjectInfo)
-        }
-    }, [globalData, params, fetchedData]);
 
     // Add subject to Recents dash usin LocalStorage
     useEffect(() => {
