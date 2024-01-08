@@ -15,6 +15,7 @@ import OpenBookSVG from '@/assets/OpenBookSVG'
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import { User2Icon } from 'lucide-react'
+import toast from 'react-hot-toast';
 
 type Params = {
     instituteID: string,
@@ -102,6 +103,7 @@ const UploadDocuments = () => {
                     })
                 } catch (err) {
                     updateFileProgress(fileState.key, 'ERROR');
+                    toast.error("Error while uploading files")
                 }
             }),
         );
@@ -119,6 +121,7 @@ const UploadDocuments = () => {
 
         if (UploadRes.status == 201) {
             setIsUploadComplete(true)
+            toast.success("Files uploaded successfully!")
             await queryClient.invalidateQueries()
         }
     }
