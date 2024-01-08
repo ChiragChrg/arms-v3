@@ -1,19 +1,20 @@
 "use client"
 import { useState } from 'react'
 import { useParams } from 'next/navigation'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEdgeStore } from '@/lib/edgestore';
+import { getInstitution } from '@/app/actions'
 import useUserStore from '@/store/useUserStore'
+import { DataStoreTypes } from '@/types/dataStoreTypes'
+import axios from 'axios'
+
+import { MultiFileDropzone, type FileState } from './FileDropZone'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import BuildingSVG from '@/assets/BuildingSVG'
 import BookStackSVG from '@/assets/BookStackSVG'
 import { User2Icon } from 'lucide-react'
-
-import { MultiFileDropzone, type FileState } from './FileDropZone'
-import { useEdgeStore } from '@/lib/edgestore';
-import axios from 'axios'
-import { DataStoreTypes } from '@/types/dataStoreTypes'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 type Params = {
     instituteID: string,
@@ -38,12 +39,22 @@ const UploadDocuments = () => {
     const queryClient = useQueryClient()
 
     const { data: instituteData } = useQuery({
-        queryKey: ['getInstitutebyID', params.instituteID],
+        queryKey: ['getInstitutebyName', params?.subjectID, "document-upload"],
         queryFn: async () => {
-            const instituteName = params?.instituteID.replaceAll("-", " ");
-            const { data } = await axios.post('/api/post/get-institute', { instituteName });
-            return data as DataStoreTypes;
+            try {
+                const instituteName = params?.instituteID?.replaceAll("-", " ");
+                const res = await getInstitution(instituteName) as DataStoreTypes;
+                return res;
+            } catch (error) {
+                console.error('Error fetching institutions:', error);
+                throw new Error('Failed to fetch institutions data');
+            }
         },
+        initialData: () => {
+            const init = queryClient.getQueryData(['getInstitutebyName', params?.subjectID]) as DataStoreTypes
+            return init
+        },
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.subjectID])?.dataUpdatedAt,
     });
 
     function updateFileProgress(key: string, progress: FileState['progress']) {
@@ -136,7 +147,7 @@ const UploadDocuments = () => {
                         <input
                             type="text"
                             required={true}
-                            defaultValue={params?.instituteID || ""}
+                            defaultValue={params?.instituteID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
@@ -150,7 +161,7 @@ const UploadDocuments = () => {
                         <input
                             type="text"
                             required={true}
-                            defaultValue={params?.courseID || ""}
+                            defaultValue={params?.courseID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
@@ -164,7 +175,7 @@ const UploadDocuments = () => {
                         <input
                             type="text"
                             required={true}
-                            defaultValue={params?.subjectID || ""}
+                            defaultValue={params?.subjectID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
