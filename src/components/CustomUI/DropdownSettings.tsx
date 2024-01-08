@@ -1,10 +1,14 @@
 "use client"
 import { useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
+import { DataStoreTypes, courseType, subjectType } from '@/types/dataStoreTypes'
+import { useEdgeStore } from '@/lib/edgestore'
 import axios from 'axios'
-import toast from 'react-hot-toast'
+
 import { Button } from '../ui/button'
-import { Settings2Icon, User2, Trash2Icon, XIcon, Loader2Icon } from 'lucide-react'
+import toast from 'react-hot-toast'
+import { Settings2Icon, Trash2Icon, XIcon, Loader2Icon } from 'lucide-react'
 
 import {
     DropdownMenu,
@@ -24,9 +28,6 @@ import {
     DialogFooter,
     DialogClose
 } from "@/components/ui/dialog"
-import { useEdgeStore } from '@/lib/edgestore'
-import { DataStoreTypes, courseType, subjectType } from '@/types/dataStoreTypes'
-import { useQueryClient, QueryCache } from '@tanstack/react-query'
 
 type Props = {
     title: string,
@@ -58,8 +59,6 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
     const router = useRouter()
     const { edgestore } = useEdgeStore();
     const queryClient = useQueryClient()
-
-    const queryCache = new QueryCache()
 
     const compareText = (value: string) => {
         if (value === `Delete ${toDeleteName}`)
@@ -168,7 +167,6 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
             console.log(err)
             toast.error(`Error while deleting ${title}`)
         } finally {
-            queryCache.clear()
             await queryClient.invalidateQueries()
             setIsLoading(false)
             setIsDisabled(false)
