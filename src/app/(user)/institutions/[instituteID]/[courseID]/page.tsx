@@ -32,7 +32,7 @@ const CourseInfo = () => {
     const queryClient = useQueryClient()
 
     const { data: course, isError, isLoading } = useQuery({
-        queryKey: ['getInstitutebyName', params?.instituteID],
+        queryKey: ['getInstitutebyName', params?.courseID],
         queryFn: async () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
@@ -47,9 +47,9 @@ const CourseInfo = () => {
         initialData: () => {
             const init = queryClient.getQueryData(['getInstitutebyName', params?.instituteID]) as DataStoreTypes
             const courseData = init?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase()) as courseType
-            console.log("initDataCorce", init)
             return courseData
         },
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.instituteID])?.dataUpdatedAt,
     });
 
     if (isError) {

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import { getInstitution } from '@/app/actions'
 import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
@@ -28,7 +28,6 @@ const InstituteInfo = () => {
     const pathname = usePathname()
     const params = useParams<Params>()
     const router = useRouter()
-    const queryClient = useQueryClient()
 
     const { data: institute, isError, isLoading } = useQuery({
         queryKey: ['getInstitutebyName', params?.instituteID],
@@ -36,8 +35,6 @@ const InstituteInfo = () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
                 const res = await getInstitution(instituteName) as DataStoreTypes;
-
-                queryClient.setQueryData(['getInstitutebyName', params?.instituteID], res);
                 return res;
             } catch (error) {
                 console.error('Error fetching institutions:', error);
