@@ -32,7 +32,11 @@ export default function Home() {
 
         <div className='h-full flex flex-col justify-end gap-4 pb-4'>
           <div className="flex justify-between items-center mb-12">
-            <Image src={LandingVector} alt='LandingVector' className='hidden sm:block w-[350px] 2xl:w-[500px]' />
+            <Image
+              src={LandingVector}
+              alt='LandingVector'
+              loading='eager'
+              className='hidden sm:block w-[350px] 2xl:w-[500px]' />
 
             <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur-lg rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
               <h2 className='text-[1.4em] font-medium drop-shadow'>Let&apos;s get started! 🚀</h2>
