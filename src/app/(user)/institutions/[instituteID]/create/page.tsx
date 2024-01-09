@@ -29,6 +29,9 @@ const CreateCourse = () => {
         e?.preventDefault()
         const instituteName = params?.instituteID.replaceAll("-", " ");
 
+        if (instituteName.toLowerCase() === courseName.toLowerCase())
+            throw new Error("Course name cannot be same as institute name!")
+
         const res = await axios.post("/api/post/create-course", {
             instituteName,
             courseName,

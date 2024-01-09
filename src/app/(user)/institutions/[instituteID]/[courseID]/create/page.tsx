@@ -31,6 +31,9 @@ const CreateSubject = () => {
         const instituteName = params?.instituteID.replaceAll("-", " ");
         const courseName = params?.courseID.replaceAll("-", " ");
 
+        if (courseName.toLowerCase() === subjectName.toLowerCase())
+            throw new Error("Subject name cannot be same as course name!")
+
         const res = await axios.post("/api/post/create-subject", {
             instituteName,
             courseName,
