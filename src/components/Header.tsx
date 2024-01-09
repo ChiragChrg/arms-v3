@@ -1,14 +1,16 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import ThemeButton from './CustomUI/ThemeButton'
-import Logo from '@/assets/Logo'
-import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
-import { X } from 'lucide-react'
 import useUserStore from '@/store/useUserStore'
-import HamMenuSVG from '@/assets/HamMenuSVG'
 import useLoaderStore from '@/store/useLoaderStore'
+import { cn } from '@/lib/utils'
+import PWA from '@/lib/pwa'
+
+import Logo from '@/assets/Logo'
+import HamMenuSVG from '@/assets/HamMenuSVG'
+import ThemeButton from './CustomUI/ThemeButton'
+import { X } from 'lucide-react'
 
 type Props = {
     altLogo?: boolean,
@@ -58,6 +60,11 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
             })
         }
     }, [user])
+
+    // Listening to PWA BeforeInstallPrompt
+    useEffect(() => {
+        PWA()
+    }, [])
 
     return (
         <header className={cn('flex justify-between items-center z-20', className)}>

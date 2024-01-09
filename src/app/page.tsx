@@ -1,34 +1,11 @@
-"use client"
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { LandingVector } from '@/assets'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
-import useUserStore from '@/store/useUserStore'
-import { useEffect } from 'react'
-import PWA from '@/lib/pwa'
+import AnonymousButton from '@/components/CustomUI/AnonymousButton'
 
 export default function Home() {
-  const { setUser } = useUserStore()
-  const router = useRouter()
-
-  const HandleAnonymousLogin = () => {
-    const formattedUser = {
-      uid: "anonymous",
-      username: "Student",
-      email: "Anomymous User",
-    }
-    setUser(formattedUser)
-    localStorage.setItem("arms-user", JSON.stringify(formattedUser));
-    router.push("/dashboard")
-  }
-
-  useEffect(() => {
-    // Listening to PWA BeforeInstallPrompt
-    PWA()
-  }, [])
-
   return (
     <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>
       <Header altColor />
@@ -60,12 +37,7 @@ export default function Home() {
             <div className="w-full sm:w-fit flex_center flex-col gap-8 bg-background/60 backdrop-blur-lg rounded-md p-4 2xl:p-8 sm:mr-[17em] 2xl:mr-[25em]">
               <h2 className='text-[1.4em] font-medium drop-shadow'>Let&apos;s get started! 🚀</h2>
               <div className="flex_center gap-4 w-full sm:w-fit">
-                <div
-                  onClick={HandleAnonymousLogin}
-                  className='flex_center flex-col rounded w-full sm:w-[10em] py-2 px-2 2xl:px-4 bg-background hover:text-white hover:bg-[var(--logoClr)] transition-colors cursor-pointer select-none'>
-                  <h3 className='text-[1.1em]'>I&apos;m a Student</h3>
-                  <p className='opacity-70 text-[0.9em]'>Anonymous</p>
-                </div>
+                <AnonymousButton />
 
                 <Link
                   href="/login"
