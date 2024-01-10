@@ -33,7 +33,7 @@ const RecentSubjects = () => {
                     <span className="text-primary"> Topics</span>
                 </h2>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {recentTopic?.map((data, index) => (
                         <Link href={data?.url} key={index} className="bg-primary/60 p-2 px-4 flex justify-start gap-6 rounded-md text-white">
                             <OpenBookSVG size='50' />

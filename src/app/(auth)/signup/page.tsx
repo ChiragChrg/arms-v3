@@ -102,12 +102,12 @@ const Signup = () => {
     return (
         <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>
             {/* Show colored Logo on mobile devies & vice versa */}
-            <Header altLogo className='hidden sm:flex' />
-            <Header className='sm:hidden' />
+            <Header altLogo className='hidden lg:flex' />
+            <Header className='lg:hidden' />
 
-            <section className='h-full flex justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-8'>
-                <div className='relative flex_center flex-col gap-2 2xl:gap-4 w-fit px-8 py-4 rounded-lg bg-background/70 backdrop-blur-lg sm:ml-[4em]'>
-                    <h1 className='hidden sm:block text-[1.5em] 2xl:text-[2em] font-medium'>
+            <section className='h-full flex justify-between items-center flex-col-reverse lg:flex-row px-8 2xl:px-8'>
+                <div className='relative flex_center flex-col gap-2 2xl:gap-4 w-fit px-8 py-4 rounded-lg bg-background/70 backdrop-blur-lg lg:ml-[4em]'>
+                    <h1 className='hidden lg:block text-[1.5em] 2xl:text-[2em] font-medium'>
                         Create new account
                     </h1>
 
@@ -225,7 +225,7 @@ const Signup = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails className='hidden sm:inline-flex' offsetDirection='right' buttonClass='hidden sm:inline-flex' rotate='45deg' leftBtn />
+            <Trails className='hidden lg:inline-flex lg:h-[55%] 2xl:h-[80%]' offsetDirection='right' buttonClass='hidden lg:inline-flex' rotate='45deg' leftBtn />
         </main>
     )
 }

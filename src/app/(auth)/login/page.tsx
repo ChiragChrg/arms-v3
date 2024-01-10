@@ -94,8 +94,8 @@ const Login = () => {
         <main className='flex flex-col w-full h-screen px-4 py-3 overflow-hidden scalingZoom'>
             <Header />
 
-            <section className='h-full flex justify-evenly sm:justify-between items-center flex-col-reverse sm:flex-row px-8 2xl:px-4 my-auto'>
-                <div className="hidden sm:flex_center flex-col gap-8">
+            <section className='h-full flex justify-evenly lg:justify-between items-center flex-col-reverse lg:flex-row px-8 2xl:px-4 my-auto'>
+                <div className="hidden lg:flex_center flex-col gap-8">
                     <p className="text-[2.5em] 2xl:text-[3em] font-medium">
                         Let&apos;s get <span className="text-primary">Started</span>
                     </p>
@@ -103,7 +103,7 @@ const Login = () => {
                 </div>
 
                 <div className='relative flex_center flex-col gap-4 2xl:gap-8 w-fit p-8 rounded-lg bg-background/70 backdrop-blur-lg'>
-                    <h1 className='hidden sm:block text-[2em] 2xl:text-[2.5em] font-medium'>
+                    <h1 className='hidden lg:block text-[2em] 2xl:text-[2.5em] font-medium'>
                         Welcome to <span className="text-primary">ARMS</span>
                     </h1>
 
@@ -212,7 +212,7 @@ const Login = () => {
 
             <p className='flex_center sm:text-[1.2em] drop-shadow-md sm:text-white'>© Copyright 2023 ChiragChrg</p>
 
-            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden sm:inline-flex' offsetDirection="center" className='hidden sm:block 2xl:h-[80%]' />
+            <Trails rotate='90deg' yOffset='0%' leftBtn buttonClass='hidden lg:inline-flex' offsetDirection="center" className='hidden lg:block lg:h-[40%] 2xl:h-[80%]' />
         </main>
     )
 }

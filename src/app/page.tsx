@@ -12,7 +12,7 @@ export default function Home() {
 
       <section className='h-full px-4 flex flex-col justify-between'>
         <div className="flex flex-col gap-2">
-          <h1 className='Landing_Title sm:flex gap-8 text-[2rem] 2xl:text-[3rem] font-medium'>
+          <h1 className='Landing_Title lg:flex gap-8 text-[2rem] 2xl:text-[3rem] font-medium'>
             <p>
               <span>A</span>cademic
             </p>
@@ -57,7 +57,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Trails className='w-[400%] h-[46%] sm:w-[200%] sm:h-[85%] 2xl:h-[75%]' />
+      <Trails className='w-[400%] sm:w-[200%] h-[46%] sm:h-[50%] md:h-[55%] 2xl:h-[75%]' />
     </main>
   )
 }

@@ -71,7 +71,7 @@ const CreateSubject = () => {
                 Create new <span className="text-primary">Subject</span>
             </h1>
 
-            <div className="flex justify-around items-center flex-col-reverse sm:flex-row gap-6 mt-24">
+            <div className="flex justify-around items-center flex-col-reverse lg:flex-row gap-6 mt-24">
                 <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>Subject Name</span>

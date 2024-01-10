@@ -281,7 +281,7 @@ const SubjectInfo = () => {
 
                         // Date Formating
                         const date = new Date(doc?.docCreated);
-                        const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
+                        const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' };
                         const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
 
                         const singleFileAccess = doc?.docUploader?._id === user?.uid
@@ -296,13 +296,13 @@ const SubjectInfo = () => {
                                         <span>{doc?.docUploader?.username}</span>
                                     </div>
                                 </TableCell>
-                                <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
+                                <TableCell className='px-2 sm:px-4 py-2 sm:table-cell min-w-[70px]'>{formattedDate}</TableCell>
                                 <TableCell className="px-2 sm:px-4 py-2 text-right flex_center flex-col sm:flex-row gap-2">
                                     <Button
                                         size='icon'
                                         title='Download'
                                         onClick={() => handleDownload(doc?.docLink, doc?.docName)}
-                                        className='flex_center bg-primary text-white rounded-md h-10 w-full'>
+                                        className='flex_center bg-primary text-white rounded-md h-10 w-full p-2'>
                                         <DownloadCloudIcon />
                                     </Button>
 
@@ -313,7 +313,7 @@ const SubjectInfo = () => {
                                                     variant='destructive'
                                                     size='icon'
                                                     title='Delete'
-                                                    className='w-full text-white deleteBtnBg'>
+                                                    className='w-full p-2 text-white deleteBtnBg'>
                                                     <Trash2Icon />
                                                 </Button>
                                             </DialogTrigger>

@@ -80,8 +80,9 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                     className='text-[2em] font-bold leading-8'>ARMS</h1>
             </div>
 
+            {/* Mobile navigation */}
             <div onClick={() => setShowNav(true)} >
-                <HamMenuSVG size="40" className='sm:hidden text-logoClr dark:text-white -scale-x-100' />
+                <HamMenuSVG size="40" className='lg:hidden text-logoClr dark:text-white -scale-x-100' />
             </div>
 
             <div
@@ -90,7 +91,7 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                     pointerEvents: showNav ? "auto" : "none",
                     userSelect: showNav ? "auto" : "none",
                 }}
-                className='sm:hidden fixed inset-0 flex flex-col z-50 transition-transform duration-500'>
+                className='lg:hidden fixed inset-0 flex flex-col z-50 transition-transform duration-500'>
                 <nav className='w-[60%] h-full ml-auto flex flex-col justify-start items-center gap-4 pt-8 bg-background shadow text-[1.5em] tracking-wider'>
                     <X size={45} className='bg-primary/80 text-white rounded-full p-2 mb-8' onClick={() => setShowNav(false)} />
 
@@ -103,8 +104,9 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                 </nav>
             </div>
 
+            {/* Desktop Navigation */}
             <nav
-                className={cn('hidden sm:flex items-center gap-8 text-[1.1em] drop-shadow-md', altColor && "text-white")}>
+                className={cn('hidden lg:flex items-center gap-8 text-[1.1em] drop-shadow-md', altColor && "text-white")}>
                 <Link href={homeRoute?.path}>{homeRoute?.name}</Link>
                 <Link href="/about">About</Link>
                 <Link href="https://chiragchrg.netlify.app/" target='_blank'>Portfolio</Link>
