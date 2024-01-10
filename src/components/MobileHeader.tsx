@@ -29,7 +29,7 @@ const MobileHeader = () => {
                     <Button
                         variant="secondary"
                         onClick={() => router.back()}
-                        className="text-white px-3 bg-primary/30">
+                        className="text-slate-700 dark:text-white px-3 bg-primary/30">
                         <ArrowLeftIcon />
                         <span>Back</span>
                     </Button>}
