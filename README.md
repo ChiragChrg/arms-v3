@@ -3,7 +3,7 @@
 
 # ARMS - Academic Resource Management System
 
-![ARMS v3 Preview](public/Icons/ARMSDevices.png)
+![ARMS v3 Preview](public/Icons/ARMSv3Mockup.png)
 
 ## Introduction
 ARMS (Academic Resource Management System) is an all-inclusive educational platform designed to empower students with easy access to study materials for their respective subjects. By logging in anonymously, students can conveniently browse and download PDF documents uploaded by authorized faculties. With a centralized approach, ARMS ensures that students can effortlessly find and obtain the necessary resources they need for their academic pursuits. It's a user-friendly solution that streamlines the process of resource management, providing a seamless experience for both students and faculties alike.
