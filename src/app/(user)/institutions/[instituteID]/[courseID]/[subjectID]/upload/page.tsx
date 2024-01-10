@@ -111,18 +111,24 @@ const UploadDocuments = () => {
         // Uploading File info to DB
         const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
         const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-        const UploadRes = await axios.post("/api/post/upload-files", {
-            instituteId: instituteData?._id,
-            courseId: courseInfo?._id,
-            subjectId: subjectInfo?._id,
-            uploaderId: user?.uid,
-            FilesMeta: uploadMeta
-        })
 
-        if (UploadRes.status == 201) {
-            setIsUploadComplete(true)
-            toast.success("Files uploaded successfully!")
-            await queryClient.invalidateQueries()
+        try {
+            const UploadRes = await axios.post("/api/post/upload-files", {
+                instituteId: instituteData?._id,
+                courseId: courseInfo?._id,
+                subjectId: subjectInfo?._id,
+                uploaderId: user?.uid,
+                FilesMeta: uploadMeta
+            })
+
+            if (UploadRes.status == 201) {
+                setIsUploadComplete(true)
+                toast.success("Files uploaded successfully!")
+                await queryClient.invalidateQueries()
+            }
+        } catch (error) {
+            console.error(error)
+            toast.error("Failed to update Database")
         }
     }
 
