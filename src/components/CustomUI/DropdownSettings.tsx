@@ -67,6 +67,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
             setIsDisabled(true)
     }
 
+    // Delete LocalStorage Recents data
     const deleteRecentTopics = async () => {
         const recentDataUsers: RecentDataType = JSON.parse(localStorage.getItem("arms-recents") as string) || []
         const recentData = recentDataUsers[userID]
@@ -234,7 +235,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
                             variant="destructive"
                             onClick={handleDelete}
                             disabled={isDisabled}
-                            className='flex_center gap-2 w-full text-white'>
+                            className='flex_center gap-2 w-full text-white deleteBtnBg'>
                             {isLoading ?
                                 <>
                                     <Loader2Icon size={20} className='animate-spin' />

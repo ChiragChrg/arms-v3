@@ -70,6 +70,7 @@ const UserAvatar = () => {
                 variant="destructive"
                 size="icon"
                 onClick={() => onOpen("LogoutModal")}
+                className='deleteBtnBg'
                 disabled={status == "loading"}>
                 <LogOutIcon size={20} />
             </Button>

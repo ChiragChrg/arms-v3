@@ -313,7 +313,7 @@ const SubjectInfo = () => {
                                                     variant='destructive'
                                                     size='icon'
                                                     title='Delete'
-                                                    className='w-full bg-red-500 hover:bg-red-500/90 text-white'>
+                                                    className='w-full text-white deleteBtnBg'>
                                                     <Trash2Icon />
                                                 </Button>
                                             </DialogTrigger>
@@ -335,7 +335,7 @@ const SubjectInfo = () => {
                                                     <Button
                                                         variant="destructive"
                                                         onClick={() => deleteFiles(doc?.docLink, doc?._id)}
-                                                        className='flex_center gap-2 w-full text-white'>
+                                                        className='flex_center gap-2 w-full text-white deleteBtnBg'>
                                                         <Trash2Icon size={20} />
                                                         <span>Delete</span>
                                                     </Button>
