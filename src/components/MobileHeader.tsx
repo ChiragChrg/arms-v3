@@ -1,22 +1,38 @@
 "use client"
+import { usePathname, useRouter } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import { useSession } from 'next-auth/react'
 import useSidebarStore from '@/store/useSidebarStore'
 import useUserStore from '@/store/useUserStore'
-import HamMenuSVG from '@/assets/HamMenuSVG'
+
 import { CircleLoader } from './CustomUI/Skeletons'
-import { User2 } from 'lucide-react'
+import { Button } from "./ui/button"
+import HamMenuSVG from '@/assets/HamMenuSVG'
+import { ArrowLeftIcon, User2 } from 'lucide-react'
 
 const MobileHeader = () => {
     const { user } = useUserStore()
     const { setShowSidebar } = useSidebarStore()
     const { status } = useSession()
+    const router = useRouter()
+    const pathname = usePathname()
 
     return (
         <div className="flex lg:hidden justify-between items-center mb-4">
-            <div onClick={() => setShowSidebar(true)} >
-                <HamMenuSVG size="40" className='lg:hidden text-logoClr dark:text-white' />
+            <div className="flex_center gap-4">
+                <div onClick={() => setShowSidebar(true)} >
+                    <HamMenuSVG size="40" className='lg:hidden text-logoClr dark:text-white' />
+                </div>
+
+                {pathname !== "/dashboard" &&
+                    <Button
+                        variant="secondary"
+                        onClick={() => router.back()}
+                        className="text-white px-3 bg-primary/30">
+                        <ArrowLeftIcon />
+                        <span>Back</span>
+                    </Button>}
             </div>
 
             <Link href="/settings" className="flex_center w-fit aspect-square rounded-full overflow-hidden">
