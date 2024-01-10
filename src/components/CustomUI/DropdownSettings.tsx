@@ -208,7 +208,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
                         </DialogDescription>
                     </DialogHeader>
 
-                    <label className="relative min-w-[350px]">
+                    <label className="relative sm:min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>
                             Type &quot; <span className='text-red-500'>Delete {toDeleteName}</span> &quot; to confirm.
                         </span>
