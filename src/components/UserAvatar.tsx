@@ -22,11 +22,11 @@ const UserAvatar = () => {
         if (status == "authenticated" && session !== null) {
             const formattedUser = {
                 uid: session?.user?.uid!,
-                username: session?.user?.name,
-                email: session?.user?.email,
-                avatarImg: session?.user?.avatarImg,
-                isApproved: session?.user?.isApproved,
-                accessToken: session?.user?.accessToken,
+                username: session?.user?.name as string,
+                email: session?.user?.email as string,
+                avatarImg: session?.user?.avatarImg ?? '',
+                isApproved: session?.user?.isApproved ?? false,
+                accessToken: session?.user?.accessToken ?? '',
             }
             setUser(formattedUser)
             setIsAdmin(session?.user?.uid === process.env.NEXT_PUBLIC_ARMS_ADMIN_UID)
@@ -77,5 +77,6 @@ const UserAvatar = () => {
         </div>
     )
 }
+
 
 export default UserAvatar
