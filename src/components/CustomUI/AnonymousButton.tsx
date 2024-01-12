@@ -11,6 +11,9 @@ const AnonymousButton = () => {
             uid: "anonymous",
             username: "Student",
             email: "Anomymous User",
+            avatarImg: "",
+            isApproved: false,
+            accessToken: "",
         }
         setUser(formattedUser)
         localStorage.setItem("arms-user", JSON.stringify(formattedUser));

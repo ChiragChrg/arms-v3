@@ -2,11 +2,11 @@ import { create } from "zustand"
 
 interface UserTypes {
     uid: string,
-    username?: string | null,
-    email?: string | null,
-    avatarImg?: string | null,
-    isApproved?: boolean | null,
-    accessToken?: string | null,
+    username: string,
+    email: string,
+    avatarImg: string,
+    isApproved: boolean,
+    accessToken: string,
 }
 
 export interface UserProp {
