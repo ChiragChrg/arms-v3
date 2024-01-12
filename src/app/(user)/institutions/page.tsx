@@ -8,7 +8,7 @@ import { RectLoader } from '@/components/CustomUI/Skeletons'
 import { PlusIcon } from 'lucide-react'
 import BuildingSVG from '@/assets/BuildingSVG'
 import useUserStore from '@/store/useUserStore'
-import { getAllInstitutions } from '@/app/actions'
+import { getAllInstitutions } from '@/app/actions/fetchData'
 
 const Institutions = () => {
     const { user } = useUserStore()

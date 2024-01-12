@@ -9,7 +9,7 @@ import BookStackSVG from '@/assets/BookStackSVG'
 import OpenBookSVG from '@/assets/OpenBookSVG'
 import DocumentsSVG from '@/assets/DocumentsSVG'
 import { AlertCircle } from "lucide-react"
-import { getDashCount } from '@/app/actions'
+import { getDashCount } from '@/app/actions/fetchData'
 
 interface CountDataType {
     institute: number,
