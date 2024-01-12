@@ -72,7 +72,7 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            {(user?.avatarImg && !user.isApproved) &&
+            {(user && !user.isApproved && user?.accessToken?.length !== 0) &&
                 <div className="bg-alertGradient border border-yellow-400/40 w-fit mx-auto my-2 mt-8 px-4 py-2 text-center rounded-md">
                     <div className="flex_center gap-2 mb-2">
                         <AlertCircle size={20} />
