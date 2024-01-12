@@ -1,14 +1,14 @@
 "use client"
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import useUserStore from '@/store/useUserStore'
-import { User2, CheckIcon, RotateCcwIcon, LogOutIcon, MonitorSmartphoneIcon } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import useModalStore from '@/store/useModalStore'
-import { HandlePWAInstall } from '@/lib/pwa'
-import { deferredPrompt } from '@/lib/pwa'
+import { Button } from '@/components/ui/button'
 import MobileHeader from '@/components/MobileHeader'
-import { useEffect, useState } from 'react'
+
+import { HandlePWAInstall, deferredPrompt } from '@/lib/pwa'
 import { CircleLoader } from '@/components/CustomUI/Skeletons'
+import { User2, CheckIcon, LogOutIcon, MonitorSmartphoneIcon, TimerResetIcon } from 'lucide-react'
 
 const Settings = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true)
@@ -77,7 +77,7 @@ const Settings = () => {
                             </div>
                             :
                             <div className='flex gap-2 text-yellow-500'>
-                                <RotateCcwIcon />
+                                <TimerResetIcon />
                                 <span>Pending</span>
                             </div>
                         }
