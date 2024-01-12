@@ -3,12 +3,17 @@ import { FormEvent, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { getProviders, signIn } from 'next-auth/react'
-import axios from 'axios'
 import toast from 'react-hot-toast'
 
 import Input from '../CustomUI/Input'
 import { Button } from '../ui/button'
 import { Loader2Icon, UserPlusIcon } from 'lucide-react'
+import { registerUser } from '@/app/actions/RegisterUser'
+
+type ResponseType = {
+    status: number,
+    message: string,
+}
 
 const SignupForm = () => {
     const [providerList, setProviderList] = useState<any | null>({})
@@ -49,14 +54,14 @@ const SignupForm = () => {
         setIsLoading(true)
 
         try {
-            const res = await axios.post("/api/post/register", {
+            const res = await registerUser({
                 username,
                 email,
                 password
-            })
+            }) as ResponseType
 
             if (res?.status === 201) {
-                toast.success("User created successfully!", {
+                toast.success(res?.message, {
                     id: SignupToastID
                 })
 
