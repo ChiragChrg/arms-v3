@@ -10,6 +10,7 @@ import OpenBookSVG from '@/assets/OpenBookSVG'
 import DocumentsSVG from '@/assets/DocumentsSVG'
 import { AlertCircle } from "lucide-react"
 import { getDashCount } from '@/app/actions/fetchData'
+import Link from 'next/link'
 
 interface CountDataType {
     institute: number,
@@ -71,6 +72,13 @@ const Dashboard = () => {
                     <p className='w-full text-center text-[0.9em] sm:text-[1.1em] text-baseClr dark:text-white/80 z-[1]'>PDFs uploaded</p>
                 </div>
             </div>
+
+            <Link
+                href='./institutions'
+                className="flex lg:hidden justify-start items-center gap-6 bg-primary/40 p-2 px-4 rounded-md text-white mt-6 max-w-lg mx-auto">
+                <BuildingSVG size='30' />
+                <span className='text-[1.25em]'>Institutions</span>
+            </Link>
 
             {(user && !user.isApproved && user?.accessToken?.length !== 0) &&
                 <div className="bg-alertGradient border border-yellow-400/40 w-fit mx-auto my-2 mt-8 px-4 py-2 text-center rounded-md">
