@@ -165,7 +165,8 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                                 <div className="flex flex-col items-center gap-1 justify-center text-xs text-gray-500 dark:text-gray-400">
                                     <UploadCloudIcon className="mb-1 h-8 w-8" />
                                     <div className="text-gray-500 dark:text-gray-400 text-[1.2em]">
-                                        Drag & Drop or click to upload PDF files
+                                        <span className='hidden lg:block'>Drag & Drop or Click to upload PDF files</span>
+                                        <span className='lg:hidden'>Click to upload PDF files</span>
                                     </div>
                                     <div className="text-gray-500/80 dark:text-gray-400/80">
                                         Max-Files: 10, Max-Size: 25MB, File-Type: PDF
