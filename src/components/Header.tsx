@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import useUserStore from '@/store/useUserStore'
+import useUserStore, { UserTypes } from '@/store/useUserStore'
 import useLoaderStore from '@/store/useLoaderStore'
 import { cn } from '@/lib/utils'
 import PWA from '@/lib/pwa'
@@ -34,14 +34,16 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
     const { status } = useSession()
 
     useEffect(() => {
-        if (status === "authenticated" && !disableAuthRedirect) {
+        const anonymousUser: UserTypes = JSON.parse(localStorage.getItem('arms-anonymous-user') as string)
+
+        if ((anonymousUser?.uid === "anonymous" || status === "authenticated") && !disableAuthRedirect) {
             router.push('/dashboard')
         } else {
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
         }
-    }, [router, setShowLoader, disableAuthRedirect, status])
+    }, [router, disableAuthRedirect, status, setShowLoader])
 
     useEffect(() => {
         if (showNav) {

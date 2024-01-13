@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-interface UserTypes {
+export interface UserTypes {
     uid: string,
     username: string,
     email: string,

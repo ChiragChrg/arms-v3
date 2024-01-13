@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import useUserStore from '@/store/useUserStore'
+import useUserStore, { UserTypes } from '@/store/useUserStore'
 import useModalStore from '@/store/useModalStore'
 import useLoaderStore from '@/store/useLoaderStore'
 
@@ -20,7 +20,25 @@ const UserAvatar = () => {
 
     useEffect(() => {
         // console.log(session, status)
-        if (status == "authenticated" && session !== null) {
+        const anonymousUser: UserTypes = JSON.parse(localStorage.getItem('arms-anonymous-user') as string)
+
+        if (anonymousUser?.uid === "anonymous") {
+            // Set Anonymous user from localStorage
+            const formattedUser = {
+                uid: "anonymous",
+                username: "Student",
+                email: "Anomymous User",
+                avatarImg: "",
+                isApproved: false,
+                accessToken: "",
+            }
+            setUser(formattedUser)
+
+            setTimeout(() => {
+                setShowLoader(false)
+            }, 2500)
+
+        } else if (status == "authenticated" && session !== null) {
             const formattedUser = {
                 uid: session?.user?.uid!,
                 username: session?.user?.name as string,
@@ -35,14 +53,10 @@ const UserAvatar = () => {
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
-        }
-    }, [session, status, setUser, setIsAdmin, setShowLoader])
-
-    useEffect(() => {
-        if (!user?.uid) {
+        } else {
             router.push('/')
         }
-    }, [user, router])
+    }, [session, status, router, setUser, setIsAdmin, setShowLoader])
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-primary/50 dark:bg-sidebarLinkClr drop-shadow-md">

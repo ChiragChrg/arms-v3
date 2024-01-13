@@ -16,6 +16,7 @@ const AnonymousButton = () => {
             accessToken: "",
         }
         setUser(formattedUser)
+        localStorage.setItem("arms-anonymous-user", JSON.stringify(formattedUser));
         router.push("/dashboard")
     }
 
