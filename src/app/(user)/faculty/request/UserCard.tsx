@@ -47,7 +47,7 @@ const UserCard = ({ user }: Props) => {
                     className='rounded-full'
                 />
                 :
-                <div className="bg-slate-400 w-fit max-w-[80px] p-3 rounded-full">
+                <div className="bg-slate-400 w-fit max-w-[80px] p-3 rounded-full text-white">
                     <User2 size={56} />
                 </div>
             }
@@ -69,7 +69,7 @@ const UserCard = ({ user }: Props) => {
                 <Button
                     variant="destructive"
                     onClick={() => mutate({ approval: "reject", uid: user?._id })}
-                    className='flex_center gap-1 p-2 min-w-[90px] w-full h-fit text-[0.8em] text-white drop-shadow'>
+                    className='flex_center deleteBtnBg gap-1 p-2 min-w-[90px] w-full h-fit text-[0.8em] text-white drop-shadow'>
                     {isPending ?
                         <Loader size={20} className='animate-spin' />
                         :
