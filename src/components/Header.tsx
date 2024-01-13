@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import useUserStore from '@/store/useUserStore'
 import useLoaderStore from '@/store/useLoaderStore'
 import { cn } from '@/lib/utils'
@@ -28,21 +29,19 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
     const [showNav, setShowNav] = useState<boolean>(false)
     const [homeRoute, setHomeRoute] = useState<HomeRouteType>({ path: "/", name: "Home" })
     const router = useRouter()
-    const { user, setUser } = useUserStore()
+    const { user } = useUserStore()
     const { setShowLoader } = useLoaderStore()
+    const { status } = useSession()
 
     useEffect(() => {
-        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
-
-        if (localUser?.uid && !disableAuthRedirect) {
-            setUser(localUser)
+        if (status === "authenticated" && !disableAuthRedirect) {
             router.push('/dashboard')
         } else {
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
         }
-    }, [setUser, router, setShowLoader, disableAuthRedirect])
+    }, [router, setShowLoader, disableAuthRedirect, status])
 
     useEffect(() => {
         if (showNav) {
@@ -51,9 +50,7 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
     }, [showNav])
 
     useEffect(() => {
-        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
-
-        if (localUser?.uid) {
+        if (user?.uid) {
             setHomeRoute({
                 path: "/dashboard",
                 name: "Dashboard"

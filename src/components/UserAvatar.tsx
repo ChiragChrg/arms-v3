@@ -1,14 +1,15 @@
 "use client"
 import { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import useUserStore from '@/store/useUserStore'
 import useModalStore from '@/store/useModalStore'
-import { RectLoader } from "./CustomUI/Skeletons"
-import { Button } from './ui/button'
-import { LogOutIcon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import useLoaderStore from '@/store/useLoaderStore'
+
+import { Button } from './ui/button'
+import { RectLoader } from "./CustomUI/Skeletons"
 import AvatarImage from './CustomUI/AvatarImage'
+import { LogOutIcon } from 'lucide-react'
 
 const UserAvatar = () => {
     const { user, setUser, setIsAdmin } = useUserStore()
@@ -30,23 +31,18 @@ const UserAvatar = () => {
             }
             setUser(formattedUser)
             setIsAdmin(session?.user?.uid === process.env.NEXT_PUBLIC_ARMS_ADMIN_UID)
-            localStorage.setItem("arms-user", JSON.stringify(formattedUser));
-        }
-    }, [session, status, setUser, setIsAdmin])
-
-    useEffect(() => {
-        const localUser = JSON.parse(localStorage.getItem('arms-user') as string)
-
-        if (!localUser?.uid && status === "unauthenticated") {
-            router.push('/')
-        } else {
-            setUser(localUser)
 
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
         }
-    }, [router, status, setUser, setShowLoader])
+    }, [session, status, setUser, setIsAdmin, setShowLoader])
+
+    useEffect(() => {
+        if (!user?.uid) {
+            router.push('/')
+        }
+    }, [user, router])
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-primary/50 dark:bg-sidebarLinkClr drop-shadow-md">

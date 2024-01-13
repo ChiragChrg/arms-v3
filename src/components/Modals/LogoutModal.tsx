@@ -28,7 +28,6 @@ const LogoutModal = () => {
             onClose()
             setShowSidebar(false)
 
-            localStorage.removeItem("arms-user")
             router.push("/")
         } catch (error) {
             console.error('Logout error:', error);
