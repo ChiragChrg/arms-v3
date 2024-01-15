@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import useUserStore, { UserTypes } from '@/store/useUserStore'
+import useUserStore from '@/store/useUserStore'
 import useModalStore from '@/store/useModalStore'
 import useLoaderStore from '@/store/useLoaderStore'
 
@@ -20,10 +20,10 @@ const UserAvatar = () => {
 
     useEffect(() => {
         // console.log(session, status)
-        const anonymousUser: UserTypes = JSON.parse(localStorage.getItem('arms-anonymous-user') as string)
+        const isAnonymousUser = JSON.parse(localStorage.getItem('arms-anonymous-user') as string)
 
-        if (anonymousUser?.uid === "anonymous") {
-            // Set Anonymous user from localStorage
+        if (isAnonymousUser) {
+            // Set a dummy Anonymous user info
             const formattedUser = {
                 uid: "anonymous",
                 username: "Student",

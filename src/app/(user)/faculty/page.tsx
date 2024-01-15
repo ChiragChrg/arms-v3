@@ -45,8 +45,7 @@ const Faculty = () => {
         queryFn: async () => {
             const { data } = await axios.get("/api/get/faculty")
             return data as FacultyType[]
-        },
-        refetchOnMount: true
+        }
     })
 
     if (isAdmin)
@@ -64,7 +63,9 @@ const Faculty = () => {
                         <Link href="./faculty/request" className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                             <UserCheck />
                             <span className='hidden sm:block'>Pending</span>
-                            <span>Request ( {data?.filter(user => user?.isApproved === false).length || 0} )</span>
+                            <div className='relative flex_center gap-2'>Request
+                                <span className='flex_center w-6 aspect-square rounded-full bg-white text-primary font-bold text-[0.7em]'>{data?.filter(user => user?.isApproved === false).length || 20}</span>
+                            </div>
                         </Link>
                     }
                 </div>
