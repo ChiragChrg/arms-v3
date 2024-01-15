@@ -1,22 +1,11 @@
 "use client"
-import useUserStore from '@/store/useUserStore'
 import { useRouter } from 'next/navigation'
 
 const AnonymousButton = () => {
-    const { setUser } = useUserStore()
     const router = useRouter()
 
     const HandleAnonymousLogin = () => {
-        const formattedUser = {
-            uid: "anonymous",
-            username: "Student",
-            email: "Anomymous User",
-            avatarImg: "",
-            isApproved: false,
-            accessToken: "",
-        }
-        setUser(formattedUser)
-        localStorage.setItem("arms-anonymous-user", JSON.stringify(formattedUser));
+        localStorage.setItem("arms-anonymous-user", "true");
         router.push("/dashboard")
     }
 

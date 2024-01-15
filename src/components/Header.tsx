@@ -34,11 +34,11 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
     const { status } = useSession()
 
     useEffect(() => {
-        const anonymousUser: UserTypes = JSON.parse(localStorage.getItem('arms-anonymous-user') as string)
+        const isAnonymousUser = JSON.parse(localStorage.getItem('arms-anonymous-user') as string)
 
-        if ((anonymousUser?.uid === "anonymous" || status === "authenticated") && !disableAuthRedirect) {
+        if ((isAnonymousUser || status === "authenticated") && !disableAuthRedirect) {
             router.push('/dashboard')
-        } else {
+        } else if (status === "unauthenticated") {
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
