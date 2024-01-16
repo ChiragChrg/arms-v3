@@ -112,35 +112,39 @@ const Faculty = () => {
 
                 {/* Card Ui for Mobile screen */}
                 <div className="grid xl:hidden grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    {data?.map((faculty, index) => (
-                        <div key={index} className="flex justify-between items-center border border-secondary rounded-md px-1 py-0.5">
-                            <div className="flex items-center gap-4">
-                                {faculty?.avatarImg ?
-                                    <Image
-                                        src={faculty?.avatarImg}
-                                        alt='User_Avatar'
-                                        width={40}
-                                        height={40}
-                                        loading='eager'
-                                        className='rounded-full'
-                                    />
-                                    :
-                                    <div className="bg-slate-500 w-fit p-1.5 rounded-full">
-                                        <User2 size={30} />
+                    {data?.map((faculty, index) => {
+                        if (!faculty?.isApproved) return
+
+                        return (
+                            <div key={index} className="flex justify-between items-center border border-secondary rounded-md px-1 py-0.5">
+                                <div className="flex items-center gap-4">
+                                    {faculty?.avatarImg ?
+                                        <Image
+                                            src={faculty?.avatarImg}
+                                            alt='User_Avatar'
+                                            width={40}
+                                            height={40}
+                                            loading='eager'
+                                            className='rounded-full'
+                                        />
+                                        :
+                                        <div className="bg-slate-500 w-fit p-1.5 rounded-full">
+                                            <User2 size={30} />
+                                        </div>
+                                    }
+
+                                    <div className="flex flex-col">
+                                        <span className='font-medium capitalize'>{faculty?.username}</span>
+                                        <span className='text-[0.8em] opacity-80'>{faculty?.email}</span>
                                     </div>
-                                }
-
-                                <div className="flex flex-col">
-                                    <span className='font-medium capitalize'>{faculty?.username}</span>
-                                    <span className='text-[0.8em] opacity-80'>{faculty?.email}</span>
                                 </div>
-                            </div>
 
-                            <Button size="icon" variant='ghost'>
-                                <MoreVerticalIcon />
-                            </Button>
-                        </div>
-                    ))}
+                                <Button size="icon" variant='ghost'>
+                                    <MoreVerticalIcon />
+                                </Button>
+                            </div>
+                        )
+                    })}
                 </div>
             </section>
         )
