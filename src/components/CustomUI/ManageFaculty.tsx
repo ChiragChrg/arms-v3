@@ -22,6 +22,7 @@ import {
     DialogFooter,
     DialogClose
 } from "@/components/ui/dialog"
+import { deleteUser } from '@/app/actions/UserActions'
 
 type Props = {
     facultyName: string,
@@ -41,18 +42,16 @@ const ManageFaculty = ({ facultyName, facultyUid }: Props) => {
             setIsDisabled(true)
     }
 
-    const handleDelete = async () => {
+    const handleDeleteUser = async () => {
         setIsLoading(true)
         setIsDisabled(true)
         try {
-            // const res = await axios.delete('/api/delete/faculty', {
-            //     data: facultyUid
-            // });
+            const res = await deleteUser(facultyUid)
 
-            // if (res?.status === 200) {
-            //     toast.success(`Faculty deleted successfully!`)
-            //     setOpen(false)
-            // }
+            if (res?.status === 201) {
+                toast.success(`Faculty deleted successfully!`)
+                setOpen(false)
+            }
         } catch (err) {
             console.log(err)
             toast.error(`Error while deleting Faculty`)
@@ -115,7 +114,7 @@ const ManageFaculty = ({ facultyName, facultyUid }: Props) => {
 
                     <Button
                         variant="destructive"
-                        onClick={handleDelete}
+                        onClick={handleDeleteUser}
                         disabled={isDisabled}
                         className='flex_center gap-2 w-full text-white deleteBtnBg'>
                         {isLoading ?

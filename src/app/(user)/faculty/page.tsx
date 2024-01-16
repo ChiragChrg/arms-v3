@@ -22,7 +22,7 @@ import AvatarImage from '@/components/CustomUI/AvatarImage'
 import ManageFaculty from '@/components/CustomUI/ManageFaculty'
 
 interface FacultyType {
-    uid: string,
+    _id: string,
     username: string,
     email: string,
     avatarImg: string,
@@ -101,7 +101,7 @@ const Faculty = () => {
                                     <TableCell className='px-2 sm:px-4 py-2 sm:table-cell text-center'>
                                         <ManageFaculty
                                             facultyName={faculty?.username}
-                                            facultyUid={faculty?.uid}
+                                            facultyUid={faculty?._id}
                                         />
                                     </TableCell>
                                 </TableRow>
