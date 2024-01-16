@@ -57,7 +57,7 @@ const UserAvatar = () => {
         } else if (status === "unauthenticated") {
             router.push('/')
         }
-    }, [session, status, router, setUser, setIsAdmin, setShowLoader])
+    }, [session, status, router, setUser, setIsAdmin, setShowLoader, setIsLoading])
 
     return (
         <div className="flex justify-between items-center gap-2 w-full p-1 rounded text-white bg-primary/50 dark:bg-sidebarLinkClr drop-shadow-md">

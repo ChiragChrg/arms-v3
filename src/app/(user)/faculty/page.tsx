@@ -39,7 +39,7 @@ const Faculty = () => {
         if (!isLoading && !isAdmin) {
             router.push("/dashboard")
         }
-    }, [isAdmin, router])
+    }, [isAdmin, router, isLoading])
 
     const { data } = useQuery({
         queryKey: ["facultyList"],
