@@ -12,7 +12,7 @@ import AvatarImage from './CustomUI/AvatarImage'
 import { LogOutIcon } from 'lucide-react'
 
 const UserAvatar = () => {
-    const { user, setUser, setIsAdmin } = useUserStore()
+    const { user, setUser, setIsAdmin, setIsLoading } = useUserStore()
     const { onOpen } = useModalStore()
     const { setShowLoader } = useLoaderStore()
     const { data: session, status } = useSession()
@@ -33,11 +33,11 @@ const UserAvatar = () => {
                 accessToken: "",
             }
             setUser(formattedUser)
+            setIsLoading(false)
 
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
-
         } else if (status == "authenticated" && session !== null) {
             const formattedUser = {
                 uid: session?.user?.uid!,
@@ -49,11 +49,12 @@ const UserAvatar = () => {
             }
             setUser(formattedUser)
             setIsAdmin(session?.user?.uid === process.env.NEXT_PUBLIC_ARMS_ADMIN_UID)
+            setIsLoading(false)
 
             setTimeout(() => {
                 setShowLoader(false)
             }, 2500)
-        } else {
+        } else if (status === "unauthenticated") {
             router.push('/')
         }
     }, [session, status, router, setUser, setIsAdmin, setShowLoader])
