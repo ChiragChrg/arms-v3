@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useParams } from 'next/navigation'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEdgeStore } from '@/lib/edgestore';
-import { getInstitution } from '@/app/actions/fetchData'
+import { getInstitution } from '@/app/actions/DocsActions'
 import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
 import axios from 'axios'

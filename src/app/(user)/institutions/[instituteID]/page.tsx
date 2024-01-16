@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
-import { getInstitution } from '@/app/actions/fetchData'
+import { getInstitution } from '@/app/actions/DocsActions'
 import useUserStore from '@/store/useUserStore'
 import { DataStoreTypes } from '@/types/dataStoreTypes'
 
