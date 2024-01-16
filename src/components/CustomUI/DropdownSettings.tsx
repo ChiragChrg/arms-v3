@@ -163,8 +163,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
                     router.push(`/institutions/${params?.instituteID}/${params?.courseID}`)
                 }
             }
-        }
-        catch (err) {
+        } catch (err) {
             console.log(err)
             toast.error(`Error while deleting ${title}`)
         } finally {

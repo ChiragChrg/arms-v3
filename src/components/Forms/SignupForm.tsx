@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 import Input from '../CustomUI/Input'
 import { Button } from '../ui/button'
 import { Loader2Icon, UserPlusIcon } from 'lucide-react'
-import { registerUser } from '@/app/actions/RegisterUser'
+import { registerUser } from '@/app/actions/UserActions'
 
 type ResponseType = {
     status: number,
