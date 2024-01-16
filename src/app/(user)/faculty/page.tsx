@@ -31,12 +31,12 @@ interface FacultyType {
 }
 
 const Faculty = () => {
-    const { isAdmin } = useUserStore()
+    const { isAdmin, isLoading } = useUserStore()
     const router = useRouter()
 
     // Redirect NON-ADMIN users back to dashboard
     useLayoutEffect(() => {
-        if (!isAdmin) {
+        if (!isLoading && !isAdmin) {
             router.push("/dashboard")
         }
     }, [isAdmin, router])

@@ -15,6 +15,8 @@ export interface UserProp {
     deleteUser: () => void,
     isAdmin: boolean,
     setIsAdmin: (value: boolean) => void
+    isLoading: boolean
+    setIsLoading: (value: boolean) => void
 }
 
 const useUserStore = create<UserProp>((set) => ({
@@ -22,7 +24,9 @@ const useUserStore = create<UserProp>((set) => ({
     setUser: (user: UserTypes) => set({ user }),
     deleteUser: () => set({ user: null }),
     isAdmin: false,
-    setIsAdmin: (value: boolean) => set({ isAdmin: value })
+    setIsAdmin: (value: boolean) => set({ isAdmin: value }),
+    isLoading: true,
+    setIsLoading: (value: boolean) => set({ isLoading: value }),
 }))
 
 export default useUserStore
