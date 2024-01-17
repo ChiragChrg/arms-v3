@@ -65,7 +65,7 @@ const Faculty = () => {
                             <UserCheck />
                             <span className='hidden sm:block'>Pending</span>
                             <div className='relative flex_center gap-2'>Request
-                                <span className='flex_center w-6 aspect-square rounded-full bg-white text-primary font-bold text-[0.7em]'>{data?.filter(user => user?.isApproved === false).length || 20}</span>
+                                <span className='flex_center w-6 aspect-square rounded-full bg-white text-primary font-bold text-[0.7em]'>{data?.filter(user => user?.isApproved === false).length || 0}</span>
                             </div>
                         </Link>
                     }
@@ -139,9 +139,10 @@ const Faculty = () => {
                                     </div>
                                 </div>
 
-                                <Button size="icon" variant='ghost'>
-                                    <MoreVerticalIcon />
-                                </Button>
+                                <ManageFaculty
+                                    facultyName={faculty?.username}
+                                    facultyUid={faculty?._id}
+                                />
                             </div>
                         )
                     })}
