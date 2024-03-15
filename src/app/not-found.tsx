@@ -1,9 +1,11 @@
 "use client"
-import Logo from '@/assets/Logo'
-import Header from '@/components/Header'
-import useLoaderStore from '@/store/useLoaderStore'
-import { Metadata } from 'next/types'
 import React, { useEffect } from 'react'
+import { Metadata } from 'next/types'
+import dynamic from 'next/dynamic'
+
+const Logo = dynamic(() => import('@/assets/Logo'))
+const Header = dynamic(() => import('@/components/Header'))
+import useLoaderStore from '@/store/useLoaderStore'
 
 export const metadata: Metadata = {
     title: '404 Not Found | ARMS',

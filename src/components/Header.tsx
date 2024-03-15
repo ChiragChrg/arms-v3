@@ -1,17 +1,19 @@
 "use client"
+import dynamic from 'next/dynamic'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import useUserStore, { UserTypes } from '@/store/useUserStore'
+import useUserStore from '@/store/useUserStore'
 import useLoaderStore from '@/store/useLoaderStore'
 import { cn } from '@/lib/utils'
 import PWA from '@/lib/pwa'
 
-import Logo from '@/assets/Logo'
-import HamMenuSVG from '@/assets/HamMenuSVG'
 import ThemeButton from './CustomUI/ThemeButton'
 import { X } from 'lucide-react'
+
+const Logo = dynamic(() => import('@/assets/Logo'))
+const HamMenuSVG = dynamic(() => import('@/assets/HamMenuSVG'))
 
 type Props = {
     altLogo?: boolean,
