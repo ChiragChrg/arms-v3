@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import OpenBookSVG from '@/assets/OpenBookSVG'
+import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 import useUserStore from '@/store/useUserStore'
 
 type RecentTopicsType = {

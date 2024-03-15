@@ -8,7 +8,7 @@ import useUserStore from '@/store/useUserStore'
 
 import { CircleLoader } from './CustomUI/Skeletons'
 import { Button } from "./ui/button"
-import HamMenuSVG from '@/assets/HamMenuSVG'
+import HamMenuSVG from '@/assets/Icons/HamMenuSVG'
 import { ArrowLeftIcon, User2 } from 'lucide-react'
 
 const MobileHeader = () => {

@@ -11,7 +11,7 @@ import useUserStore from '@/store/useUserStore'
 import { NewCourseVector } from '@/assets/SVGs'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import OpenBookSVG from '@/assets/OpenBookSVG'
+import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 
 type Params = {
     instituteID: string,
