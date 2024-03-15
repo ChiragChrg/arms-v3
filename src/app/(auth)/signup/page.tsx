@@ -2,7 +2,7 @@ import Image from 'next/image'
 import SignupForm from '@/components/Forms/SignupForm'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
-import { SignupVector } from '@/assets'
+import { SignupVector } from '@/assets/SVGs'
 
 const Signup = () => {
     return (

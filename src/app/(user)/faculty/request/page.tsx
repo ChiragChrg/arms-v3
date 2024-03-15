@@ -7,7 +7,7 @@ import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
 import { useQuery } from '@tanstack/react-query'
 import NavRoute from '@/components/NavRoutes'
-import { EmptyApprovalVector } from '@/assets'
+import { EmptyApprovalVector } from '@/assets/SVGs'
 import UserCard from './UserCard'
 
 

@@ -4,7 +4,7 @@ import Image from "next/image"
 import { useRouter } from 'next/navigation'
 import { send } from '@emailjs/browser'
 import axios from 'axios'
-import { ForgotPasswordVector } from '@/assets'
+import { ForgotPasswordVector } from '@/assets/SVGs'
 import Header from '@/components/Header'
 import Input from '@/components/CustomUI/Input'
 import { Button } from '@/components/ui/button'
