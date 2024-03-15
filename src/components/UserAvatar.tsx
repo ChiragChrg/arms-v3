@@ -82,6 +82,8 @@ const UserAvatar = () => {
                 size="icon"
                 onClick={() => onOpen("LogoutModal")}
                 className='deleteBtnBg'
+                name='Logout'
+                title='Logout'
                 disabled={status == "loading"}>
                 <LogOutIcon size={20} />
             </Button>
