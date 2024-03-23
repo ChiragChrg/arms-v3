@@ -2,7 +2,7 @@ import Image from 'next/image'
 import LoginForm from '@/components/Forms/LoginForm'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
-import { PeopleVector, UploadVector } from '@/assets'
+import { PeopleVector, UploadVector } from '@/assets/SVGs'
 
 const Login = () => {
     return (

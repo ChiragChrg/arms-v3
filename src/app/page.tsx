@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { LandingVector } from '@/assets'
+import { LandingVector } from '@/assets/SVGs'
 import Header from '@/components/Header'
 import Trails from '@/components/Trails'
 import AnonymousButton from '@/components/CustomUI/AnonymousButton'

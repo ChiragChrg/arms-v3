@@ -9,7 +9,7 @@ import Header from '@/components/Header'
 import { Button } from '@/components/ui/button'
 import Input from '@/components/CustomUI/Input'
 import { KeyRoundIcon, Loader2Icon } from 'lucide-react'
-import { ResetPasswordVector } from '@/assets'
+import { ResetPasswordVector } from '@/assets/SVGs'
 
 const ResetPassword = () => {
     const [password, setPassword] = useState<string>("")

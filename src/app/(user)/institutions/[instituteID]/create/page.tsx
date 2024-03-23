@@ -5,10 +5,10 @@ import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
 import useUserStore from '@/store/useUserStore'
-import { NewCourseVector } from '@/assets'
+import { NewCourseVector } from '@/assets/SVGs'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import BookStackSVG from '@/assets/BookStackSVG'
+import BookStackSVG from '@/assets/Icons/BookStackSVG'
 import axios from 'axios'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
@@ -54,6 +54,15 @@ const CreateCourse = () => {
         }
     })
 
+    // Check if courseName matches the regex pattern
+    const handleChange = (event: { target: { value: any } }) => {
+        const { value } = event?.target;
+
+        if (/^[a-zA-Z0-9\s]*$/.test(value)) {
+            setCourseName(value.trim());
+        }
+    };
+
     return (
         <section className='section_style'>
             <NavRoute routes={["Institutions", `Institutions/${params?.instituteID}`, `Institutions/${params?.instituteID}/Create`]} />
@@ -73,7 +82,7 @@ const CreateCourse = () => {
                                 type="text"
                                 required={true}
                                 placeholder='Enter Course Name'
-                                onChange={(e) => setCourseName(e.target.value)}
+                                onChange={handleChange}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <BookStackSVG size="24" className="absolute right-2 text-slate-400" />

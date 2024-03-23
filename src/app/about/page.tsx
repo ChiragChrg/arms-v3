@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '@/components/Header'
-import Logo from '@/assets/Logo'
+import Logo from '@/assets/Icons/Logo'
 
 const About = () => {
     return (

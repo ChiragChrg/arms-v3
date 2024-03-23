@@ -11,9 +11,9 @@ import axios from 'axios'
 import { MultiFileDropzone, type FileState } from './FileDropZone'
 import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
-import OpenBookSVG from '@/assets/OpenBookSVG'
-import BuildingSVG from '@/assets/BuildingSVG'
-import BookStackSVG from '@/assets/BookStackSVG'
+import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
+import BuildingSVG from '@/assets/Icons/BuildingSVG'
+import BookStackSVG from '@/assets/Icons/BookStackSVG'
 import { User2Icon } from 'lucide-react'
 import toast from 'react-hot-toast';
 
