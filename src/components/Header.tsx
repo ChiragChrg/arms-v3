@@ -12,8 +12,8 @@ import PWA from '@/lib/pwa'
 import ThemeButton from './CustomUI/ThemeButton'
 import { X } from 'lucide-react'
 
-const Logo = dynamic(() => import('@/assets/Logo'))
-const HamMenuSVG = dynamic(() => import('@/assets/HamMenuSVG'))
+const Logo = dynamic(() => import('@/assets/Icons/Logo'))
+const HamMenuSVG = dynamic(() => import('@/assets/Icons/HamMenuSVG'))
 
 type Props = {
     altLogo?: boolean,

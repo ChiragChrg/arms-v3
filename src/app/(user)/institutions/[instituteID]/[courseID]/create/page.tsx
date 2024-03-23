@@ -11,7 +11,7 @@ import useUserStore from '@/store/useUserStore'
 import { NewCourseVector } from '@/assets/SVGs'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import OpenBookSVG from '@/assets/OpenBookSVG'
+import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 
 type Params = {
     instituteID: string,
@@ -57,6 +57,15 @@ const CreateSubject = () => {
         }
     })
 
+    // Check if subjectName matches the regex pattern
+    const handleChange = (event: { target: { value: any } }) => {
+        const { value } = event?.target;
+
+        if (/^[a-zA-Z0-9\s]*$/.test(value)) {
+            setSubjectName(value);
+        }
+    };
+
     return (
         <section className='section_style'>
             <NavRoute routes={[
@@ -81,7 +90,7 @@ const CreateSubject = () => {
                                 type="text"
                                 required={true}
                                 placeholder='Enter Subject Name'
-                                onChange={(e) => setSubjectName(e.target.value)}
+                                onChange={handleChange}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <OpenBookSVG size="24" className="absolute right-2 text-slate-400" />

@@ -8,7 +8,7 @@ import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
 import useUserStore from '@/store/useUserStore'
 import { NewInstituteVector } from '@/assets/SVGs'
-import BuildingSVG from '@/assets/BuildingSVG'
+import BuildingSVG from '@/assets/Icons/BuildingSVG'
 import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
@@ -43,6 +43,15 @@ const CreateInstitute = () => {
         }
     })
 
+    // Check if institutename matches the regex pattern
+    const handleChange = (event: { target: { value: any } }) => {
+        const { value } = event?.target;
+
+        if (/^[a-zA-Z0-9\s]*$/.test(value)) {
+            setInstituteName(value);
+        }
+    };
+
     return (
         <section className='section_style'>
             <NavRoute routes={["Institutions", "Institutions/Create"]} />
@@ -62,7 +71,7 @@ const CreateInstitute = () => {
                                 type="text"
                                 required={true}
                                 placeholder='Enter Institute Name'
-                                onChange={(e) => setInstituteName(e.target.value)}
+                                onChange={handleChange}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <BuildingSVG size="24" className="absolute right-2 text-slate-400" />

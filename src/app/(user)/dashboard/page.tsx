@@ -4,10 +4,10 @@ import CountUp from "react-countup"
 import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
 import RecentSubjects from "@/components/RecentSubjects"
-import BuildingSVG from '@/assets/BuildingSVG'
-import BookStackSVG from '@/assets/BookStackSVG'
-import OpenBookSVG from '@/assets/OpenBookSVG'
-import DocumentsSVG from '@/assets/DocumentsSVG'
+import BuildingSVG from '@/assets/Icons/BuildingSVG'
+import BookStackSVG from '@/assets/Icons/BookStackSVG'
+import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
+import DocumentsSVG from '@/assets/Icons/DocumentsSVG'
 import { AlertCircle } from "lucide-react"
 import { getDashCount } from '@/app/actions/DocsActions'
 import Link from 'next/link'

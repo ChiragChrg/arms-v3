@@ -13,8 +13,8 @@ import AvatarImage from '@/components/CustomUI/AvatarImage'
 import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 
-import BuildingSVG from '@/assets/BuildingSVG'
-import BookStackSVG from '@/assets/BookStackSVG'
+import BuildingSVG from '@/assets/Icons/BuildingSVG'
+import BookStackSVG from '@/assets/Icons/BookStackSVG'
 import toast from 'react-hot-toast'
 import { PlusIcon } from 'lucide-react'
 

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Metadata } from 'next/types'
 import dynamic from 'next/dynamic'
 
-const Logo = dynamic(() => import('@/assets/Logo'))
+const Logo = dynamic(() => import('@/assets/Icons/Logo'))
 const Header = dynamic(() => import('@/components/Header'))
 import useLoaderStore from '@/store/useLoaderStore'
 

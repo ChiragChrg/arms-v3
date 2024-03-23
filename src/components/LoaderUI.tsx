@@ -1,4 +1,4 @@
-import Logo from '@/assets/Logo'
+import Logo from '@/assets/Icons/Logo'
 import React from 'react'
 
 const LoaderUI = () => {

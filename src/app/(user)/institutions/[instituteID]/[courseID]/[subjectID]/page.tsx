@@ -17,7 +17,7 @@ import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import { Button } from '@/components/ui/button'
 
-import OpenBookSVG from '@/assets/OpenBookSVG'
+import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 import toast from 'react-hot-toast'
 import { DownloadCloudIcon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react'
 
