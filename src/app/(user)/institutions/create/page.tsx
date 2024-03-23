@@ -48,7 +48,7 @@ const CreateInstitute = () => {
         const { value } = event?.target;
 
         if (/^[a-zA-Z0-9\s]*$/.test(value)) {
-            setInstituteName(value);
+            setInstituteName(value.trim());
         }
     };
 

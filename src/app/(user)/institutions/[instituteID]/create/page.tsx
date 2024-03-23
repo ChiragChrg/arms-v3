@@ -59,7 +59,7 @@ const CreateCourse = () => {
         const { value } = event?.target;
 
         if (/^[a-zA-Z0-9\s]*$/.test(value)) {
-            setCourseName(value);
+            setCourseName(value.trim());
         }
     };
 

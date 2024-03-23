@@ -62,7 +62,7 @@ const CreateSubject = () => {
         const { value } = event?.target;
 
         if (/^[a-zA-Z0-9\s]*$/.test(value)) {
-            setSubjectName(value);
+            setSubjectName(value.trim());
         }
     };
 
