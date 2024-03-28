@@ -45,7 +45,8 @@ const Faculty = () => {
         queryKey: ["facultyList"],
         queryFn: async () => {
             const { data } = await axios.get("/api/get/faculty")
-            return data as FacultyType[]
+            const reqUserCount: number = data?.filter((user: FacultyType) => user?.isApproved === false).length;
+            return { faculties: data as FacultyType[], reqUserCount }
         }
     })
 
@@ -65,7 +66,8 @@ const Faculty = () => {
                             <UserCheck />
                             <span className='hidden sm:block'>Pending</span>
                             <div className='relative flex_center gap-2'>Request
-                                <span className='flex_center w-6 aspect-square rounded-full bg-white text-primary font-bold text-[0.7em]'>{data?.filter(user => user?.isApproved === false).length || 0}</span>
+                                {data?.reqUserCount != 0 &&
+                                    <span className='flex_center w-6 aspect-square rounded-full bg-white text-primary font-bold text-[0.7em]'>{data?.reqUserCount}</span>}
                             </div>
                         </Link>
                     }
@@ -82,7 +84,7 @@ const Faculty = () => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {data?.map((faculty, index) => {
+                        {data?.faculties?.map((faculty, index) => {
                             if (!faculty?.isApproved) return
 
                             // Date Formating
@@ -112,7 +114,7 @@ const Faculty = () => {
 
                 {/* Card Ui for Mobile screen */}
                 <div className="grid xl:hidden grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                    {data?.map((faculty, index) => {
+                    {data?.faculties?.map((faculty, index) => {
                         if (!faculty?.isApproved) return
 
                         return (

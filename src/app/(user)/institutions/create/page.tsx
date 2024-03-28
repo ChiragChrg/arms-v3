@@ -16,6 +16,7 @@ import toast from 'react-hot-toast'
 const CreateInstitute = () => {
     const [instituteName, setInstituteName] = useState<string>("")
     const [instituteDesc, setInstituteDesc] = useState<string>("")
+    const [isInvalid, setIsInvalid] = useState<boolean>(false)
     const { user } = useUserStore()
     const router = useRouter()
     const queryClient = useQueryClient()
@@ -48,7 +49,10 @@ const CreateInstitute = () => {
         const { value } = event?.target;
 
         if (/^[a-zA-Z0-9\s]*$/.test(value)) {
+            setIsInvalid(false)
             setInstituteName(value.trim());
+        } else {
+            setIsInvalid(true)
         }
     };
 
@@ -64,9 +68,11 @@ const CreateInstitute = () => {
             <div className="flex justify-around items-center flex-col-reverse lg:flex-row gap-6 mt-14">
                 <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
-                        <span className='text-[0.9em] bg-background/0 px-1'>Institute Name</span>
+                        <p className='text-[0.9em] bg-background/0 px-1'>Institute Name</p>
 
-                        <div className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
+                        <div
+                            style={isInvalid ? { borderColor: "rgb(239 68 68)" } : {}}
+                            className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
                             <input
                                 type="text"
                                 required={true}
@@ -76,6 +82,12 @@ const CreateInstitute = () => {
 
                             <BuildingSVG size="24" className="absolute right-2 text-slate-400" />
                         </div>
+
+                        <span
+                            className='text-[0.8em] ml-1 text-red-500'
+                            style={{ visibility: isInvalid ? "visible" : "hidden" }}>
+                            Cannot contain special characters
+                        </span>
                     </label>
 
                     <label className="relative min-w-[350px]">
@@ -108,7 +120,7 @@ const CreateInstitute = () => {
                         </div>
                     </label>
 
-                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending}>
+                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending || isInvalid}>
                         {isPending ?
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />

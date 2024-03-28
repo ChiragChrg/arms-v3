@@ -21,6 +21,7 @@ type Params = {
 const CreateSubject = () => {
     const [subjectName, setSubjectName] = useState<string>("")
     const [subjectDesc, setSubjectDesc] = useState<string>("")
+    const [isInvalid, setIsInvalid] = useState<boolean>(false)
     const { user } = useUserStore()
     const params = useParams<Params>()
     const router = useRouter()
@@ -62,7 +63,10 @@ const CreateSubject = () => {
         const { value } = event?.target;
 
         if (/^[a-zA-Z0-9\s]*$/.test(value)) {
+            setIsInvalid(false)
             setSubjectName(value.trim());
+        } else {
+            setIsInvalid(true)
         }
     };
 
@@ -85,7 +89,9 @@ const CreateSubject = () => {
                     <label className="relative min-w-[350px]">
                         <span className='text-[0.9em] bg-background/0 px-1'>Subject Name</span>
 
-                        <div className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
+                        <div
+                            style={isInvalid ? { borderColor: "rgb(239 68 68)" } : {}}
+                            className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
                             <input
                                 type="text"
                                 required={true}
@@ -95,6 +101,12 @@ const CreateSubject = () => {
 
                             <OpenBookSVG size="24" className="absolute right-2 text-slate-400" />
                         </div>
+
+                        <span
+                            className='text-[0.8em] ml-1 text-red-500'
+                            style={{ visibility: isInvalid ? "visible" : "hidden" }}>
+                            Cannot contain special characters
+                        </span>
                     </label>
 
                     <label className="relative min-w-[350px]">
@@ -127,7 +139,7 @@ const CreateSubject = () => {
                         </div>
                     </label>
 
-                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending}>
+                    <Button type='submit' className='flex_center gap-4 text-white' disabled={isPending || isInvalid}>
                         {isPending ?
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />
