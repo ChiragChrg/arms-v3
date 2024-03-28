@@ -22,14 +22,8 @@ type Props = {
     disableAuthRedirect?: boolean
 }
 
-type HomeRouteType = {
-    path: string,
-    name: string
-}
-
 const Header = ({ altLogo = false, altColor = false, className = "", disableAuthRedirect = false }: Props) => {
     const [showNav, setShowNav] = useState<boolean>(false)
-    const [homeRoute, setHomeRoute] = useState<HomeRouteType>({ path: "/", name: "Home" })
     const router = useRouter()
     const { user } = useUserStore()
     const { setShowLoader } = useLoaderStore()
@@ -52,15 +46,6 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
             document.body.style.userSelect = "none"
         }
     }, [showNav])
-
-    useEffect(() => {
-        if (user?.uid) {
-            setHomeRoute({
-                path: "/dashboard",
-                name: "Dashboard"
-            })
-        }
-    }, [user])
 
     // Listening to PWA BeforeInstallPrompt
     useEffect(() => {
@@ -96,8 +81,8 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
                 <nav className='w-[60%] h-full ml-auto flex flex-col justify-start items-center gap-4 pt-8 bg-background shadow text-[1.5em] tracking-wider'>
                     <X size={45} className='bg-primary/80 text-white rounded-full p-2 mb-8' onClick={() => setShowNav(false)} />
 
-                    <Link href={homeRoute?.path}>{homeRoute?.name}</Link>
-                    <Link href="/about">About</Link>
+                    <Link href="/">Home</Link>
+                    <Link href="/aboutus">About</Link>
                     <Link href="https://chiragchrg.netlify.app/" target='_blank'>Portfolio</Link>
                     <Link href="https://github.com/ChiragChrg" target='_blank'>GitHub</Link>
 
@@ -108,8 +93,8 @@ const Header = ({ altLogo = false, altColor = false, className = "", disableAuth
             {/* Desktop Navigation */}
             <nav
                 className={cn('hidden lg:flex items-center gap-8 text-[1.1em] drop-shadow-md', altColor && "text-white")}>
-                <Link href={homeRoute?.path}>{homeRoute?.name}</Link>
-                <Link href="/about">About</Link>
+                <Link href="/">Home</Link>
+                <Link href="/aboutus">About</Link>
                 <Link href="https://chiragchrg.netlify.app/" target='_blank'>Portfolio</Link>
                 <Link href="https://github.com/ChiragChrg" target='_blank'>GitHub</Link>
 
