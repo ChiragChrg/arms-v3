@@ -20,7 +20,7 @@ import toast from 'react-hot-toast';
 type Params = {
     instituteID: string,
     courseID: string,
-    subjectID: string
+    unitID: string
 }
 
 type FileUploadRes = {
@@ -40,7 +40,7 @@ const UploadDocuments = () => {
     const queryClient = useQueryClient()
 
     const { data: instituteData } = useQuery({
-        queryKey: ['getInstitutebyName', params?.subjectID, "document-upload"],
+        queryKey: ['getInstitutebyName', params?.unitID, "document-upload"],
         queryFn: async () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
@@ -52,10 +52,10 @@ const UploadDocuments = () => {
             }
         },
         initialData: () => {
-            const init = queryClient.getQueryData(['getInstitutebyName', params?.subjectID]) as DataStoreTypes
+            const init = queryClient.getQueryData(['getInstitutebyName', params?.unitID]) as DataStoreTypes
             return init
         },
-        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.subjectID])?.dataUpdatedAt,
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.unitID])?.dataUpdatedAt,
     });
 
     function updateFileProgress(key: string, progress: FileState['progress']) {
@@ -110,13 +110,13 @@ const UploadDocuments = () => {
 
         // Uploading File info to DB
         const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-        const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
+        const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase())
 
         try {
             const UploadRes = await axios.post("/api/post/upload-files", {
                 instituteId: instituteData?._id,
                 courseId: courseInfo?._id,
-                subjectId: subjectInfo?._id,
+                unitID: subjectInfo?._id,
                 uploaderId: user?.uid,
                 FilesMeta: uploadMeta
             })
@@ -139,7 +139,7 @@ const UploadDocuments = () => {
                 "Institutions",
                 `Institutions/${params?.instituteID}`,
                 `Institutions/${params?.instituteID}/${params?.courseID}`,
-                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`,
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.unitID}`,
                 `Institutions/${params?.instituteID}/${params?.courseID}/Create`
             ]} />
             <MobileHeader />
@@ -184,7 +184,7 @@ const UploadDocuments = () => {
                         <input
                             type="text"
                             required={true}
-                            defaultValue={params?.subjectID?.replaceAll("-", " ") || ""}
+                            defaultValue={params?.unitID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 

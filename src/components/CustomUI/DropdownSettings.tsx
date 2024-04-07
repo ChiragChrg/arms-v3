@@ -40,7 +40,8 @@ type Props = {
 type Params = {
     instituteID: string,
     courseID: string,
-    subjectID: string
+    subjectID: string,
+    unitID: string
 }
 
 type RecentDataType = {
@@ -161,6 +162,24 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
                     toast.success(`${title} deleted successfully!`)
                     setOpen(false)
                     router.push(`/institutions/${params?.instituteID}/${params?.courseID}`)
+                }
+            }
+            else if (title === "Unit") {
+                const res = await axios.delete('/api/delete/unit', {
+                    data: {
+                        instituteName: params?.instituteID.replaceAll("-", " ").toLowerCase(),
+                        courseName: params?.courseID.replaceAll("-", " ").toLowerCase(),
+                        subjectName: params?.subjectID.replaceAll("-", " ").toLowerCase(),
+                        unitName: params?.unitID.replaceAll("-", " ").toLowerCase(),
+                    }
+                });
+
+                if (res?.status === 200) {
+                    await deleteRecentTopics()
+                    await deleteAllDocuments("subject")
+                    toast.success(`${title} deleted successfully!`)
+                    setOpen(false)
+                    router.push(`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`)
                 }
             }
         } catch (err) {

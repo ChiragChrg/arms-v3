@@ -6,6 +6,7 @@ type RequestBody = {
     instituteId: string,
     courseId: string,
     subjectId: string,
+    unitID: string,
     uploaderId: string,
     FilesMeta: {
         docName: string,
@@ -16,7 +17,7 @@ type RequestBody = {
 }
 
 export async function POST(request: NextRequest) {
-    const { instituteId, courseId, subjectId, uploaderId, FilesMeta }: RequestBody = await request.json();
+    const { instituteId, courseId, subjectId, unitID, uploaderId, FilesMeta }: RequestBody = await request.json();
 
     try {
         await connectDB();
@@ -29,8 +30,9 @@ export async function POST(request: NextRequest) {
         if (courseObj) {
             const subjectObj = courseObj?.subjects?.find((subj: Record<string, any>) => subj._id == subjectId);
             if (subjectObj) {
+                const unitObj = subjectObj?.units?.find((unit: Record<string, any>) => unit._id == unitID);
                 FilesMeta.forEach((file) => {
-                    subjectObj.subjectDocs.push({
+                    unitObj.unitDocs.push({
                         docName: file.docName,
                         docSize: file.docSize,
                         docLink: file.docLink,
