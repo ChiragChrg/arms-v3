@@ -47,29 +47,44 @@ const DocsSchema = new Schema({
                 ref: 'User',
                 required: true,
             },
-            subjectDocs: [{
-                docName: {
+            units: [{
+                unitName: {
                     type: String,
                     required: true,
                 },
-                docSize: {
+                unitDesc: {
                     type: String,
                     required: true,
                 },
-                docLink: {
-                    type: String,
-                    required: true,
-                },
-                docCreated: {
-                    type: Date,
-                    default: Date.now,
-                },
-                docUploader: {
+                unitCreator: {
                     type: Schema.Types.ObjectId,
                     ref: 'User',
                     required: true,
                 },
-            }],
+                unitDocs: [{
+                    docName: {
+                        type: String,
+                        required: true,
+                    },
+                    docSize: {
+                        type: String,
+                        required: true,
+                    },
+                    docLink: {
+                        type: String,
+                        required: true,
+                    },
+                    docCreated: {
+                        type: Date,
+                        default: Date.now,
+                    },
+                    docUploader: {
+                        type: Schema.Types.ObjectId,
+                        ref: 'User',
+                        required: true,
+                    },
+                }],
+            }]
         }],
     }],
 })
