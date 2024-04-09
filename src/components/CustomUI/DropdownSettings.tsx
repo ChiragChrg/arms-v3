@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
-import { DataStoreTypes, courseType, subjectType } from '@/types/dataStoreTypes'
+import { DataStoreTypes, courseType, subjectType, unitType } from '@/types/dataStoreTypes'
 import { useEdgeStore } from '@/lib/edgestore'
 import axios from 'axios'
 
@@ -34,7 +34,7 @@ type Props = {
     toDeleteName: string,
     isAuthorized: boolean,
     userID: string,
-    documentData: DataStoreTypes | courseType | subjectType
+    documentData: DataStoreTypes | courseType | subjectType | unitType
 }
 
 type Params = {
@@ -83,30 +83,43 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
     }
 
     // Delete all uploaded documents from EdgeStore
-    const deleteAllDocuments = async (type: "institute" | "course" | "subject") => {
+    const deleteAllDocuments = async (type: "institute" | "course" | "subject" | "unit") => {
         if (type === "institute") {
             const Institute = documentData as DataStoreTypes
             Institute?.course?.forEach((course) => {
                 course?.subjects?.forEach((subject) => {
-                    subject?.subjectDocs?.forEach(async (doc) => {
-                        await edgestore.publicFiles.delete({
-                            url: doc?.docLink,
-                        });
+                    subject?.units?.forEach(async (unit) => {
+                        unit?.unitDocs?.forEach(async (doc) => {
+                            await edgestore.publicFiles.delete({
+                                url: doc?.docLink,
+                            });
+                        })
                     })
                 })
             })
         } else if (type === "course") {
             const Course = documentData as courseType
             Course?.subjects?.forEach((subject) => {
-                subject?.subjectDocs?.forEach(async (doc) => {
+                subject?.units?.forEach(async (unit) => {
+                    unit?.unitDocs?.forEach(async (doc) => {
+                        await edgestore.publicFiles.delete({
+                            url: doc?.docLink,
+                        });
+                    })
+                })
+            })
+        } else if (type === "subject") {
+            const Subject = documentData as subjectType
+            Subject?.units?.forEach(async (unit) => {
+                unit?.unitDocs?.forEach(async (doc) => {
                     await edgestore.publicFiles.delete({
                         url: doc?.docLink,
                     });
                 })
             })
-        } else if (type === "subject") {
-            const Subject = documentData as subjectType
-            Subject?.subjectDocs?.forEach(async (doc) => {
+        } else if (type === "unit") {
+            const Unit = documentData as unitType
+            Unit?.unitDocs?.forEach(async (doc) => {
                 await edgestore.publicFiles.delete({
                     url: doc?.docLink,
                 });
@@ -176,7 +189,7 @@ const DropdownSettings = ({ title, toDeleteName, isAuthorized, userID, documentD
 
                 if (res?.status === 200) {
                     await deleteRecentTopics()
-                    await deleteAllDocuments("subject")
+                    await deleteAllDocuments("unit")
                     toast.success(`${title} deleted successfully!`)
                     setOpen(false)
                     router.push(`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`)

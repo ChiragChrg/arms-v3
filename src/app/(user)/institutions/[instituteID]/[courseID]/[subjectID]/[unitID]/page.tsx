@@ -1,12 +1,12 @@
 "use client"
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEdgeStore } from '@/lib/edgestore'
 import { getInstitution } from '@/app/actions/DocsActions'
 import useUserStore from '@/store/useUserStore'
-import { DataStoreTypes, courseType, subjectType } from '@/types/dataStoreTypes'
+import { DataStoreTypes, courseType, subjectType, unitType } from '@/types/dataStoreTypes'
 import { getDownloadUrl } from '@edgestore/react/utils';
 import axios from 'axios'
 
@@ -43,6 +43,7 @@ import {
 type Params = {
     instituteID: string,
     courseID: string,
+    subjectID: string,
     unitID: string
 }
 
@@ -64,15 +65,16 @@ const UnitInfo = () => {
     const { edgestore } = useEdgeStore();
     const queryClient = useQueryClient()
 
-    const { data: subject, isError, isLoading } = useQuery({
+    const { data: unit, isError, isLoading } = useQuery({
         queryKey: ['getInstitutebyName', params?.unitID],
         queryFn: async () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
                 const res = await getInstitution(instituteName) as DataStoreTypes;
                 const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-                const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as subjectType
-                return subjectData
+                const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+                const unitData = subjectData?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as unitType
+                return unitData
             } catch (error) {
                 console.error('Error fetching institutions:', error);
                 throw new Error('Failed to fetch institutions data');
@@ -81,7 +83,8 @@ const UnitInfo = () => {
         initialData: () => {
             const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
             const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as subjectType
-            return subjectData
+            const unitData = subjectData?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as unitType
+            return unitData
         },
         initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.courseID])?.dataUpdatedAt,
     });
@@ -93,12 +96,12 @@ const UnitInfo = () => {
 
     // Add subject to Recents dash usin LocalStorage
     useEffect(() => {
-        if (!subject?.subjectName) return
+        if (!unit?.unitName) return
 
         const newData = {
-            url: `./institutions/${params?.instituteID}/${params?.courseID}/${params?.unitID}`,
-            title: subject?.subjectName,
-            subtitle: `${params?.instituteID.replaceAll("-", " ")} / ${params?.courseID.replaceAll("-", " ")}`
+            url: `./institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}`,
+            title: unit?.unitName,
+            subtitle: `${params?.instituteID.replaceAll("-", " ")} / ${params?.courseID.replaceAll("-", " ")} / ${params?.subjectID.replaceAll("-", " ")}`
         }
 
         const userID = user?.uid as string
@@ -130,7 +133,7 @@ const UnitInfo = () => {
                 localStorage.setItem("arms-recents", JSON.stringify(recentDataUsers))
             }
         }
-    }, [subject, params, user?.uid])
+    }, [unit, params, user?.uid])
 
     // Deleting files
     const deleteFiles = async (urlToDelete: string, fileId: string) => {
@@ -144,7 +147,8 @@ const UnitInfo = () => {
                 data: {
                     instituteName: params?.instituteID.replaceAll("-", " ").toLowerCase(),
                     courseName: params?.courseID.replaceAll("-", " ").toLowerCase(),
-                    subjectName: params?.unitID.replaceAll("-", " ").toLowerCase(),
+                    subjectName: params?.subjectID.replaceAll("-", " ").toLowerCase(),
+                    unitName: params?.unitID.replaceAll("-", " ").toLowerCase(),
                     documentID: fileId,
                 }
             });
@@ -164,11 +168,11 @@ const UnitInfo = () => {
 
     // Grant DELETE access if user is ADMIN or the CREATOR
     useEffect(() => {
-        if (isAdmin || user?.uid === subject?.subjectCreator?._id)
+        if (isAdmin || user?.uid === unit?.unitCreator?._id)
             setIsAuthorized(true)
         else
             setIsAuthorized(false)
-    }, [user, isAdmin, subject?.subjectCreator?._id])
+    }, [user, isAdmin, unit?.unitCreator?._id])
 
     // Convert file url to a download link
     const handleDownload = async (fileUrl: string, fileName: string) => {
@@ -191,17 +195,17 @@ const UnitInfo = () => {
 
                 <DropdownSettings
                     title='Subject'
-                    toDeleteName={subject?.subjectName as string}
+                    toDeleteName={unit?.unitName as string}
                     isAuthorized={isAuthorized}
                     userID={user?.uid as string}
-                    documentData={subject as subjectType} />
+                    documentData={unit as unitType} />
 
                 <div className="w-full flex_center flex-col gap-2 px-4 mt-8 sm:mt-0">
                     <div className="flex_center flex-col gap-2 w-full">
                         {!isLoading ?
                             <>
-                                <h1 className='text-[1.8em] sm:text-[2em] font-medium drop-shadow'>{subject?.subjectName}</h1>
-                                <p className='opacity-90 text-center'>{subject?.subjectDesc}</p>
+                                <h1 className='text-[1.8em] sm:text-[2em] font-medium drop-shadow'>{unit?.unitName}</h1>
+                                <p className='opacity-90 text-center'>{unit?.unitDesc}</p>
                             </>
                             :
                             <>
@@ -216,7 +220,7 @@ const UnitInfo = () => {
                     <div className="w-full flex justify-between sm:justify-center items-center gap-2 sm:gap-10 text-[0.9em]">
                         {!isLoading ?
                             <>
-                                <span>Documents: {subject?.subjectDocs?.length || 0}</span>
+                                <span>Documents: {unit?.unitDocs?.length || 0}</span>
                             </>
                             :
                             <>
@@ -231,8 +235,8 @@ const UnitInfo = () => {
                         <span>RegisteredBy : </span>
                         {!isLoading ?
                             <div className="flex_center gap-2">
-                                <AvatarImage url={subject?.subjectCreator?.avatarImg} size={25} />
-                                <span>{subject?.subjectCreator?.username}</span>
+                                <AvatarImage url={unit?.unitCreator?.avatarImg} size={25} />
+                                <span>{unit?.unitCreator?.username}</span>
                             </div>
                             :
                             <div className="w-[150px] flex_center gap-2">
@@ -247,7 +251,7 @@ const UnitInfo = () => {
             <div className="flex justify-between items-center py-4">
                 <h2 className='text-[1.7em] font-medium'>Documents</h2>
                 {user?.isApproved &&
-                    <Link href={`./${subject?.subjectName?.toLowerCase().replaceAll(" ", "-")}/upload`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
+                    <Link href={`./${unit?.unitName?.toLowerCase().replaceAll(" ", "-")}/upload`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Upload</span>
                         <span className='hidden sm:block'>Document</span>
@@ -266,7 +270,7 @@ const UnitInfo = () => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {subject?.subjectDocs?.map((doc, index) => {
+                    {unit?.unitDocs?.map((doc, index) => {
                         // File Size Formating
                         const formatDataSize = (bytes: number): string => {
                             const sizes = ['Bytes', 'KB', 'MB', 'GB'];

@@ -82,7 +82,7 @@ const SubjectInfo = () => {
 
     return (
         <section className='section_style'>
-            <NavRoute routes={["Institutions", `Institutions/${params?.instituteID}`, `.${pathname}`]} />
+            <NavRoute routes={["Institutions", `Institutions/${params?.instituteID}`, `Institutions/${params?.instituteID}/${params?.courseID}`, `.${pathname}`]} />
             <MobileHeader />
 
             <div className="relative flex items-center gap-4 bg-radialGradient dark:bg-radialGradientDark sm:[background:hsl(var(--primary)/0.3)] rounded-md p-2 sm:p-3 mt-4">
@@ -152,7 +152,7 @@ const SubjectInfo = () => {
                     <Link href={`./${subject?.subjectName?.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
                         <span>Create</span>
-                        <span className='hidden sm:block'>Subject</span>
+                        <span className='hidden sm:block'>Unit</span>
                     </Link>
                 }
             </div>

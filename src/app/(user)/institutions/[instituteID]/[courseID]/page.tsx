@@ -62,7 +62,9 @@ const CourseInfo = () => {
 
         if (course) {
             course?.subjects?.forEach((subjectObj) => {
-                totalDocs += subjectObj?.subjectDocs?.length || 0
+                subjectObj?.units?.forEach((unitObj) => {
+                    totalDocs += unitObj?.unitDocs?.length || 0
+                })
             })
         }
 
