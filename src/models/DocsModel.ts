@@ -5,10 +5,12 @@ const DocsSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true
     },
     description: {
         type: String,
         required: true,
+        trim: true
     },
     registeredBy: {
         type: Schema.Types.ObjectId,
@@ -23,10 +25,12 @@ const DocsSchema = new Schema({
         courseName: {
             type: String,
             required: true,
+            trim: true
         },
         courseDesc: {
             type: String,
             required: true,
+            trim: true
         },
         courseCreator: {
             type: Schema.Types.ObjectId,
@@ -37,10 +41,12 @@ const DocsSchema = new Schema({
             subjectName: {
                 type: String,
                 required: true,
+                trim: true
             },
             subjectDesc: {
                 type: String,
                 required: true,
+                trim: true
             },
             subjectCreator: {
                 type: Schema.Types.ObjectId,
@@ -51,10 +57,12 @@ const DocsSchema = new Schema({
                 unitName: {
                     type: String,
                     required: true,
+                    trim: true
                 },
                 unitDesc: {
                     type: String,
                     required: true,
+                    trim: true
                 },
                 unitCreator: {
                     type: Schema.Types.ObjectId,
@@ -65,6 +73,7 @@ const DocsSchema = new Schema({
                     docName: {
                         type: String,
                         required: true,
+                        trim: true
                     },
                     docSize: {
                         type: String,

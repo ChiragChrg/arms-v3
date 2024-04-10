@@ -6,7 +6,8 @@ interface RequestBody {
     instituteName: string,
     courseName: string,
     subjectName: string,
-    subjectDesc: string,
+    unitName: string,
+    unitDesc: string,
     registeredBy: string
 }
 
@@ -14,7 +15,7 @@ export async function POST(request: Request) {
     const body: RequestBody = await request.json()
 
     try {
-        if (!body?.instituteName || !body?.courseName || !body?.subjectName || !body?.subjectDesc || !body?.registeredBy) {
+        if (!body?.instituteName || !body?.courseName || !body?.subjectName || !body?.unitName || !body?.unitDesc || !body?.registeredBy) {
             return new NextResponse("Missing Fields", { status: 400 })
         }
 
@@ -22,22 +23,27 @@ export async function POST(request: Request) {
         const InstituteExists = await DocsModel.findOne({
             "instituteName": { '$regex': body?.instituteName, $options: 'i' },
             "course.courseName": { '$regex': body?.courseName, $options: 'i' },
+            "course.subjects.subjectName": { '$regex': body?.subjectName, $options: 'i' },
         }, {
             course: {
                 $elemMatch: { courseName: { '$regex': body?.courseName, $options: 'i' } },
-            },
+                "subjects": {
+                    $elemMatch: { subjectName: { '$regex': body?.subjectName, $options: 'i' } }
+                }
+            }
         })
-        const courseExists = InstituteExists?.course[0]
 
-        if (!courseExists) {
-            return new NextResponse("Course not found!", { status: 400 })
+        const subjectExists = InstituteExists?.course[0]?.subjects[0];
+
+        if (!subjectExists) {
+            return new NextResponse("Subject not found!", { status: 400 });
         }
 
-        courseExists.subjects.push({
-            subjectName: body?.subjectName,
-            subjectDesc: body?.subjectDesc,
-            subjectCreator: body?.registeredBy
-        })
+        subjectExists.units.push({
+            unitName: body?.unitName,
+            unitDesc: body?.unitDesc,
+            unitCreator: body?.registeredBy
+        });
 
         await InstituteExists.save()
 
