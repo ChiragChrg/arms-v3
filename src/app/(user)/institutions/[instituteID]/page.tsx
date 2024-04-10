@@ -58,8 +58,10 @@ const InstituteInfo = () => {
                 totalSubject += courseObj?.subjects?.length || 0;
 
                 courseObj?.subjects?.forEach((subjectObj) => {
-                    totalDocs += subjectObj?.subjectDocs?.length || 0;
-                });
+                    subjectObj?.units?.forEach((unitObj) => {
+                        totalDocs += unitObj?.unitDocs?.length || 0
+                    })
+                })
             });
         }
 
