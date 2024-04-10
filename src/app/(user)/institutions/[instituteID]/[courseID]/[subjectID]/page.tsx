@@ -39,20 +39,19 @@ const SubjectInfo = () => {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
                 const res = await getInstitution(instituteName) as DataStoreTypes;
                 const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-                const subjectData = courseData?.subjects?.find((obj) => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-                return subjectData;
+                const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+                return subjectData
             } catch (error) {
                 console.error('Error fetching institutions:', error);
                 throw new Error('Failed to fetch institutions data');
             }
         },
         initialData: () => {
-            const init = queryClient.getQueryData(['getInstitutebyName', params?.instituteID]) as DataStoreTypes
-            const courseData = init?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase()) as courseType
-            const subjectData = courseData?.subjects?.find((obj) => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
-            return subjectData;
+            const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
+            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+            return subjectData
         },
-        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.instituteID])?.dataUpdatedAt,
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.courseID])?.dataUpdatedAt,
     });
 
     if (isError) {

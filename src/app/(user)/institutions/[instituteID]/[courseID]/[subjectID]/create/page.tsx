@@ -8,10 +8,9 @@ import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
 import useUserStore from '@/store/useUserStore'
-import { NewCourseVector } from '@/assets/SVGs'
-import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
+import { NewUnitVector } from '@/assets/SVGs'
+import { BookOpenTextIcon, Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 
 type Params = {
     instituteID: string,
@@ -40,6 +39,7 @@ const CreateUnit = () => {
         const res = await axios.post("/api/post/create-unit", {
             instituteName,
             courseName,
+            subjectName,
             unitName,
             unitDesc,
             registeredBy: user?.uid
@@ -102,7 +102,7 @@ const CreateUnit = () => {
                                 onChange={handleChange}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                            <OpenBookSVG size="24" className="absolute right-2 text-slate-400" />
+                            <BookOpenTextIcon size="24" className="absolute right-2 text-slate-400" />
                         </div>
 
                         <span
@@ -151,7 +151,7 @@ const CreateUnit = () => {
                     </Button>
                 </form>
 
-                <Image src={NewCourseVector} alt='NewCourseVector' className='w-[280px] sm:w-[400px] 2xl:w-[550px]' />
+                <Image src={NewUnitVector} alt='NewCourseVector' className='w-[280px] sm:w-[400px] 2xl:w-[550px]' />
             </div>
         </section>
     )
