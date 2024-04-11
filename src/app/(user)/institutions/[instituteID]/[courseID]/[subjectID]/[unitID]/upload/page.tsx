@@ -14,12 +14,13 @@ import MobileHeader from '@/components/MobileHeader'
 import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 import BuildingSVG from '@/assets/Icons/BuildingSVG'
 import BookStackSVG from '@/assets/Icons/BookStackSVG'
-import { User2Icon } from 'lucide-react'
+import { BookOpenTextIcon, User2Icon } from 'lucide-react'
 import toast from 'react-hot-toast';
 
 type Params = {
     instituteID: string,
     courseID: string,
+    subjectID: string,
     unitID: string
 }
 
@@ -184,7 +185,7 @@ const UploadDocuments = () => {
                         <input
                             type="text"
                             required={true}
-                            defaultValue={params?.unitID?.replaceAll("-", " ") || ""}
+                            defaultValue={params?.subjectID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
@@ -192,17 +193,17 @@ const UploadDocuments = () => {
                     </div>
                 </label>
                 <label className="relative w-full">
-                    <span className='text-[0.9em] bg-background/0 px-1'>Uploader</span>
+                    <span className='text-[0.9em] bg-background/0 px-1'>Unit</span>
 
                     <div className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
                         <input
                             type="text"
                             required={true}
-                            defaultValue={user?.username || ""}
+                            defaultValue={params?.unitID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                        <User2Icon size={24} className="absolute right-2 text-slate-400" />
+                        <BookOpenTextIcon size={24} className="absolute right-2 text-slate-400" />
                     </div>
                 </label>
             </div>
