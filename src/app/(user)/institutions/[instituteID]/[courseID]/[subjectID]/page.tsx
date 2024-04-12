@@ -81,7 +81,12 @@ const SubjectInfo = () => {
 
     return (
         <section className='section_style'>
-            <NavRoute routes={["Institutions", `Institutions/${params?.instituteID}`, `Institutions/${params?.instituteID}/${params?.courseID}`, `.${pathname}`]} />
+            <NavRoute routes={[
+                "Institutions",
+                `Institutions/${params?.instituteID}`,
+                `Institutions/${params?.instituteID}/${params?.courseID}`,
+                `.${pathname}`
+            ]} />
             <MobileHeader />
 
             <div className="relative flex items-center gap-4 bg-radialGradient dark:bg-radialGradientDark sm:[background:hsl(var(--primary)/0.3)] rounded-md p-2 sm:p-3 mt-4">
