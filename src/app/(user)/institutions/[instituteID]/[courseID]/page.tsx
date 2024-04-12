@@ -161,7 +161,7 @@ const CourseInfo = () => {
                     <Link
                         href={`${pathname}/${obj?.subjectName?.toLowerCase().replaceAll(" ", "-")}`}
                         key={index}
-                        className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark px-2 py-4 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
+                        className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark px-2 py-4">
                         <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
                             <OpenBookSVG size='40' />
                         </div>

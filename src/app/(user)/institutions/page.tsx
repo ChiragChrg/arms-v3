@@ -48,7 +48,7 @@ const Institutions = () => {
                         <Link
                             href={`./institutions/${obj?.instituteName?.toLowerCase().replaceAll(" ", "-")}`}
                             key={obj?._id}
-                            className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark p-2 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
+                            className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark p-2">
                             <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
                                 <BuildingSVG size='40' />
                             </div>
