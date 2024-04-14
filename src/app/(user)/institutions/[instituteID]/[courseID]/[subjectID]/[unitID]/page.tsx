@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useParams, usePathname, useRouter } from 'next/navigation'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -17,9 +17,8 @@ import DropdownSettings from '@/components/CustomUI/DropdownSettings'
 import { CircleLoader, RectLoader } from '@/components/CustomUI/Skeletons'
 import { Button } from '@/components/ui/button'
 
-import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 import toast from 'react-hot-toast'
-import { DownloadCloudIcon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react'
+import { BookOpenTextIcon, DownloadCloudIcon, PlusIcon, Trash2Icon, XIcon } from 'lucide-react'
 
 import {
     Table,
@@ -82,7 +81,7 @@ const UnitInfo = () => {
         },
         initialData: () => {
             const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
-            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as subjectType
+            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
             const unitData = subjectData?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as unitType
             return unitData
         },
@@ -101,7 +100,7 @@ const UnitInfo = () => {
         const newData = {
             url: `./institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}`,
             title: unit?.unitName,
-            subtitle: `${params?.instituteID.replaceAll("-", " ")} / ${params?.courseID.replaceAll("-", " ")} / ${params?.subjectID.replaceAll("-", " ")}`
+            subtitle: `${params?.instituteID.replaceAll("-", " ")} / ${params?.courseID.replaceAll("-", " ")} / ${params?.subjectID.replaceAll("-", " ")} / ${params?.unitID.replaceAll("-", " ")}`
         }
 
         const userID = user?.uid as string
@@ -195,7 +194,7 @@ const UnitInfo = () => {
 
             <div className="relative flex items-center gap-4 bg-radialGradient dark:bg-radialGradientDark sm:[background:hsl(var(--primary)/0.3)] rounded-md p-2 sm:p-3 mt-4">
                 <div className="absolute -top-2 -left-2 sm:top-auto sm:left-auto sm:relative w-fit sm:bg-primary/80 p-6 rounded-full text-white/40 dark:text-white/10 sm:text-white dark:sm:text-white">
-                    <OpenBookSVG size='80' />
+                    <BookOpenTextIcon size='80' />
                 </div>
 
                 <DropdownSettings

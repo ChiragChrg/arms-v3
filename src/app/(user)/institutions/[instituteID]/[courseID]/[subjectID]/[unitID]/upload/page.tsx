@@ -111,13 +111,15 @@ const UploadDocuments = () => {
 
         // Uploading File info to DB
         const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-        const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase())
+        const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
+        const unitInfo = subjectInfo?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase())
 
         try {
             const UploadRes = await axios.post("/api/post/upload-files", {
                 instituteId: instituteData?._id,
                 courseId: courseInfo?._id,
-                unitID: subjectInfo?._id,
+                subjectId: subjectInfo?._id,
+                unitId: unitInfo?._id,
                 uploaderId: user?.uid,
                 FilesMeta: uploadMeta
             })
@@ -128,6 +130,7 @@ const UploadDocuments = () => {
                 await queryClient.invalidateQueries()
             }
         } catch (error) {
+            setIsUploadComplete(true)
             console.error(error)
             toast.error("Failed to update Database")
         }
@@ -140,8 +143,9 @@ const UploadDocuments = () => {
                 "Institutions",
                 `Institutions/${params?.instituteID}`,
                 `Institutions/${params?.instituteID}/${params?.courseID}`,
-                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.unitID}`,
-                `Institutions/${params?.instituteID}/${params?.courseID}/Create`
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`,
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}`,
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}/Create`
             ]} />
             <MobileHeader />
 
