@@ -6,11 +6,12 @@ type RequestBody = {
     instituteName: string,
     courseName: string,
     subjectName: string,
+    unitName: string,
     documentID: string,
 }
 
 export async function DELETE(request: Request) {
-    const { instituteName, courseName, subjectName, documentID }: RequestBody = await request.json()
+    const { instituteName, courseName, subjectName, unitName, documentID }: RequestBody = await request.json()
 
     try {
         await connectDB();
@@ -24,14 +25,18 @@ export async function DELETE(request: Request) {
             if (course?.courseName.toLowerCase() == courseName) {
                 course?.subjects?.forEach((subject: any) => {
                     if (subject?.subjectName.toLowerCase() == subjectName) {
-                        const docIndex = subject.subjectDocs.findIndex((doc: any) => doc._id == documentID);
+                        subject?.units?.forEach((unit: any) => {
+                            if (unit?.unitName.toLowerCase() == unitName) {
+                                const docIndex = unit.unitDocs?.findIndex((doc: any) => doc._id == documentID)
 
-                        if (docIndex !== -1) {
-                            subject.subjectDocs.pull(subject.subjectDocs[docIndex]);
-                            Institute.save();
-                        } else {
-                            console.log('Document not found.');
-                        }
+                                if (docIndex !== -1) {
+                                    unit.unitDocs?.pull(unit.unitDocs[docIndex]);
+                                    Institute.save();
+                                } else {
+                                    console.log('Document not found.');
+                                }
+                            }
+                        })
                     }
                 })
             }
