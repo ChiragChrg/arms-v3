@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import useUserStore from '@/store/useUserStore'
 import useLoaderStore from '@/store/useLoaderStore'
 import { cn } from '@/lib/utils'
 import PWA from '@/lib/pwa'
@@ -25,7 +24,6 @@ type Props = {
 const Header = ({ altLogo = false, altColor = false, className = "", disableAuthRedirect = false }: Props) => {
     const [showNav, setShowNav] = useState<boolean>(false)
     const router = useRouter()
-    const { user } = useUserStore()
     const { setShowLoader } = useLoaderStore()
     const { status } = useSession()
 

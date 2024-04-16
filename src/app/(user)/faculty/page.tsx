@@ -7,8 +7,7 @@ import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
-import { Button } from '@/components/ui/button'
-import { MoreVerticalIcon, User2, UserCheck } from 'lucide-react'
+import { User2, UserCheck } from 'lucide-react'
 
 import {
     Table,
@@ -101,10 +100,10 @@ const Faculty = () => {
                                     <TableCell className="px-2 sm:px-4 py-2">{faculty?.email}</TableCell>
                                     <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                     <TableCell className='px-2 sm:px-4 py-2 sm:table-cell text-center'>
-                                        <ManageFaculty
+                                        {faculty?._id !== process.env.NEXT_PUBLIC_ARMS_ADMIN_UID && <ManageFaculty
                                             facultyName={faculty?.username}
                                             facultyUid={faculty?._id}
-                                        />
+                                        />}
                                     </TableCell>
                                 </TableRow>
                             )
