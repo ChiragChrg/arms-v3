@@ -45,17 +45,17 @@ const SubjectInfo = () => {
                 throw new Error('Failed to fetch institutions data');
             }
         },
-        initialData: () => {
-            const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
-            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
-            return subjectData
-        },
-        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.courseID])?.dataUpdatedAt,
+        // initialData: () => {
+        //     const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
+        //     const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+        //     return subjectData
+        // },
+        // initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.courseID])?.dataUpdatedAt,
     });
 
     if (isError) {
         toast.error("Error while fetching Subject")
-        router.push('/institutions')
+        router.push(`/institutions/${params?.instituteID}/${params?.courseID}`)
     }
 
     const docsCount = useMemo(() => {

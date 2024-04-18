@@ -79,18 +79,18 @@ const UnitInfo = () => {
                 throw new Error('Failed to fetch institutions data');
             }
         },
-        initialData: () => {
-            const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
-            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
-            const unitData = subjectData?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as unitType
-            return unitData
-        },
-        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.courseID])?.dataUpdatedAt,
+        // initialData: () => {
+        //     const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
+        //     const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+        //     const unitData = subjectData?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase()) as unitType
+        //     return unitData
+        // },
+        // initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.subjectID])?.dataUpdatedAt,
     });
 
     if (isError) {
         toast.error("Error while fetching Institute")
-        router.push('/institutions')
+        router.push(`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`)
     }
 
     // Add subject to Recents dash usin LocalStorage
@@ -198,7 +198,7 @@ const UnitInfo = () => {
                 </div>
 
                 <DropdownSettings
-                    title='Subject'
+                    title='Unit'
                     toDeleteName={unit?.unitName as string}
                     isAuthorized={isAuthorized}
                     userID={user?.uid as string}
