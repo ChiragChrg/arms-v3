@@ -20,31 +20,25 @@ export async function POST(request: Request) {
         }
 
         await connectDB()
-        const InstituteExists = await DocsModel.findOne({
-            "instituteName": { '$regex': body?.instituteName, $options: 'i' },
-            "course.courseName": { '$regex': body?.courseName, $options: 'i' },
-            "course.subjects.subjectName": { '$regex': body?.subjectName, $options: 'i' },
-        }, {
-            course: {
-                $elemMatch: { courseName: { '$regex': body?.courseName, $options: 'i' } },
-                "subjects": {
-                    $elemMatch: { subjectName: { '$regex': body?.subjectName, $options: 'i' } }
-                }
-            }
-        })
+        const InstituteExists = await DocsModel.findOne({ instituteName: { '$regex': body?.instituteName, $options: 'i' } })
 
-        const subjectExists = InstituteExists?.course[0]?.subjects[0];
-
-        if (!subjectExists) {
-            return new NextResponse("Subject not found!", { status: 400 });
+        if (!InstituteExists) {
+            return new NextResponse("Invalid Institute!", { status: 400 })
         }
 
-        subjectExists.units.push({
-            unitName: body?.unitName,
-            unitDesc: body?.unitDesc,
-            unitCreator: body?.registeredBy
-        });
-
+        InstituteExists.course.forEach((course: any) => {
+            if (course?.courseName.toLowerCase() == body?.courseName) {
+                course?.subjects.forEach((subject: any) => {
+                    if (subject.subjectName.toLowerCase() == body?.subjectName) {
+                        subject.units.push({
+                            unitName: body?.unitName,
+                            unitDesc: body?.unitDesc,
+                            unitCreator: body?.registeredBy
+                        });
+                    }
+                });
+            }
+        })
         await InstituteExists.save()
 
         return new NextResponse("Subject Created Successfully!", { status: 201 })
