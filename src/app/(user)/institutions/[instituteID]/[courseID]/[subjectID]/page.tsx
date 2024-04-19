@@ -32,7 +32,7 @@ const SubjectInfo = () => {
     const queryClient = useQueryClient()
 
     const { data: subject, isError, isLoading } = useQuery({
-        queryKey: ['getInstitutebyName', params?.subjectID],
+        queryKey: ['getInstitutebyName', params?.instituteID, params?.courseID, params?.subjectID],
         queryFn: async () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
@@ -45,12 +45,12 @@ const SubjectInfo = () => {
                 throw new Error('Failed to fetch institutions data');
             }
         },
-        // initialData: () => {
-        //     const courseData = queryClient.getQueryData(['getInstitutebyName', params?.courseID]) as courseType
-        //     const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
-        //     return subjectData
-        // },
-        // initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.courseID])?.dataUpdatedAt,
+        initialData: () => {
+            const courseData = queryClient.getQueryData(['getInstitutebyName', params?.instituteID, params?.courseID, params?.subjectID]) as courseType
+            const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+            return subjectData
+        },
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.instituteID, params?.courseID, params?.subjectID])?.dataUpdatedAt,
     });
 
     if (isError) {
