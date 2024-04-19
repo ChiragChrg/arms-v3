@@ -56,7 +56,7 @@ const CreateUnit = () => {
         onSuccess: async () => {
             toast.success("Unit Created Successfully!")
             await queryClient.invalidateQueries()
-            router.push(`../${params?.courseID}/${params?.subjectID}`)
+            router.push(`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`)
         }
     })
 
