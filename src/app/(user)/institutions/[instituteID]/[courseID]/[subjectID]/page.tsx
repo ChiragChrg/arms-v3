@@ -38,7 +38,7 @@ const SubjectInfo = () => {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
                 const res = await getInstitution(instituteName) as DataStoreTypes;
                 const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
-                const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) as subjectType
+                const subjectData = courseData?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase()) || {} as subjectType
                 return subjectData
             } catch (error) {
                 console.error('Error fetching institutions:', error);
@@ -150,7 +150,7 @@ const SubjectInfo = () => {
             </div>
 
             <div className="flex justify-between items-center py-4">
-                <h2 className='text-[1.7em] font-medium'>Subjects</h2>
+                <h2 className='text-[1.7em] font-medium'>Units</h2>
                 {user?.isApproved &&
                     <Link href={`./${subject?.subjectName?.toLowerCase().replaceAll(" ", "-")}/create`} className='flex_center gap-2 text-[1em] bg-primary text-white rounded-sm px-2 py-1.5'>
                         <PlusIcon />
