@@ -58,8 +58,10 @@ const InstituteInfo = () => {
                 totalSubject += courseObj?.subjects?.length || 0;
 
                 courseObj?.subjects?.forEach((subjectObj) => {
-                    totalDocs += subjectObj?.subjectDocs?.length || 0;
-                });
+                    subjectObj?.units?.forEach((unitObj) => {
+                        totalDocs += unitObj?.unitDocs?.length || 0
+                    })
+                })
             });
         }
 
@@ -162,7 +164,7 @@ const InstituteInfo = () => {
                         <Link
                             href={`${pathname}/${obj?.courseName?.toLowerCase().replaceAll(" ", "-")}`}
                             key={index}
-                            className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark px-2 py-4 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
+                            className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark px-2 py-4">
                             <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
                                 <BookStackSVG size='40' />
                             </div>

@@ -62,7 +62,8 @@ const ERROR_MESSAGES = {
 type Params = {
     instituteID: string,
     courseID: string,
-    subjectID: string
+    subjectID: string,
+    unitID: string
 }
 
 const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
@@ -198,7 +199,7 @@ const MultiFileDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                                         <>
                                             {isUploadComplete ?
                                                 <Link
-                                                    href={`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`}
+                                                    href={`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}`}
                                                     className='flex_center gap-2 bg-primary text-white w-[110px] h-10 px-4 py-2 rounded-md'>
                                                     <CheckCircleIcon />
                                                     <span>Done</span>

@@ -32,12 +32,12 @@ const CourseInfo = () => {
     const queryClient = useQueryClient()
 
     const { data: course, isError, isLoading } = useQuery({
-        queryKey: ['getInstitutebyName', params?.courseID],
+        queryKey: ['getInstitutebyName', params?.instituteID, params?.courseID],
         queryFn: async () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
                 const res = await getInstitution(instituteName) as DataStoreTypes;
-                const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
+                const courseData = res?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase()) || {} as courseType
                 return courseData;
             } catch (error) {
                 console.error('Error fetching institutions:', error);
@@ -45,16 +45,16 @@ const CourseInfo = () => {
             }
         },
         initialData: () => {
-            const init = queryClient.getQueryData(['getInstitutebyName', params?.instituteID]) as DataStoreTypes
+            const init = queryClient.getQueryData(['getInstitutebyName', params?.instituteID, params?.courseID]) as DataStoreTypes
             const courseData = init?.course?.find((obj) => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase()) as courseType
             return courseData
         },
-        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.instituteID])?.dataUpdatedAt,
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.instituteID, params?.courseID])?.dataUpdatedAt,
     });
 
     if (isError) {
         toast.error("Error while fetching Course")
-        router.push('/institutions')
+        router.push(`/institutions/${params?.instituteID}`)
     }
 
     const docsCount = useMemo(() => {
@@ -62,7 +62,9 @@ const CourseInfo = () => {
 
         if (course) {
             course?.subjects?.forEach((subjectObj) => {
-                totalDocs += subjectObj?.subjectDocs?.length || 0
+                subjectObj?.units?.forEach((unitObj) => {
+                    totalDocs += unitObj?.unitDocs?.length || 0
+                })
             })
         }
 
@@ -159,7 +161,7 @@ const CourseInfo = () => {
                     <Link
                         href={`${pathname}/${obj?.subjectName?.toLowerCase().replaceAll(" ", "-")}`}
                         key={index}
-                        className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark px-2 py-4 sm:hover:translate-y-[-0.3em] transition-transform duration-200">
+                        className="flex_center flex-col w-full h-full rounded-md bg-radialGradient dark:bg-radialGradientDark px-2 py-4">
                         <div className="w-fit bg-primary/80 p-4 rounded-full mb-4 text-white">
                             <OpenBookSVG size='40' />
                         </div>

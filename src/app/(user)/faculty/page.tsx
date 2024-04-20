@@ -7,8 +7,7 @@ import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
 import useUserStore from '@/store/useUserStore'
 import MobileHeader from '@/components/MobileHeader'
-import { Button } from '@/components/ui/button'
-import { MoreVerticalIcon, User2, UserCheck } from 'lucide-react'
+import { User2, UserCheck } from 'lucide-react'
 
 import {
     Table,
@@ -91,6 +90,7 @@ const Faculty = () => {
                             const date = new Date(faculty?.createdAt);
                             const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' };
                             const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+                            const hideActionBtn = faculty?._id !== process.env.NEXT_PUBLIC_ARMS_ADMIN_UID
 
                             return (
                                 <TableRow key={index}>
@@ -101,10 +101,10 @@ const Faculty = () => {
                                     <TableCell className="px-2 sm:px-4 py-2">{faculty?.email}</TableCell>
                                     <TableCell className='px-2 sm:px-4 py-2 sm:table-cell'>{formattedDate}</TableCell>
                                     <TableCell className='px-2 sm:px-4 py-2 sm:table-cell text-center'>
-                                        <ManageFaculty
+                                        {hideActionBtn && <ManageFaculty
                                             facultyName={faculty?.username}
                                             facultyUid={faculty?._id}
-                                        />
+                                        />}
                                     </TableCell>
                                 </TableRow>
                             )
@@ -116,6 +116,7 @@ const Faculty = () => {
                 <div className="grid xl:hidden grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     {data?.faculties?.map((faculty, index) => {
                         if (!faculty?.isApproved) return
+                        const hideActionBtn = faculty?._id !== process.env.NEXT_PUBLIC_ARMS_ADMIN_UID
 
                         return (
                             <div key={index} className="flex justify-between items-center border border-secondary rounded-md px-1 py-0.5">
@@ -141,10 +142,10 @@ const Faculty = () => {
                                     </div>
                                 </div>
 
-                                <ManageFaculty
+                                {hideActionBtn && <ManageFaculty
                                     facultyName={faculty?.username}
                                     facultyUid={faculty?._id}
-                                />
+                                />}
                             </div>
                         )
                     })}

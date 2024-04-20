@@ -97,6 +97,7 @@ const CreateInstitute = () => {
                             <textarea
                                 rows={3}
                                 maxLength={80}
+                                required={true}
                                 placeholder='Enter Institute Description'
                                 onChange={(e) => setInstituteDesc(e?.target?.value)}
                                 className='resize-none text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />

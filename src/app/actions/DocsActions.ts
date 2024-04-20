@@ -9,6 +9,9 @@ export async function getDashCount() {
         await connectDB();
         const DocsDB = await DocsModel.find({});
 
+        if (!DocsDB)
+            throw new Error('Documents not found!');
+
         const counts = {
             institute: DocsDB.length,
             course: 0,
@@ -18,18 +21,19 @@ export async function getDashCount() {
 
         DocsDB.forEach((obj: any) => {
             counts.course += obj.course.length;
-            obj.course.forEach((itm: any) => {
+            obj.course?.forEach((itm: any) => {
                 counts.subject += itm.subjects.length;
-                itm.subjects.forEach((sub: any) => {
-                    counts.document += sub.subjectDocs.length;
+                itm.subjects?.forEach((sub: any) => {
+                    sub.units?.forEach((unit: any) => {
+                        counts.document += unit.unitDocs.length;
+                    })
                 });
             });
         });
 
         return counts
     } catch (err) {
-        console.error(err);
-        throw new Error('Failed to fetch DashCount');
+        console.error("Error : ", err || 'Failed to fetch DashCount');
     }
 }
 
@@ -67,7 +71,12 @@ export async function getInstitution(instituteName: string) {
                 select: 'username email avatarImg',
             })
             .populate({
-                path: 'course.subjects.subjectDocs.docUploader',
+                path: 'course.subjects.units.unitCreator',
+                model: UserModel,
+                select: 'username email avatarImg',
+            })
+            .populate({
+                path: 'course.subjects.units.unitDocs.docUploader',
                 model: UserModel,
                 select: 'username email avatarImg',
             })

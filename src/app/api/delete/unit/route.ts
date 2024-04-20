@@ -7,11 +7,10 @@ type RequestBody = {
     courseName: string,
     subjectName: string,
     unitName: string,
-    documentID: string,
 }
 
 export async function DELETE(request: Request) {
-    const { instituteName, courseName, subjectName, unitName, documentID }: RequestBody = await request.json()
+    const { instituteName, courseName, subjectName, unitName }: RequestBody = await request.json()
 
     try {
         await connectDB();
@@ -25,24 +24,20 @@ export async function DELETE(request: Request) {
             if (course?.courseName.toLowerCase() == courseName) {
                 course?.subjects?.forEach((subject: any) => {
                     if (subject?.subjectName.toLowerCase() == subjectName) {
-                        subject?.units?.forEach((unit: any) => {
-                            if (unit?.unitName.toLowerCase() == unitName) {
-                                const docIndex = unit.unitDocs?.findIndex((doc: any) => doc._id == documentID)
+                        const deleteIndex = subject?.units?.findIndex((unit: any) => unit?.unitName.toLowerCase() == unitName);
 
-                                if (docIndex !== -1) {
-                                    unit.unitDocs?.pull(unit.unitDocs[docIndex]);
-                                    Institute.save();
-                                } else {
-                                    console.log('Document not found.');
-                                }
-                            }
-                        })
+                        if (deleteIndex !== -1) {
+                            subject?.units.pull(subject?.units[deleteIndex]);
+                            Institute.save();
+                        } else {
+                            console.log('Unit not found.');
+                        }
                     }
                 })
             }
         })
 
-        return new NextResponse("Document deleted successfully!", { status: 200 });
+        return new NextResponse("Unit deleted successfully!", { status: 200 });
     } catch (err) {
         console.error(err);
         return new NextResponse(JSON.stringify(err), { status: 500 });

@@ -110,6 +110,7 @@ const CreateCourse = () => {
                                 placeholder='Enter Course Description'
                                 onChange={(e) => setCourseDesc(e?.target?.value)}
                                 maxLength={40}
+                                required={true}
                                 className='resize-none text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{courseDesc.length}/40</p>

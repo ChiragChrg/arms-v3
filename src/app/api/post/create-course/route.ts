@@ -29,7 +29,7 @@ export async function POST(request: Request) {
             courseCreator: body?.registeredBy
         })
 
-        InstituteExists.save()
+        await InstituteExists.save()
 
         return new NextResponse("Course Created Successfully!", { status: 201 })
     } catch (err) {

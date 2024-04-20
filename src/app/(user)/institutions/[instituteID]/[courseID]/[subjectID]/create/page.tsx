@@ -8,19 +8,19 @@ import NavRoute from '@/components/NavRoutes'
 import MobileHeader from '@/components/MobileHeader'
 import { Button } from '@/components/ui/button'
 import useUserStore from '@/store/useUserStore'
-import { NewCourseVector } from '@/assets/SVGs'
-import { Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
+import { NewUnitVector } from '@/assets/SVGs'
+import { BookOpenTextIcon, Loader2Icon, PlusIcon, User2Icon } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
-import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 
 type Params = {
     instituteID: string,
     courseID: string,
+    subjectID: string,
 }
 
-const CreateSubject = () => {
-    const [subjectName, setSubjectName] = useState<string>("")
-    const [subjectDesc, setSubjectDesc] = useState<string>("")
+const CreateUnit = () => {
+    const [unitName, setUnitName] = useState<string>("")
+    const [unitDesc, setUnitDesc] = useState<string>("")
     const [isInvalid, setIsInvalid] = useState<boolean>(false)
     const { user } = useUserStore()
     const params = useParams<Params>()
@@ -31,15 +31,17 @@ const CreateSubject = () => {
         e?.preventDefault()
         const instituteName = params?.instituteID.replaceAll("-", " ");
         const courseName = params?.courseID.replaceAll("-", " ");
+        const subjectName = params?.subjectID.replaceAll("-", " ");
 
-        if (courseName.toLowerCase() === subjectName.toLowerCase())
-            throw new Error("Subject name cannot be same as course name!")
+        if (subjectName.toLowerCase() === unitName.toLowerCase())
+            throw new Error("Unit name cannot be same as Subject name!")
 
-        const res = await axios.post("/api/post/create-subject", {
+        const res = await axios.post("/api/post/create-unit", {
             instituteName,
             courseName,
             subjectName,
-            subjectDesc,
+            unitName,
+            unitDesc,
             registeredBy: user?.uid
         })
         return res
@@ -47,24 +49,24 @@ const CreateSubject = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: HandleCreateCourse,
-        onError(error: any) {
+        onError(error) {
             console.log(error)
-            toast.error(`Error: ${error?.response?.data || "Something went wrong!"}`)
+            toast.error(`Error: ${error?.message || "Something went wrong!"}`)
         },
         onSuccess: async () => {
-            toast.success("Subject Created Successfully!")
+            toast.success("Unit Created Successfully!")
             await queryClient.invalidateQueries()
-            router.push(`../${params?.courseID}`)
+            router.push(`/institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`)
         }
     })
 
-    // Check if subjectName matches the regex pattern
+    // Check if unitName matches the regex pattern
     const handleChange = (event: { target: { value: any } }) => {
         const { value } = event?.target;
 
         if (/^[a-zA-Z0-9\s]*$/.test(value)) {
             setIsInvalid(false)
-            setSubjectName(value.trim());
+            setUnitName(value.trim());
         } else {
             setIsInvalid(true)
         }
@@ -76,18 +78,19 @@ const CreateSubject = () => {
                 "Institutions",
                 `Institutions/${params?.instituteID}`,
                 `Institutions/${params?.instituteID}/${params?.courseID}`,
-                `Institutions/${params?.instituteID}/${params?.courseID}/Create`
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`,
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/Create`
             ]} />
             <MobileHeader />
 
             <h1 className="text-[1.8em] sm:text-[2em] 2xl:text-[3em] font-medium my-2 text-center">
-                Create new <span className="text-primary">Subject</span>
+                Create new <span className="text-primary">Unit</span>
             </h1>
 
             <div className="flex justify-around items-center flex-col-reverse lg:flex-row gap-6 mt-24">
                 <form onSubmit={(e) => mutate(e)} className='flex flex-col gap-3 2xl:gap-4'>
                     <label className="relative min-w-[350px]">
-                        <span className='text-[0.9em] bg-background/0 px-1'>Subject Name</span>
+                        <span className='text-[0.9em] bg-background/0 px-1'>Unit Name</span>
 
                         <div
                             style={isInvalid ? { borderColor: "rgb(239 68 68)" } : {}}
@@ -95,11 +98,11 @@ const CreateSubject = () => {
                             <input
                                 type="text"
                                 required={true}
-                                placeholder='Enter Subject Name'
+                                placeholder='Enter Unit Name'
                                 onChange={handleChange}
                                 className='text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                            <OpenBookSVG size="24" className="absolute right-2 text-slate-400" />
+                            <BookOpenTextIcon size="24" className="absolute right-2 text-slate-400" />
                         </div>
 
                         <span
@@ -115,13 +118,13 @@ const CreateSubject = () => {
                         <div className="flex flex-col border border-muted-foreground sm:focus-within:border-primary rounded p-1">
                             <textarea
                                 rows={2}
-                                placeholder='Enter Subject Description'
-                                onChange={(e) => setSubjectDesc(e?.target?.value)}
+                                placeholder='Enter Unit Description'
+                                onChange={(e) => setUnitDesc(e?.target?.value)}
                                 maxLength={40}
                                 required={true}
                                 className='resize-none text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                            <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{subjectDesc.length}/40</p>
+                            <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{unitDesc.length}/40</p>
                         </div>
                     </label>
 
@@ -145,14 +148,14 @@ const CreateSubject = () => {
                             <Loader2Icon className='animate-spin' />
                             : <PlusIcon />
                         }
-                        Create Subject
+                        Create Unit
                     </Button>
                 </form>
 
-                <Image src={NewCourseVector} alt='NewCourseVector' className='w-[280px] sm:w-[400px] 2xl:w-[550px]' />
+                <Image src={NewUnitVector} alt='NewCourseVector' className='w-[280px] sm:w-[400px] 2xl:w-[550px]' />
             </div>
         </section>
     )
 }
 
-export default CreateSubject
+export default CreateUnit

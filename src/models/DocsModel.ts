@@ -5,10 +5,12 @@ const DocsSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true
     },
     description: {
         type: String,
         required: true,
+        trim: true
     },
     registeredBy: {
         type: Schema.Types.ObjectId,
@@ -23,10 +25,12 @@ const DocsSchema = new Schema({
         courseName: {
             type: String,
             required: true,
+            trim: true
         },
         courseDesc: {
             type: String,
             required: true,
+            trim: true
         },
         courseCreator: {
             type: Schema.Types.ObjectId,
@@ -37,39 +41,59 @@ const DocsSchema = new Schema({
             subjectName: {
                 type: String,
                 required: true,
+                trim: true
             },
             subjectDesc: {
                 type: String,
                 required: true,
+                trim: true
             },
             subjectCreator: {
                 type: Schema.Types.ObjectId,
                 ref: 'User',
                 required: true,
             },
-            subjectDocs: [{
-                docName: {
+            units: [{
+                unitName: {
                     type: String,
                     required: true,
+                    trim: true
                 },
-                docSize: {
+                unitDesc: {
                     type: String,
                     required: true,
+                    trim: true
                 },
-                docLink: {
-                    type: String,
-                    required: true,
-                },
-                docCreated: {
-                    type: Date,
-                    default: Date.now,
-                },
-                docUploader: {
+                unitCreator: {
                     type: Schema.Types.ObjectId,
                     ref: 'User',
                     required: true,
                 },
-            }],
+                unitDocs: [{
+                    docName: {
+                        type: String,
+                        required: true,
+                        trim: true
+                    },
+                    docSize: {
+                        type: String,
+                        required: true,
+                    },
+                    docLink: {
+                        type: String,
+                        required: true,
+                    },
+                    docCreated: {
+                        type: Date,
+                        default: Date.now,
+                    },
+                    docUploader: {
+                        type: Schema.Types.ObjectId,
+                        ref: 'User',
+                        required: true,
+                    },
+                }],
+            }]
         }],
     }],
 })

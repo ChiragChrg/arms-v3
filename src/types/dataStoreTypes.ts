@@ -12,6 +12,19 @@ export interface docsType {
     _id: string
 }
 
+export interface unitType {
+    unitName: string,
+    unitDesc: string,
+    unitCreator: {
+        _id: string,
+        username: string,
+        email: string,
+        avatarImg: string
+    },
+    unitDocs?: docsType[] | null,
+    _id?: string
+}
+
 export interface subjectType {
     subjectName: string,
     subjectDesc: string,
@@ -21,7 +34,7 @@ export interface subjectType {
         email: string,
         avatarImg: string
     },
-    subjectDocs?: docsType[] | null,
+    units?: unitType[] | null,
     _id?: string
 }
 

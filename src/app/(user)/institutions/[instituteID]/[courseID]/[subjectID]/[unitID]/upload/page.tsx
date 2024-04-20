@@ -14,13 +14,14 @@ import MobileHeader from '@/components/MobileHeader'
 import OpenBookSVG from '@/assets/Icons/OpenBookSVG'
 import BuildingSVG from '@/assets/Icons/BuildingSVG'
 import BookStackSVG from '@/assets/Icons/BookStackSVG'
-import { User2Icon } from 'lucide-react'
+import { BookOpenTextIcon, User2Icon } from 'lucide-react'
 import toast from 'react-hot-toast';
 
 type Params = {
     instituteID: string,
     courseID: string,
-    subjectID: string
+    subjectID: string,
+    unitID: string
 }
 
 type FileUploadRes = {
@@ -40,7 +41,7 @@ const UploadDocuments = () => {
     const queryClient = useQueryClient()
 
     const { data: instituteData } = useQuery({
-        queryKey: ['getInstitutebyName', params?.subjectID, "document-upload"],
+        queryKey: ['getInstitutebyName', params?.unitID, "document-upload"],
         queryFn: async () => {
             try {
                 const instituteName = params?.instituteID?.replaceAll("-", " ");
@@ -52,10 +53,10 @@ const UploadDocuments = () => {
             }
         },
         initialData: () => {
-            const init = queryClient.getQueryData(['getInstitutebyName', params?.subjectID]) as DataStoreTypes
+            const init = queryClient.getQueryData(['getInstitutebyName', params?.unitID]) as DataStoreTypes
             return init
         },
-        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.subjectID])?.dataUpdatedAt,
+        initialDataUpdatedAt: () => queryClient.getQueryState(['getInstitutebyName', params?.unitID])?.dataUpdatedAt,
     });
 
     function updateFileProgress(key: string, progress: FileState['progress']) {
@@ -111,12 +112,14 @@ const UploadDocuments = () => {
         // Uploading File info to DB
         const courseInfo = instituteData?.course?.find(obj => obj?.courseName.toLowerCase().replaceAll(" ", "-") === params?.courseID.toLowerCase())
         const subjectInfo = courseInfo?.subjects?.find(obj => obj?.subjectName.toLowerCase().replaceAll(" ", "-") === params?.subjectID.toLowerCase())
+        const unitInfo = subjectInfo?.units?.find(obj => obj?.unitName.toLowerCase().replaceAll(" ", "-") === params?.unitID.toLowerCase())
 
         try {
             const UploadRes = await axios.post("/api/post/upload-files", {
                 instituteId: instituteData?._id,
                 courseId: courseInfo?._id,
                 subjectId: subjectInfo?._id,
+                unitId: unitInfo?._id,
                 uploaderId: user?.uid,
                 FilesMeta: uploadMeta
             })
@@ -127,6 +130,7 @@ const UploadDocuments = () => {
                 await queryClient.invalidateQueries()
             }
         } catch (error) {
+            setIsUploadComplete(true)
             console.error(error)
             toast.error("Failed to update Database")
         }
@@ -140,7 +144,8 @@ const UploadDocuments = () => {
                 `Institutions/${params?.instituteID}`,
                 `Institutions/${params?.instituteID}/${params?.courseID}`,
                 `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}`,
-                `Institutions/${params?.instituteID}/${params?.courseID}/Create`
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}`,
+                `Institutions/${params?.instituteID}/${params?.courseID}/${params?.subjectID}/${params?.unitID}/Create`
             ]} />
             <MobileHeader />
 
@@ -192,17 +197,17 @@ const UploadDocuments = () => {
                     </div>
                 </label>
                 <label className="relative w-full">
-                    <span className='text-[0.9em] bg-background/0 px-1'>Uploader</span>
+                    <span className='text-[0.9em] bg-background/0 px-1'>Unit</span>
 
                     <div className="flex items-center border border-muted-foreground sm:focus-within:border-primary rounded p-1">
                         <input
                             type="text"
                             required={true}
-                            defaultValue={user?.username || ""}
+                            defaultValue={params?.unitID?.replaceAll("-", " ") || ""}
                             disabled={true}
                             className='text-[1em] w-full bg-background/0 text-slate-400 px-2 capitalize py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
-                        <User2Icon size={24} className="absolute right-2 text-slate-400" />
+                        <BookOpenTextIcon size={24} className="absolute right-2 text-slate-400" />
                     </div>
                 </label>
             </div>

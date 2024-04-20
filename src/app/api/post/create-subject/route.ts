@@ -39,7 +39,7 @@ export async function POST(request: Request) {
             subjectCreator: body?.registeredBy
         })
 
-        InstituteExists.save()
+        await InstituteExists.save()
 
         return new NextResponse("Subject Created Successfully!", { status: 201 })
     } catch (err) {
