@@ -9,8 +9,7 @@ const edgeStoreRouter = es.router({
             maxSize: 1024 * 1024 * 25,
             accept: ['application/pdf'],
         })
-        .beforeDelete(({ ctx, fileInfo }) => {
-            console.log('beforeDelete', ctx, fileInfo);
+        .beforeDelete(() => {
             return true;
         }),
 });

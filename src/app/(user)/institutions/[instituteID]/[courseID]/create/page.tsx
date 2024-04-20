@@ -47,9 +47,9 @@ const CreateSubject = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: HandleCreateCourse,
-        onError(error) {
+        onError(error: any) {
             console.log(error)
-            toast.error(`Error: ${error?.message || "Something went wrong!"}`)
+            toast.error(`Error: ${error?.response?.data || "Something went wrong!"}`)
         },
         onSuccess: async () => {
             toast.success("Subject Created Successfully!")
@@ -118,6 +118,7 @@ const CreateSubject = () => {
                                 placeholder='Enter Subject Description'
                                 onChange={(e) => setSubjectDesc(e?.target?.value)}
                                 maxLength={40}
+                                required={true}
                                 className='resize-none text-[1em] w-full bg-background/0 px-2 py-1 border-none outline-none placeholder:text-secondary-foreground/70' />
 
                             <p className='w-full text-right text-[0.8em] text-slate-400 px-1'>{subjectDesc.length}/40</p>
