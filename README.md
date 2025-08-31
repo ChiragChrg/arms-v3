@@ -8,6 +8,12 @@
 ## Introduction
 ARMS (Academic Resource Management System) is an all-inclusive educational platform designed to empower students with easy access to study materials for their respective subjects. By logging in anonymously, students can conveniently browse and download PDF documents uploaded by authorized faculties. With a centralized approach, ARMS ensures that students can effortlessly find and obtain the necessary resources they need for their academic pursuits. It's a user-friendly solution that streamlines the process of resource management, providing a seamless experience for both students and faculties alike.
 
+### Versions:
+- [ARMS v1 (PHP)](https://github.com/ChiragChrg/arms-php)
+- [ARMS v2](https://github.com/ChiragChrg/arms-v2)
+- ARMS v3
+- [ARMS v4](https://github.com/ChiragChrg/arms-v4)
+
 ## Key Features
 - **Anonymous student login** - Students can browse and access materials without creating an account for frictionless onboarding
 - **Centralized resources** - Materials for all courses and subjects in one place organized by institution, course, and topic for easy discovery  
